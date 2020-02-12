@@ -6,21 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//HelloYmf.github.io">
-  <title>Tag: kali技巧 | Aurora的博客</title>
+  <title>C++Note1 | Aurora的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="此blog用于分享学习经验。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Aurora的博客">
-<meta property="og:url" content="tags/kali%E6%8A%80%E5%B7%A7/index.html">
+  <meta name="description" content="Object Oriented Programming">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++Note1">
+<meta property="og:url" content="2020/02/12/C++PartOne/index.html">
 <meta property="og:site_name" content="Aurora的博客">
-<meta property="og:description" content="此blog用于分享学习经验。">
+<meta property="og:description" content="Object Oriented Programming">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="/2020/02/12/C++PartOne/%E8%9B%8B%E5%9B%BE.png">
+<meta property="article:published_time" content="2020-02-12T09:31:54.000Z">
+<meta property="article:modified_time" content="2020-02-12T10:09:23.251Z">
 <meta property="article:author" content="Aurora">
-<meta property="article:tag" content="c&#x2F;c++">
-<meta property="article:tag" content="数据结构与算法">
-<meta property="article:tag" content="linux">
-<meta property="article:tag" content="kali抓包工具">
+<meta property="article:tag" content="C++NOtes">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="/2020/02/12/C++PartOne/%E8%9B%8B%E5%9B%BE.png">
   
     <link rel="alternative" href="/atom.xml" title="Aurora的博客" type="application/atom+xml">
   
@@ -165,59 +166,135 @@
           </div>
           <div id="js-content" class="content-ll">
             
-  
-  
+<article id="post-C++PartOne" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="archives/2020" target="_blank" rel="noopener" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/02/09/kali破解无线/" target="_blank" rel="noopener" class="archive-article-date">
-  	<time datetime="2020-02-09T15:05:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-09</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="2020/02/09/kali破解无线/" target="_blank" rel="noopener">kali破解无线</a>
+    <h1 class="article-title" itemprop="name">
+      C++Note1
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="2020/02/12/C++PartOne/" target="_blank" rel="noopener" class="archive-article-date">
+  	<time datetime="2020-02-12T09:31:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Object-Oriented-Programming"><a href="#Object-Oriented-Programming" target="_blank" rel="noopener" class="headerlink" title="Object Oriented Programming"></a>Object Oriented Programming</h1><a id="more"></a>
+
+<h2 id="类（class）的结构"><a href="#类（class）的结构" target="_blank" rel="noopener" class="headerlink" title="类（class）的结构"></a>类（class）的结构</h2><ul>
+<li>Objects = Attributes + Services<ul>
+<li>Data: the properties or status</li>
+<li>Operations: the functions</li>
+</ul>
+</li>
+</ul>
+<img src="/2020/02/12/C++PartOne/%E8%9B%8B%E5%9B%BE.png" class title="picture">
+
+<h2 id="面向对象和面向过程的区别"><a href="#面向对象和面向过程的区别" target="_blank" rel="noopener" class="headerlink" title="面向对象和面向过程的区别"></a>面向对象和面向过程的区别</h2><ul>
+<li><p><em>面向过程则主要考虑流程设计，如何一步一步的实现。</em></p>
+</li>
+<li><p><em>面向对象主要从需求本身出发去思考。考虑东西与东西的关系，每个东西之间通过消息传达，彼此之间没有绝对的联系。比如灯泡发光这个操作，人拨动开关是人这个对象的事情，向灯发出消息，而灯是否发光则是灯自己的事情，相互之间不干扰。</em></p>
+</li>
+</ul>
+<h2 id="面向对象的好处"><a href="#面向对象的好处" target="_blank" rel="noopener" class="headerlink" title="面向对象的好处"></a>面向对象的好处</h2><ul>
+<li><em>面向对象可以进行接口化，进而保护内部数据不直接暴露，同时便于维护与升级。</em></li>
+</ul>
+<h2 id="C-第一个程序"><a href="#C-第一个程序" target="_blank" rel="noopener" class="headerlink" title="C++第一个程序"></a>C++第一个程序</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;          //c++标准库</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;        <span class="comment">//命名空间</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> number;</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;number;            <span class="comment">//标准输入函数</span></span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;number&lt;&lt;<span class="built_in">endl</span>;     <span class="comment">//标准输出函数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="c结构体vsc-类"><a href="#c结构体vsc-类" target="_blank" rel="noopener" class="headerlink" title="c结构体vsc++类"></a>c结构体vsc++类</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">point3d</span> &#123;</span>        <span class="comment">//c结构体</span></span><br><span class="line">            <span class="keyword">float</span> x;</span><br><span class="line">            <span class="keyword">float</span> y;</span><br><span class="line">            <span class="keyword">float</span> z;</span><br><span class="line">&#125; Point3d;</span><br></pre></td></tr></table></figure>
+<p>分隔线。。。。。。。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Point3d</span> &#123;</span>                 <span class="comment">//c++类</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">        Point3d(<span class="keyword">float</span> x,<span class="keyword">float</span> y,<span class="keyword">float</span> z);               <span class="comment">//函数</span></span><br><span class="line">        <span class="built_in">print</span>();</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">        <span class="keyword">float</span> x;                                        <span class="comment">//数据</span></span><br><span class="line">        <span class="keyword">float</span> y;</span><br><span class="line">        <span class="keyword">float</span> z;</span><br><span class="line">&#125;;                              <span class="comment">//分号一定不要丢</span></span><br><span class="line"><span class="function">Point3d <span class="title">a</span><span class="params">(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span></span>;</span><br><span class="line">a.<span class="built_in">print</span>();</span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">kali技巧</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++NOtes</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="2020/02/10/凛冬不至/" target="_blank" rel="noopener" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">凛冬不至</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Object-Oriented-Programming" target="_blank" rel="noopener"><span class="toc-number">1.</span> <span class="toc-text">Object Oriented Programming</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#类（class）的结构" target="_blank" rel="noopener"><span class="toc-number">1.1.</span> <span class="toc-text">类（class）的结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#面向对象和面向过程的区别" target="_blank" rel="noopener"><span class="toc-number">1.2.</span> <span class="toc-text">面向对象和面向过程的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#面向对象的好处" target="_blank" rel="noopener"><span class="toc-number">1.3.</span> <span class="toc-text">面向对象的好处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-第一个程序" target="_blank" rel="noopener"><span class="toc-number">1.4.</span> <span class="toc-text">C++第一个程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#c结构体vsc-类" target="_blank" rel="noopener"><span class="toc-number">1.5.</span> <span class="toc-text">c结构体vsc++类</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -244,9 +321,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

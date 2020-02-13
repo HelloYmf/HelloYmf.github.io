@@ -6,20 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//HelloYmf.github.io">
-  <title>Archives: 2020 | Aurora的博客</title>
+  <title>C++Note3 | Aurora的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="此blog用于分享学习经验。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Aurora的博客">
-<meta property="og:url" content="archives/2020/index.html">
+  <meta name="description" content="成员变量和this指针:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++Note3">
+<meta property="og:url" content="2020/02/13/C++Note3/index.html">
 <meta property="og:site_name" content="Aurora的博客">
-<meta property="og:description" content="此blog用于分享学习经验。">
+<meta property="og:description" content="成员变量和this指针:">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-02-13T05:53:03.000Z">
+<meta property="article:modified_time" content="2020-02-13T06:49:10.542Z">
 <meta property="article:author" content="Aurora">
-<meta property="article:tag" content="c&#x2F;c++">
-<meta property="article:tag" content="数据结构与算法">
-<meta property="article:tag" content="linux">
-<meta property="article:tag" content="kali抓包工具">
+<meta property="article:tag" content="C++Notes">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Aurora的博客" type="application/atom+xml">
@@ -165,35 +164,54 @@
           </div>
           <div id="js-content" class="content-ll">
             
+<article id="post-C++Note3" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      C++Note3
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="archives/2020" target="_blank" rel="noopener" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/02/13/C++Note3/" target="_blank" rel="noopener" class="archive-article-date">
+
+        
+        <a href="2020/02/13/C++Note3/" target="_blank" rel="noopener" class="archive-article-date">
   	<time datetime="2020-02-13T05:53:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-13</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="2020/02/13/C++Note3/" target="_blank" rel="noopener">C++Note3</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="成员变量和this指针"><a href="#成员变量和this指针" target="_blank" rel="noopener" class="headerlink" title="成员变量和this指针:"></a>成员变量和this指针:</h1><a id="more"></a>
 
-        <div class="article-info info-on-right">
-          
+<p><em>C++中有两种变量，第一种叫本地变量，第二种叫成员变量，如果在类的函数中出现本地变量与成员变量重名的情况，则采取<strong>就近原则</strong>，优先选择本地变量。</em></p>
+<h3 id="1、两者之间的区别"><a href="#1、两者之间的区别" target="_blank" rel="noopener" class="headerlink" title="1、两者之间的区别:"></a>1、两者之间的区别:</h3><p><em>本地变量作用域在<strong>函数内部</strong>，而成员变量作用域在<strong>类内</strong>。</em></p>
+<h3 id="2、Tips"><a href="#2、Tips" target="_blank" rel="noopener" class="headerlink" title="2、Tips:"></a>2、Tips:</h3><ul>
+<li><em>类中的成员变量仅仅是<strong>声明</strong>而非定义，只有类被<strong>实例化</strong>成一个对象后才被定义。</em>  </li>
+<li><em>成员变量可以在类内随意被成员函数调用。</em></li>
+<li><em>成员变量被<strong>对象</strong>拥有，成员函数被<strong>类</strong>拥有。同时类是虚的而非实体。</em></li>
+<li><em>一个类中的不同对象在调用自己的成员函数时，其实它们调用的是<strong>同一段</strong>函数代码。</em></li>
+</ul>
+<h3 id="3、this指针："><a href="#3、this指针：" target="_blank" rel="noopener" class="headerlink" title="3、this指针："></a>3、this指针：</h3><p><em>成员函数通过this指针来知道要访问哪个对象的数据成员。</em>  </p>
+<p>  <strong>每个对象都拥有一个this指针，this指针记录对象的内存地址，当我们调用成员函数时，成员函数默认第一个参数为T* const register this，大多数编译器通过ecx寄存器传递this指针，通过 this 这个隐式参数可以访问该对象的数据成员。</strong></p>
+<h3 id="4、this指针注意点："><a href="#4、this指针注意点：" target="_blank" rel="noopener" class="headerlink" title="4、this指针注意点："></a>4、this指针注意点：</h3><ol>
+<li>C++中this关键字是一个指向对象自己的一个常量指针，不能给this赋值；</li>
+<li>只有成员函数才有this指针，友元函数不是类的成员函数，没有this指针；</li>
+<li>同样静态函数也是没有this指针的，静态函数如同静态变量一样，不属于具体的哪一个对象；</li>
+<li>this指针作用域在类成员函数内部，在类外也无法获取；</li>
+<li>this指针并不是对象的一部分，this指针所占的内存大小是不会反应在sizeof操作符上的。</li>
+<li>this指针是在对象被创建的时候建立的；</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -205,312 +223,68 @@
 		</ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/02/13/C++Note2/" target="_blank" rel="noopener" class="archive-article-date">
-  	<time datetime="2020-02-13T04:33:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-13</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="2020/02/13/C++Note2/" target="_blank" rel="noopener" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">C++Note2</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="2020/02/13/C++Note2/" target="_blank" rel="noopener">C++Note2</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++Notes</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#成员变量和this指针" target="_blank" rel="noopener"><span class="toc-number">1.</span> <span class="toc-text">成员变量和this指针:</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、两者之间的区别" target="_blank" rel="noopener"><span class="toc-number">1.0.1.</span> <span class="toc-text">1、两者之间的区别:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、Tips" target="_blank" rel="noopener"><span class="toc-number">1.0.2.</span> <span class="toc-text">2、Tips:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、this指针：" target="_blank" rel="noopener"><span class="toc-number">1.0.3.</span> <span class="toc-text">3、this指针：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、this指针注意点：" target="_blank" rel="noopener"><span class="toc-number">1.0.4.</span> <span class="toc-text">4、this指针注意点：</span></a></li></ol></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/02/12/C++Note1/" target="_blank" rel="noopener" class="archive-article-date">
-  	<time datetime="2020-02-12T09:31:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-12</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="2020/02/12/C++Note1/" target="_blank" rel="noopener">C++Note1</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++NOtes</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/02/10/凛冬不至/" target="_blank" rel="noopener" class="archive-article-date">
-  	<time datetime="2020-02-10T14:26:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="2020/02/10/凛冬不至/" target="_blank" rel="noopener">凛冬不至</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/02/10/MarkDown编写笔记/" target="_blank" rel="noopener" class="archive-article-date">
-  	<time datetime="2020-02-10T09:29:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="2020/02/10/MarkDown编写笔记/" target="_blank" rel="noopener">MarkDown编写笔记</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">MarkDown</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/02/10/linux常用命令/" target="_blank" rel="noopener" class="archive-article-date">
-  	<time datetime="2020-02-10T08:57:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="2020/02/10/linux常用命令/" target="_blank" rel="noopener">linux常用命令</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/02/09/Fiddeler抓ios旧app/" target="_blank" rel="noopener" class="archive-article-date">
-  	<time datetime="2020-02-09T15:06:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-09</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="2020/02/09/Fiddeler抓ios旧app/" target="_blank" rel="noopener">Fiddle抓ios旧版本APP</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">ios技巧</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/02/09/解决hexo无法加载图片/" target="_blank" rel="noopener" class="archive-article-date">
-  	<time datetime="2020-02-09T15:06:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-09</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="2020/02/09/解决hexo无法加载图片/" target="_blank" rel="noopener">解决hexo无法加载图片</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">问题解决</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/02/09/kali破解无线/" target="_blank" rel="noopener" class="archive-article-date">
-  	<time datetime="2020-02-09T15:05:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-09</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="2020/02/09/kali破解无线/" target="_blank" rel="noopener">kali破解无线</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">kali技巧</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -537,8 +311,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

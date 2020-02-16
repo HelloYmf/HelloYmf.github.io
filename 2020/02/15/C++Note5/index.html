@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="//HelloYmf.github.io">
   <title>C++Note5 | Aurora的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="new,delete,访问限制,class与struct的区别">
+  <meta name="description" content="new,delete,访问限制,class与struct的区别,初始化列表">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++Note5">
 <meta property="og:url" content="2020/02/15/C++Note5/index.html">
 <meta property="og:site_name" content="Aurora的博客">
-<meta property="og:description" content="new,delete,访问限制,class与struct的区别">
+<meta property="og:description" content="new,delete,访问限制,class与struct的区别,初始化列表">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="/2020/02/15/C++Note5/Friend%E7%94%A8%E6%B3%951.png">
 <meta property="og:image" content="/2020/02/15/C++Note5/Friend%E7%94%A8%E6%B3%952.png">
 <meta property="article:published_time" content="2020-02-15T08:16:21.000Z">
-<meta property="article:modified_time" content="2020-02-15T10:22:02.442Z">
+<meta property="article:modified_time" content="2020-02-16T11:32:18.349Z">
 <meta property="article:author" content="Aurora">
 <meta property="article:tag" content="C++Notes">
 <meta name="twitter:card" content="summary">
@@ -187,7 +187,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><em>new,delete,访问限制,class与struct的区别</em></p>
+        <p><em>new,delete,访问限制,class与struct的区别,初始化列表</em></p>
 <a id="more"></a>
 <h2 id="1、new与delete"><a href="#1、new与delete" target="_blank" rel="noopener" class="headerlink" title="1、new与delete"></a>1、new与delete</h2><p><em>new操作与C语言的中的malloc()函数类似，用于在堆中申请内存，返回值为指针，如果是一个类的话，则先分配空间再调用构造函数。</em></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>* p=<span class="keyword">new</span> <span class="keyword">int</span>;</span><br><span class="line"><span class="keyword">int</span>* p=<span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>];</span><br><span class="line">Student* p=<span class="keyword">new</span> Student();</span><br><span class="line">Student* p=<span class="keyword">new</span> Student[<span class="number">10</span>];</span><br></pre></td></tr></table></figure>

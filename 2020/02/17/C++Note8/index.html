@@ -6,23 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//HelloYmf.github.io">
-  <title>C++Note6 | Aurora的博客</title>
+  <title>C++Note8 | Aurora的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="继承与组合的区别：">
+  <meta name="description" content="函数重载，函数默认值，内联函数，const">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C++Note6">
-<meta property="og:url" content="2020/02/16/C++Note6/index.html">
+<meta property="og:title" content="C++Note8">
+<meta property="og:url" content="2020/02/17/C++Note8/index.html">
 <meta property="og:site_name" content="Aurora的博客">
-<meta property="og:description" content="继承与组合的区别：">
+<meta property="og:description" content="函数重载，函数默认值，内联函数，const">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdn.net/20170213115002313?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSzM0NkszNDY=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="https://img-blog.csdn.net/20170213104552734?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSzM0NkszNDY=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="article:published_time" content="2020-02-16T05:01:43.000Z">
-<meta property="article:modified_time" content="2020-02-16T06:31:56.927Z">
+<meta property="article:published_time" content="2020-02-17T06:54:13.000Z">
+<meta property="article:modified_time" content="2020-02-17T09:28:54.898Z">
 <meta property="article:author" content="Aurora">
 <meta property="article:tag" content="C++Notes">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdn.net/20170213115002313?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSzM0NkszNDY=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
   
     <link rel="alternative" href="/atom.xml" title="Aurora的博客" type="application/atom+xml">
   
@@ -167,50 +164,84 @@
           </div>
           <div id="js-content" class="content-ll">
             
-<article id="post-C++Note6" class="article article-type-post " itemscope itemprop="blogPost">
+<article id="post-C++Note8" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      C++Note6
+      C++Note8
     </h1>
   
 
         
-        <a href="2020/02/16/C++Note6/" target="_blank" rel="noopener" class="archive-article-date">
-  	<time datetime="2020-02-16T05:01:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-16</time>
+        <a href="2020/02/17/C++Note8/" target="_blank" rel="noopener" class="archive-article-date">
+  	<time datetime="2020-02-17T06:54:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-17</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="继承与组合的区别："><a href="#继承与组合的区别：" target="_blank" rel="noopener" class="headerlink" title="继承与组合的区别："></a>继承与组合的区别：</h1><a id="more"></a>
+        <p><em>函数重载，函数默认值，内联函数，const</em></p>
+<a id="more"></a>
 
-<p><em>类的组合和继承一样，是软件重用的重要方式。</em></p>
-<h3 id="1、组合：类中成员是别的类的对象"><a href="#1、组合：类中成员是别的类的对象" target="_blank" rel="noopener" class="headerlink" title="1、组合：类中成员是别的类的对象"></a>1、组合：类中成员是别的类的对象</h3><p><em>若在逻辑上A 是B 的“一部分”（a part of），则不允许B 继承A 的功能，而是要用A和其它东西组合出B，它们之间就是“Has-A关系”。例如眼（Eye）、鼻（Nose）、口（Mouth）、耳（Ear）是头（Head）的一部分，所以类Head 应该由类Eye、Nose、Mouth、Ear 组合而成，不是派生而成。示例代码如下</em></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Eye</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">　　<span class="function"><span class="keyword">void</span> <span class="title">Look</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Nose</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">　　<span class="function"><span class="keyword">void</span> <span class="title">Smell</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Mouth</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">　　<span class="function"><span class="keyword">void</span> <span class="title">Eat</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Ear</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">　　<span class="function"><span class="keyword">void</span> <span class="title">Listen</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 正确的设计，冗长的程序</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Head</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">　　<span class="function"><span class="keyword">void</span> <span class="title">Look</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123; m_eye.Look(); &#125;</span><br><span class="line">　　<span class="function"><span class="keyword">void</span> <span class="title">Smell</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123; m_nose.Smell(); &#125;</span><br><span class="line">　　<span class="function"><span class="keyword">void</span> <span class="title">Eat</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123; m_mouth.Eat(); &#125;</span><br><span class="line">　　<span class="function"><span class="keyword">void</span> <span class="title">Listen</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123; m_ear.Listen(); &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">　　Eye m_eye;</span><br><span class="line">　　Nose m_nose;</span><br><span class="line">　　Mouth m_mouth;</span><br><span class="line">Ear m_ear;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="1、函数重载："><a href="#1、函数重载：" target="_blank" rel="noopener" class="headerlink" title="1、函数重载："></a>1、函数重载：</h2><p>函数名相同但参数列表不同的两个函数成为函数重载。（如果函数名相同，参数列表也相同但返回值类型不同的两个函数不叫函数重载）</p>
+<ul>
+<li>如果成员函数重名且参数相同但其中一个函数有const也是可以的。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">f() &#123;&#125;</span><br><span class="line">f() <span class="keyword">const</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
 
-<p><em>如果允许Head 从Eye、Nose、Mouth、Ear 派生而成，那么Head 将自动具有Look、Smell、Eat、Listen 这些功能：</em></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 错误的设计</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Head</span> :</span> <span class="keyword">public</span> Eye, <span class="keyword">public</span> Nose, <span class="keyword">public</span> Mouth, <span class="keyword">public</span> Ear</span><br><span class="line">&#123;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="2、函数默认值："><a href="#2、函数默认值：" target="_blank" rel="noopener" class="headerlink" title="2、函数默认值："></a>2、函数默认值：</h2><ul>
+<li>函数默认值一定是从右往左写的。</li>
+<li>函数默认值写在声明中(.h)，切勿写在定义中(.cpp)。</li>
+</ul>
+<h2 id="3、内联函数："><a href="#3、内联函数：" target="_blank" rel="noopener" class="headerlink" title="3、内联函数："></a>3、内联函数：</h2><ul>
+<li><p>定义：inline是C++语言中的一个关键字，可以用于程序中定义内联函数，inline的引进使内联函数的定义更加简单。说到内联函数，这里给出比较常见的定义，内联函数是C++中的一种特殊函数，它可以像普通函数一样被调用，但是在调用时并不通过函数调用的机制而是通过将函数体直接插入调用处来实现的，这样可以大大减少由函数调用带来的开销，从而提高程序的运行效率。一般来说inline用于定义类的成员函数。</p>
+</li>
+<li><p>基本用法：</p>
+<p>inline的使用比较简单，只需要在声明或者定义函数时在头部加上inline关键字即可，格式如下</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> 返回类型 函数名(参数)&#123;</span><br><span class="line">    <span class="comment">//函数体</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>注意：</p>
+<p>类内定义的成员函数都为内联函数。如果类的成员函数不在类内定义，一定要有inline关键字，且在同一个.h文件中，因为inline会把定义变成声明。</p>
+</li>
+<li><p>内联函数和宏的区别：</p>
+<p>比宏好用，因为宏没有编译器做类型检查，而内联函数有，更安全。</p>
+</li>
+<li><p>内联函数的局限：<br>太大的函数不会被做成内联（比如长代码函数，递归等），内联关键字只是对编译器的一种建议。</p>
+<h2 id="4、const用法："><a href="#4、const用法：" target="_blank" rel="noopener" class="headerlink" title="4、const用法："></a>4、const用法：</h2><h4 id="1-基本使用："><a href="#1-基本使用：" target="_blank" rel="noopener" class="headerlink" title="1.基本使用："></a>1.基本使用：</h4></li>
+<li><p>经过const关键字修饰的变量在定义的时候必须进行初始化，以后将不能被修改。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> x=<span class="number">1</span>;</span><br><span class="line">x=<span class="number">0</span>;    <span class="comment">//错误，const后不能被修改。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> hi=<span class="string">"hello"</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> i,j=<span class="number">1</span>;    <span class="comment">//错误，i未被初始化。</span></span><br></pre></td></tr></table></figure></li>
+<li><p>类中的成员变量如果是const的话，必须使用初始化列表的方式进行初始化。  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">int</span> a;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">        A(<span class="keyword">int</span> x);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">A::A(<span class="keyword">int</span> x):a(x)&#123;&#125;</span><br></pre></td></tr></table></figure>
 
-<p>*上述程序十分简短并且运行正确，但是这种设计却是错误的。所以我们要经的起“继承”的诱惑，避免犯下设计错误。在UML中，上面类的UML关系图可描述如下： *</p>
-<p><img src="https://img-blog.csdn.net/20170213115002313?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSzM0NkszNDY=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="图片"></p>
-<p><em>实心菱形代表了一种坚固的关系，被包含类的生命周期受包含类控制，被包含类会随着包含类创建而创建，消亡而消亡。组合属于黑盒复用，被包含对象的内部细节对外是不可见的，所以它的封装性相对较好，实现上相互依赖比较小，并且可以通过获取其它具有相同类型的对象引用或指针，在运行期间动态的定义组合。而缺点就是致使系统中的对象过多。</em></p>
-<h3 id="2、继承："><a href="#2、继承：" target="_blank" rel="noopener" class="headerlink" title="2、继承："></a>2、继承：</h3><p><em>若在逻辑上B 是一种A （is a kind of），则允许B 继承A 的功能，它们之间就是Is-A 关系。如男人（Man）是人（Human）的一种，女人（Woman）是人的一种。那么类Man 可以从类Human 派生，类Woman也可以从类Human 派生。示例程序如下：</em></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Human</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">　　…</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Man</span> :</span> <span class="keyword">public</span> Human</span><br><span class="line">&#123;</span><br><span class="line">　　…</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Woman</span> :</span> <span class="keyword">public</span> Man</span><br><span class="line">&#123;</span><br><span class="line">　　…</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="2-const和指针："><a href="#2-const和指针：" target="_blank" rel="noopener" class="headerlink" title="2.const和指针："></a>2.const和指针：</h4><p> 如果const出现在星号左边，表示被指物是常量；如果出现在星号右边，表示指针自身是常量；如果出现在星号两边，表示被指物和指针两者都是常量。</p>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span>* p=&amp;a;    <span class="comment">//const在*左边，值不能改变。</span></span><br><span class="line"><span class="keyword">int</span> <span class="keyword">const</span>* p=&amp;a;    <span class="comment">//同上</span></span><br><span class="line"><span class="keyword">int</span>* <span class="keyword">const</span> p=&amp;a;    <span class="comment">//const在*右边，指针不能指向被人。</span></span><br></pre></td></tr></table></figure>
 
-<p><em>在UML的术语中，继承关系被称为泛化（Generalization），类Man和Woman与类Human的UML关系图可描述如下：</em></p>
-<p><img src="https://img-blog.csdn.net/20170213104552734?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSzM0NkszNDY=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="图片"></p>
-<p><em>继承在逻辑上看起来比较简单，但在实际应用上可能遭遇意外。比如在OO界中著名的“鸵鸟不是鸟”和“圆不是椭圆”的问题。这样的问题说明了程序设计和现实世界存在逻辑差异。从生物学的角度，鸵鸟（Ostrich）是鸟（Bird）的一种，既然是Is-A的关系，类COstrich应该可以从类CBird派生。但是鸵鸟不会飞，但从CBird那里继承了接口函数fly，如下所示：</em></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 错误的设计</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CBird</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">COstrich</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p><em>“圆不是椭圆”同样存在类似的问题，圆从椭圆类继承了无用的长短轴数据成员。所以更加严格的继承应该是：若在逻辑上B是A的一种，并且A的所有功能和属性对B都有意义，则允许B继承A的所有功能和属性。</em></p>
-<p><em>类继承允许我们根据自己的实现来覆盖重写父类的实现细节，父类的实现对于子类是可见的，所以我们一般称之为白盒复用。继承易于修改或扩展那些被复用的实现，但它这种白盒复用却容易破坏封装性。因为这会将父类的实现细节暴露给子类。</em></p>
-<p><strong>综上所述，Is-A关系用继承表示，Has-A关系用组合表示，GoF在《设计模式》中指出OO设计的一大原则就是：优先使用对象组合，而不是类继承。</strong></p>
-<p>版权声明：<a href="https://blog.csdn.net/qq_22080999/article/details/82048108" target="_blank" rel="noopener">https://blog.csdn.net/qq_22080999/article/details/82048108</a></p>
+<h4 id="3-const和函数："><a href="#3-const和函数：" target="_blank" rel="noopener" class="headerlink" title="3.const和函数："></a>3.const和函数：</h4><ul>
+<li><p>函数后加const:  </p>
+<p>const是对函数的一个限定，使其无法修改类内的数据成员。const告诉别人这个函数不会改变对象的状态。</p>
+<p>声明一个函数用 const 关键字来说明这个函数是一个只读函数（read only method），即不会修改任何的数据成员也就是不会改变该对象的状态。该类函数的声明和定义时都要加上 const 关键字。  </p>
+<p>不能调用非const函数：如果我们在编写 const 函数时不小心修改了数据成员，或者调用了其他非 const 成员函数（即会修改数据成员的函数），编译器将会报错。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">f</span><span class="params">(A a)</span> <span class="keyword">const</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>const修饰函数返回值:  </p>
+<p>用const来修饰返回的指针或引用，保护指针指向的内容或引用的内容不被修改，也常用于运算符重载。归根究底就是使得函数调用表达式不能作为左值。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">const</span> A&amp; <span class="title">f</span><span class="params">(A a)</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>形式参数加const：    </li>
+</ul>
+</li>
+</ul>
+<p>防止传入的实参被改变:</p>
+<pre><code class="c++"><span class="function"><span class="keyword">int</span> <span class="title">f</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> x)</span> </span>{}</code></pre>
+<p><br><br><br>版权说明：<a href="https://www.cnblogs.com/fan-0802-WHU/p/10961279.html" target="_blank" rel="noopener">https://www.cnblogs.com/fan-0802-WHU/p/10961279.html</a><br><br>&emsp;&emsp;&emsp;&emsp;&emsp; <a href="https://www.cnblogs.com/jiabei521/p/3335676.html" target="_blank" rel="noopener">https://www.cnblogs.com/jiabei521/p/3335676.html</a></p>
 
       
 
@@ -243,18 +274,9 @@
   
 <nav id="article-nav">
   
-    <a href="2020/02/16/C++Note7/" target="_blank" rel="noopener" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          C++Note7
-        
-      </div>
-    </a>
   
-  
-    <a href="2020/02/15/数据结构与算法2/" target="_blank" rel="noopener" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">数据结构与算法2</div>
+    <a href="2020/02/16/C++Note7/" target="_blank" rel="noopener" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">C++Note7</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -281,7 +303,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#继承与组合的区别：" target="_blank" rel="noopener"><span class="toc-number">1.</span> <span class="toc-text">继承与组合的区别：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、组合：类中成员是别的类的对象" target="_blank" rel="noopener"><span class="toc-number">1.0.1.</span> <span class="toc-text">1、组合：类中成员是别的类的对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、继承：" target="_blank" rel="noopener"><span class="toc-number">1.0.2.</span> <span class="toc-text">2、继承：</span></a></li></ol></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、函数重载：" target="_blank" rel="noopener"><span class="toc-number">1.</span> <span class="toc-text">1、函数重载：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、函数默认值：" target="_blank" rel="noopener"><span class="toc-number">2.</span> <span class="toc-text">2、函数默认值：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、内联函数：" target="_blank" rel="noopener"><span class="toc-number">3.</span> <span class="toc-text">3、内联函数：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、const用法：" target="_blank" rel="noopener"><span class="toc-number">4.</span> <span class="toc-text">4、const用法：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-基本使用：" target="_blank" rel="noopener"><span class="toc-number">4.0.1.</span> <span class="toc-text">1.基本使用：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-const和指针：" target="_blank" rel="noopener"><span class="toc-number">4.0.2.</span> <span class="toc-text">2.const和指针：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-const和函数：" target="_blank" rel="noopener"><span class="toc-number">4.0.3.</span> <span class="toc-text">3.const和函数：</span></a></li></ol></li></ol></li></ol>
                     </div>
                 </span>
             </div>

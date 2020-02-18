@@ -6,20 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//HelloYmf.github.io">
-  <title>Aurora的博客</title>
+  <title>C++Note9 | Aurora的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="此blog用于分享学习经验。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Aurora的博客">
-<meta property="og:url" content="page/2/index.html">
+  <meta name="description" content="引用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++Note9">
+<meta property="og:url" content="2020/02/18/C++Note9/index.html">
 <meta property="og:site_name" content="Aurora的博客">
-<meta property="og:description" content="此blog用于分享学习经验。">
+<meta property="og:description" content="引用">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-02-18T07:33:41.000Z">
+<meta property="article:modified_time" content="2020-02-18T08:05:57.931Z">
 <meta property="article:author" content="Aurora">
-<meta property="article:tag" content="c&#x2F;c++">
-<meta property="article:tag" content="数据结构与算法">
-<meta property="article:tag" content="linux">
-<meta property="article:tag" content="kali抓包工具">
+<meta property="article:tag" content="C++Notes">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Aurora的博客" type="application/atom+xml">
@@ -165,29 +164,64 @@
           </div>
           <div id="js-content" class="content-ll">
             
-  
-    <article id="post-C++Note3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+<article id="post-C++Note9" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="2020/02/13/C++Note3/" target="_blank" rel="noopener">C++Note3</a>
+    <h1 class="article-title" itemprop="name">
+      C++Note9
     </h1>
   
 
         
-        <a href="2020/02/13/C++Note3/" target="_blank" rel="noopener" class="archive-article-date">
-  	<time datetime="2020-02-13T05:53:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-13</time>
+        <a href="2020/02/18/C++Note9/" target="_blank" rel="noopener" class="archive-article-date">
+  	<time datetime="2020-02-18T07:33:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-18</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="成员变量和this指针"><a href="#成员变量和this指针" target="_blank" rel="noopener" class="headerlink" title="成员变量和this指针:"></a>成员变量和this指针:</h1>
-        
+        <p><em>引用</em></p>
+<a id="more"></a>
+
+<h2 id="1、引用："><a href="#1、引用：" target="_blank" rel="noopener" class="headerlink" title="1、引用："></a>1、引用：</h2><h4 id="1-基本用法："><a href="#1-基本用法：" target="_blank" rel="noopener" class="headerlink" title="1. 基本用法："></a>1. 基本用法：</h4><ul>
+<li><p>变量的引用：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">type&amp; refname = name;</span><br><span class="line"><span class="keyword">int</span> x;</span><br><span class="line"><span class="keyword">int</span>&amp; a = x;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>引用做函数参数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> &amp;a,<span class="keyword">int</span> &amp;b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> temp=a;</span><br><span class="line">    a=b;</span><br><span class="line">    b=temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样操作本地变量的值也会被交换。</p>
+</li>
+<li><p>引用做函数返回值：</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x;<span class="comment">//全局变量</span></span><br><span class="line"><span class="function"><span class="keyword">int</span>&amp; <span class="title">f</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> q;</span><br><span class="line">    <span class="comment">//return q; Error,这样就相当于返回了本地变量的地址，这个地址在函数调用完就没有了，显然是个错误。</span></span><br><span class="line">    <span class="keyword">return</span> x;<span class="comment">//这样是可以的。</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    f()=<span class="number">1</span>;<span class="comment">//这样是可以的，相当于x的值变成1。这样属于没有取别名，直接赋值操作了。</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="2-介绍："><a href="#2-介绍：" target="_blank" rel="noopener" class="headerlink" title="2. 介绍："></a>2. 介绍：</h4><ul>
+<li>基本理解：引用可以理解为给变量取别名，通过那个别名可以去改变那个变量的值。</li>
+<li>深入理解：引用其实就是const指针。int * const p = x;</li>
+</ul>
+<h4 id="3-引用和指针的区别："><a href="#3-引用和指针的区别：" target="_blank" rel="noopener" class="headerlink" title="3. 引用和指针的区别："></a>3. 引用和指针的区别：</h4><p>引用不可以为NULL，必须进行初始化。引用必须依赖于那个变量，属于捆绑关系。指针恰恰相反。</p>
+<h4 id="4-CARE"><a href="#4-CARE" target="_blank" rel="noopener" class="headerlink" title="4. CARE:"></a>4. CARE:</h4><p>p离哪个符号近就是哪个。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>&amp; *p;<span class="comment">//error</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>*p引用是不行的，因为这样操作的话就能取到引用的地址了，但引用的地址不能被取到。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>*&amp; p;<span class="comment">//ok</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>这样是可以的，意味着捆绑的变量的类型是指针。</p>
+</li>
+<li><p>没有引用的引用。</p>
+</li>
+<li><p>引用不是实体，所以没有引用的数组。</p>
+</li>
+</ul>
+
       
 
       
@@ -209,16 +243,24 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="2020/02/13/C++Note3/" target="_blank" rel="noopener">More >></a>
-        </p>
-      
 
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="2020/02/17/数据结构与算法3/" target="_blank" rel="noopener" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">数据结构与算法3</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -233,387 +275,32 @@
         </div>
         
         
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-C++Note2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="2020/02/13/C++Note2/" target="_blank" rel="noopener">C++Note2</a>
-    </h1>
-  
-
-        
-        <a href="2020/02/13/C++Note2/" target="_blank" rel="noopener" class="archive-article-date">
-  	<time datetime="2020-02-13T04:33:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Header-Files"><a href="#Header-Files" target="_blank" rel="noopener" class="headerlink" title="Header Files"></a>Header Files</h1>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++Notes</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="2020/02/13/C++Note2/" target="_blank" rel="noopener">More >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、引用：" target="_blank" rel="noopener"><span class="toc-number">1.</span> <span class="toc-text">1、引用：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-基本用法：" target="_blank" rel="noopener"><span class="toc-number">1.0.1.</span> <span class="toc-text">1. 基本用法：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-介绍：" target="_blank" rel="noopener"><span class="toc-number">1.0.2.</span> <span class="toc-text">2. 介绍：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-引用和指针的区别：" target="_blank" rel="noopener"><span class="toc-number">1.0.3.</span> <span class="toc-text">3. 引用和指针的区别：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-CARE" target="_blank" rel="noopener"><span class="toc-number">1.0.4.</span> <span class="toc-text">4. CARE:</span></a></li></ol></li></ol></li></ol>
+                    </div>
+                </span>
             </div>
         </div>
         
-        
     </div>
 </aside>
 
 
 
-
-  
-    <article id="post-C++Note1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="2020/02/12/C++Note1/" target="_blank" rel="noopener">C++Note1</a>
-    </h1>
-  
-
-        
-        <a href="2020/02/12/C++Note1/" target="_blank" rel="noopener" class="archive-article-date">
-  	<time datetime="2020-02-12T09:31:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Object-Oriented-Programming"><a href="#Object-Oriented-Programming" target="_blank" rel="noopener" class="headerlink" title="Object Oriented Programming"></a>Object Oriented Programming</h1>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++Notes</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="2020/02/12/C++Note1/" target="_blank" rel="noopener">More >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-MarkDown编写笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="2020/02/10/MarkDown编写笔记/" target="_blank" rel="noopener">MarkDown编写笔记</a>
-    </h1>
-  
-
-        
-        <a href="2020/02/10/MarkDown编写笔记/" target="_blank" rel="noopener" class="archive-article-date">
-  	<time datetime="2020-02-10T09:29:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>分界线。。。</em></p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">MarkDown</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="2020/02/10/MarkDown编写笔记/" target="_blank" rel="noopener">More >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Fiddeler抓ios旧app" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="2020/02/09/Fiddeler抓ios旧app/" target="_blank" rel="noopener">Fiddle抓ios旧版本APP</a>
-    </h1>
-  
-
-        
-        <a href="2020/02/09/Fiddeler抓ios旧app/" target="_blank" rel="noopener" class="archive-article-date">
-  	<time datetime="2020-02-09T15:06:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>分界线。。。</em></p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">ios技巧</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="2020/02/09/Fiddeler抓ios旧app/" target="_blank" rel="noopener">More >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-解决hexo无法加载图片" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="2020/02/09/解决hexo无法加载图片/" target="_blank" rel="noopener">解决hexo无法加载图片</a>
-    </h1>
-  
-
-        
-        <a href="2020/02/09/解决hexo无法加载图片/" target="_blank" rel="noopener" class="archive-article-date">
-  	<time datetime="2020-02-09T15:06:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>分界线。。。</em>  </p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">问题解决</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="2020/02/09/解决hexo无法加载图片/" target="_blank" rel="noopener">More >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev noopener" href="">&amp;laquo; Prev</a><a class=" target="_blank"page-number" href="">1</a><span class="page-number current">2</span>
-    </nav>
+  
+
+  
+
+  
+
   
 
 
@@ -640,8 +327,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

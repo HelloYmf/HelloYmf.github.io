@@ -6,17 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//HelloYmf.github.io">
-  <title>C++笔记11 | Aurora的博客</title>
+  <title>C++Note12 | Aurora的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="static关键字，运算符重载">
+  <meta name="description" content="模板">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C++笔记11">
-<meta property="og:url" content="2020/02/21/C++%E7%AC%94%E8%AE%B011/index.html">
+<meta property="og:title" content="C++Note12">
+<meta property="og:url" content="2020/02/23/C++Note12/index.html">
 <meta property="og:site_name" content="Aurora的博客">
-<meta property="og:description" content="static关键字，运算符重载">
+<meta property="og:description" content="模板">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-02-21T09:53:46.000Z">
-<meta property="article:modified_time" content="2020-02-22T14:00:54.199Z">
+<meta property="article:published_time" content="2020-02-23T10:04:58.000Z">
+<meta property="article:modified_time" content="2020-02-23T10:23:41.056Z">
 <meta property="article:author" content="Aurora">
 <meta property="article:tag" content="C++Notes">
 <meta name="twitter:card" content="summary">
@@ -164,80 +164,45 @@
           </div>
           <div id="js-content" class="content-ll">
             
-<article id="post-C++笔记11" class="article article-type-post " itemscope itemprop="blogPost">
+<article id="post-C++Note12" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      C++笔记11
+      C++Note12
     </h1>
   
 
         
-        <a href="2020/02/21/C++笔记11/" target="_blank" rel="noopener" class="archive-article-date">
-  	<time datetime="2020-02-21T09:53:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-21</time>
+        <a href="2020/02/23/C++Note12/" target="_blank" rel="noopener" class="archive-article-date">
+  	<time datetime="2020-02-23T10:04:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-23</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><em>static关键字，运算符重载</em></p>
+        <p><em>模板</em></p>
 <a id="more"></a>
 
-<h2 id="1、Static关键字："><a href="#1、Static关键字：" target="_blank" rel="noopener" class="headerlink" title="1、Static关键字："></a>1、Static关键字：</h2><h4 id="1-概念："><a href="#1-概念：" target="_blank" rel="noopener" class="headerlink" title="1.概念："></a>1.概念：</h4><p>static关键字有两种用法，可以让类的成员函数变成静态成员函数，让类的数据成员变成静态数据成员。使其可在对象间共享，不依赖于某个对象。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> y;   <span class="comment">//静态数据成员</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>;    <span class="comment">//静态成员函数</span></span><br></pre></td></tr></table></figure>
+<h2 id="C-模板："><a href="#C-模板：" target="_blank" rel="noopener" class="headerlink" title="C++模板："></a>C++模板：</h2><p>使用模板可以使用户为类或者函数声明一种一般模式，使得类中的某些数据成员或者成员函数的参数、返回值取得任意类型，也可以传变量。</p>
+<h4 id="1-函数模板："><a href="#1-函数模板：" target="_blank" rel="noopener" class="headerlink" title="1.函数模板："></a>1.函数模板：</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span>或者是<span class="title">typename</span> 形参名，<span class="title">class</span>或者是<span class="title">typename</span> 形参名，......&gt; </span></span><br><span class="line"><span class="class">　返回类型 函数名(参数列表)</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">　　　&#123;</span></span><br><span class="line"></span><br><span class="line">　　　　　　函数体</span><br><span class="line"></span><br><span class="line">　　　&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的template是声明模板函数用的关键字，其中说明类型的时候会用到class和typename，它们没有区别。这里的函数模板仅仅是一个声明，真正的函数到了调用的时候才会出现。这里说的形参名指的是数据类型（int,float,double…），它可以用在函数参数列表和返回值位置，也可以在函数体内定义此类型的变量。举个例子：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function">T <span class="title">max</span><span class="params">(T a,T b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a&gt;b?:a,b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">max</span>&lt;<span class="keyword">int</span>&gt;(<span class="number">1</span>,<span class="number">2</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="2-静态数据成员："><a href="#2-静态数据成员：" target="_blank" rel="noopener" class="headerlink" title="2.静态数据成员："></a>2.静态数据成员：</h4><p>必须单独进行初始化，而不用构造函数进行初始化。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> A::y = <span class="number">5</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="2-类模板："><a href="#2-类模板：" target="_blank" rel="noopener" class="headerlink" title="2.类模板："></a>2.类模板：</h4><p>类模板和函数模板一样，都是使用template关键字进行类的声明。此类型可以用于成员函数和数据成员也可以用于构造和析构。</p>
+<h6 id="CARE"><a href="#CARE" target="_blank" rel="noopener" class="headerlink" title="CARE:"></a>CARE:</h6><ul>
+<li>此类不能采取分文件编译，只能把类的声明和定义放在同一个.h文件中。</li>
+<li>如果成员函数采取类外定义的方式，每个函数前都需要写template关键字</li>
+<li>实例化对象的时候也要进行说明类型。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 定义一个矩形类模板Rect</span></span><br><span class="line"><span class="comment"> * 成员函数：calcArea()、calePerimeter()</span></span><br><span class="line"><span class="comment"> * 数据成员：m_length、m_height</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rect</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Rect(T length, T <span class="built_in">height</span>);</span><br><span class="line">	<span class="function">T <span class="title">calcArea</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function">T <span class="title">calePerimeter</span><span class="params">()</span></span>;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	T m_length;</span><br><span class="line">	T m_height;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 类属性赋值</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line">Rect &lt;T&gt;::Rect(T length, T <span class="built_in">height</span>)</span><br><span class="line">&#123;</span><br><span class="line">	m_length = length;</span><br><span class="line">	m_height = <span class="built_in">height</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 面积方法实现</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line">T Rect &lt;T&gt;::calcArea()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> m_length * m_height;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 周长方法实现</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line">T Rect &lt;T&gt;::calePerimeter()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> (m_length + m_height) * <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">Rect&lt;<span class="keyword">int</span>&gt; <span class="title">rect</span><span class="params">(<span class="number">4</span>, <span class="number">6</span>)</span></span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="built_in">rect</span>.calcArea() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="built_in">rect</span>.calePerimeter() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="3-静态成员函数："><a href="#3-静态成员函数：" target="_blank" rel="noopener" class="headerlink" title="3.静态成员函数："></a>3.静态成员函数：</h4><p>不能调用普通静态成员或普通成员函数。两种原因：</p>
-<ul>
-<li>时机问题：因为静态的东西在对象被实例化出来之前就有了。而普通的必须对象被实例化之后才出现。</li>
-<li>this指针问题:普通成员函数会有默认参数this指针，用来确定这个数据成员数哪个对象的，而静态成员函数没有this指针。</li>
-</ul>
-<h4 id="4-访问方式："><a href="#4-访问方式：" target="_blank" rel="noopener" class="headerlink" title="4.访问方式："></a>4.访问方式：</h4><p>如果静态数据成员不是私有的，则可以直接用类名的方式访问。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; A::y &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
-<p>也可以用对象调用成员函数的方式访问。</p>
-<h4 id="5-CARE"><a href="#5-CARE" target="_blank" rel="noopener" class="headerlink" title="5.CARE:"></a>5.CARE:</h4><ul>
-<li>静态数据成员不占sizeof的空间。</li>
-<li>静态变量实际上就是全局变量。</li>
-</ul>
-<h2 id="2、运算符重载："><a href="#2、运算符重载：" target="_blank" rel="noopener" class="headerlink" title="2、运算符重载："></a>2、运算符重载：</h2><h4 id="1-基本概念："><a href="#1-基本概念：" target="_blank" rel="noopener" class="headerlink" title="1.基本概念："></a>1.基本概念：</h4><p>运算符与类结合产生新的含义。而且只能对一个类使用或者枚举类型。不会改变运算数的数量，不会改变运算符优先级。</p>
-<h4 id="2-两种方式"><a href="#2-两种方式" target="_blank" rel="noopener" class="headerlink" title="2.两种方式:"></a>2.两种方式:</h4><ul>
-<li>类的成员函数</li>
-<li>友元函数（类外普通函数）</li>
-</ul>
-<h4 id="3-不能重载的运算符："><a href="#3-不能重载的运算符：" target="_blank" rel="noopener" class="headerlink" title="3.不能重载的运算符："></a>3.不能重载的运算符：</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">. .* ?: :: <span class="keyword">sizeof</span></span><br></pre></td></tr></table></figure>
-<h4 id="4-函数一般使用场景："><a href="#4-函数一般使用场景：" target="_blank" rel="noopener" class="headerlink" title="4.函数一般使用场景："></a>4.函数一般使用场景：</h4><ul>
-<li>一元运算符建议使用成员函数，二元运算符建议使用普通函数。</li>
-<li>运算符的操作改变类对象本身，则使用成员函数。如需要做左值操作数的运算符（如=，+=，++）</li>
-<li>运算时，有数和对象的混合运算时，必须使用普通函数。</li>
-<li>二元运算符中，第一个操作数为非对象时，必须使用友元函数。如输入输出运算符&lt;&lt;和&gt;&gt;</li>
-</ul>
-<h4 id="5-参数和返回值："><a href="#5-参数和返回值：" target="_blank" rel="noopener" class="headerlink" title="5.参数和返回值："></a>5.参数和返回值：</h4><ol>
-<li>参数：当参数不会被改变，一般按const引用来传递(若是使用成员函数重载，函数也为const)  </li>
-<li>返回值：</li>
-</ol>
-<ul>
-<li>如果返回值可能出现在=号左边, 则只能作为左值, 返回非const引用。</li>
-<li>如果返回值只能出现在=号右边, 则只需作为右值, 返回const型引用或者const型值。</li>
-<li>如果返回值既可能出现在=号左边或者右边, 则其返回值须作为左值, 返回非const引用。</li>
-</ul>
-<h4 id="6-TIPS"><a href="#6-TIPS" target="_blank" rel="noopener" class="headerlink" title="6.TIPS:"></a>6.TIPS:</h4><ul>
-<li>成员函数一般传一个参数，还有个隐藏的this指针。普通函数一般传两个参数。</li>
-<li>this指针的const是放在 函数名() const {} 这里的。</li>
-<li>*this是一个对象。</li>
-<li>类型转换函数：<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X:: <span class="function"><span class="keyword">operator</span> <span class="title">T</span><span class="params">()</span> <span class="comment">//把X类的对象转化为T类对象</span></span></span><br></pre></td></tr></table></figure>
-<h4 id="7-常用运算符重载函数原型："><a href="#7-常用运算符重载函数原型：" target="_blank" rel="noopener" class="headerlink" title="7.常用运算符重载函数原型："></a>7.常用运算符重载函数原型：</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>+ - * / % ^ &amp; | ~  <span class="function"><span class="keyword">const</span> T <span class="title">operatorX</span><span class="params">(<span class="keyword">const</span> T&amp; l,<span class="keyword">const</span> T&amp; r)</span> <span class="keyword">const</span></span>;</span><br><span class="line"><span class="number">2.</span>! &amp;&amp; || &lt; &lt;= == &gt;= &gt; <span class="keyword">bool</span> operatorX(<span class="keyword">const</span> T&amp; l,<span class="keyword">const</span> T&amp;r) <span class="keyword">const</span>;</span><br><span class="line"><span class="number">3.</span>[] T&amp; T::<span class="keyword">operator</span>[](<span class="keyword">int</span> index);</span><br><span class="line"><span class="number">4.</span>++x <span class="keyword">const</span> T&amp; <span class="keyword">operator</span>++();    返回值为对象本身</span><br><span class="line"><span class="number">5.</span>x++ <span class="keyword">const</span> T <span class="keyword">operator</span>++(<span class="keyword">int</span>)   其中的<span class="keyword">int</span>只用于区分，返回值为新的对象</span><br></pre></td></tr></table></figure>
 
-</li>
-</ul>
-<br>
 
-<p>参考：<a href="https://www.cnblogs.com/rmdmn/p/10539296.html" target="_blank" rel="noopener">https://www.cnblogs.com/rmdmn/p/10539296.html</a></p>
+
 
       
 
@@ -271,8 +236,8 @@
 <nav id="article-nav">
   
   
-    <a href="2020/02/20/数据结构与算法4/" target="_blank" rel="noopener" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">数据结构与算法4</div>
+    <a href="2020/02/21/C++Note11/" target="_blank" rel="noopener" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">C++笔记11</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -299,7 +264,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、Static关键字：" target="_blank" rel="noopener"><span class="toc-number">1.</span> <span class="toc-text">1、Static关键字：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-概念：" target="_blank" rel="noopener"><span class="toc-number">1.0.1.</span> <span class="toc-text">1.概念：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-静态数据成员：" target="_blank" rel="noopener"><span class="toc-number">1.0.2.</span> <span class="toc-text">2.静态数据成员：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-静态成员函数：" target="_blank" rel="noopener"><span class="toc-number">1.0.3.</span> <span class="toc-text">3.静态成员函数：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-访问方式：" target="_blank" rel="noopener"><span class="toc-number">1.0.4.</span> <span class="toc-text">4.访问方式：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-CARE" target="_blank" rel="noopener"><span class="toc-number">1.0.5.</span> <span class="toc-text">5.CARE:</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、运算符重载：" target="_blank" rel="noopener"><span class="toc-number">2.</span> <span class="toc-text">2、运算符重载：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-基本概念：" target="_blank" rel="noopener"><span class="toc-number">2.0.1.</span> <span class="toc-text">1.基本概念：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-两种方式" target="_blank" rel="noopener"><span class="toc-number">2.0.2.</span> <span class="toc-text">2.两种方式:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-不能重载的运算符：" target="_blank" rel="noopener"><span class="toc-number">2.0.3.</span> <span class="toc-text">3.不能重载的运算符：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-函数一般使用场景：" target="_blank" rel="noopener"><span class="toc-number">2.0.4.</span> <span class="toc-text">4.函数一般使用场景：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-参数和返回值：" target="_blank" rel="noopener"><span class="toc-number">2.0.5.</span> <span class="toc-text">5.参数和返回值：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-TIPS" target="_blank" rel="noopener"><span class="toc-number">2.0.6.</span> <span class="toc-text">6.TIPS:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-常用运算符重载函数原型：" target="_blank" rel="noopener"><span class="toc-number">2.0.7.</span> <span class="toc-text">7.常用运算符重载函数原型：</span></a></li></ol></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#C-模板：" target="_blank" rel="noopener"><span class="toc-number">1.</span> <span class="toc-text">C++模板：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-函数模板：" target="_blank" rel="noopener"><span class="toc-number">1.0.1.</span> <span class="toc-text">1.函数模板：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-类模板：" target="_blank" rel="noopener"><span class="toc-number">1.0.2.</span> <span class="toc-text">2.类模板：</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#CARE" target="_blank" rel="noopener"><span class="toc-number">1.0.2.0.1.</span> <span class="toc-text">CARE:</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
                     </div>
                 </span>
             </div>

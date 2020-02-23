@@ -6,20 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//HelloYmf.github.io">
-  <title>Tag: C++Notes | Aurora的博客</title>
+  <title>C++笔记11 | Aurora的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="此blog用于分享学习经验。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Aurora的博客">
-<meta property="og:url" content="tags/C-Notes/index.html">
+  <meta name="description" content="static关键字，运算符重载">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++笔记11">
+<meta property="og:url" content="2020/02/21/C++Note11/index.html">
 <meta property="og:site_name" content="Aurora的博客">
-<meta property="og:description" content="此blog用于分享学习经验。">
+<meta property="og:description" content="static关键字，运算符重载">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-02-21T09:53:46.000Z">
+<meta property="article:modified_time" content="2020-02-22T14:00:54.199Z">
 <meta property="article:author" content="Aurora">
-<meta property="article:tag" content="c&#x2F;c++">
-<meta property="article:tag" content="数据结构与算法">
-<meta property="article:tag" content="linux">
-<meta property="article:tag" content="kali抓包工具">
+<meta property="article:tag" content="C++Notes">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Aurora的博客" type="application/atom+xml">
@@ -165,73 +164,88 @@
           </div>
           <div id="js-content" class="content-ll">
             
-  
-  
+<article id="post-C++Note11" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="archives/2020" target="_blank" rel="noopener" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/02/23/C++Note12/" target="_blank" rel="noopener" class="archive-article-date">
-  	<time datetime="2020-02-23T10:04:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-23</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="2020/02/23/C++Note12/" target="_blank" rel="noopener">C++Note12</a>
+    <h1 class="article-title" itemprop="name">
+      C++笔记11
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++Notes</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/02/21/C++Note11/" target="_blank" rel="noopener" class="archive-article-date">
+        
+        <a href="2020/02/21/C++Note11/" target="_blank" rel="noopener" class="archive-article-date">
   	<time datetime="2020-02-21T09:53:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-21</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="2020/02/21/C++Note11/" target="_blank" rel="noopener">C++笔记11</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>static关键字，运算符重载</em></p>
+<a id="more"></a>
 
-        <div class="article-info info-on-right">
-          
+<h2 id="1、Static关键字："><a href="#1、Static关键字：" target="_blank" rel="noopener" class="headerlink" title="1、Static关键字："></a>1、Static关键字：</h2><h4 id="1-概念："><a href="#1-概念：" target="_blank" rel="noopener" class="headerlink" title="1.概念："></a>1.概念：</h4><p>static关键字有两种用法，可以让类的成员函数变成静态成员函数，让类的数据成员变成静态数据成员。使其可在对象间共享，不依赖于某个对象。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> y;   <span class="comment">//静态数据成员</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>;    <span class="comment">//静态成员函数</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-静态数据成员："><a href="#2-静态数据成员：" target="_blank" rel="noopener" class="headerlink" title="2.静态数据成员："></a>2.静态数据成员：</h4><p>必须单独进行初始化，而不用构造函数进行初始化。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> A::y = <span class="number">5</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-静态成员函数："><a href="#3-静态成员函数：" target="_blank" rel="noopener" class="headerlink" title="3.静态成员函数："></a>3.静态成员函数：</h4><p>不能调用普通静态成员或普通成员函数。两种原因：</p>
+<ul>
+<li>时机问题：因为静态的东西在对象被实例化出来之前就有了。而普通的必须对象被实例化之后才出现。</li>
+<li>this指针问题:普通成员函数会有默认参数this指针，用来确定这个数据成员数哪个对象的，而静态成员函数没有this指针。</li>
+</ul>
+<h4 id="4-访问方式："><a href="#4-访问方式：" target="_blank" rel="noopener" class="headerlink" title="4.访问方式："></a>4.访问方式：</h4><p>如果静态数据成员不是私有的，则可以直接用类名的方式访问。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; A::y &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+<p>也可以用对象调用成员函数的方式访问。</p>
+<h4 id="5-CARE"><a href="#5-CARE" target="_blank" rel="noopener" class="headerlink" title="5.CARE:"></a>5.CARE:</h4><ul>
+<li>静态数据成员不占sizeof的空间。</li>
+<li>静态变量实际上就是全局变量。</li>
+</ul>
+<h2 id="2、运算符重载："><a href="#2、运算符重载：" target="_blank" rel="noopener" class="headerlink" title="2、运算符重载："></a>2、运算符重载：</h2><h4 id="1-基本概念："><a href="#1-基本概念：" target="_blank" rel="noopener" class="headerlink" title="1.基本概念："></a>1.基本概念：</h4><p>运算符与类结合产生新的含义。而且只能对一个类使用或者枚举类型。不会改变运算数的数量，不会改变运算符优先级。</p>
+<h4 id="2-两种方式"><a href="#2-两种方式" target="_blank" rel="noopener" class="headerlink" title="2.两种方式:"></a>2.两种方式:</h4><ul>
+<li>类的成员函数</li>
+<li>友元函数（类外普通函数）</li>
+</ul>
+<h4 id="3-不能重载的运算符："><a href="#3-不能重载的运算符：" target="_blank" rel="noopener" class="headerlink" title="3.不能重载的运算符："></a>3.不能重载的运算符：</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">. .* ?: :: <span class="keyword">sizeof</span></span><br></pre></td></tr></table></figure>
+<h4 id="4-函数一般使用场景："><a href="#4-函数一般使用场景：" target="_blank" rel="noopener" class="headerlink" title="4.函数一般使用场景："></a>4.函数一般使用场景：</h4><ul>
+<li>一元运算符建议使用成员函数，二元运算符建议使用普通函数。</li>
+<li>运算符的操作改变类对象本身，则使用成员函数。如需要做左值操作数的运算符（如=，+=，++）</li>
+<li>运算时，有数和对象的混合运算时，必须使用普通函数。</li>
+<li>二元运算符中，第一个操作数为非对象时，必须使用友元函数。如输入输出运算符&lt;&lt;和&gt;&gt;</li>
+</ul>
+<h4 id="5-参数和返回值："><a href="#5-参数和返回值：" target="_blank" rel="noopener" class="headerlink" title="5.参数和返回值："></a>5.参数和返回值：</h4><ol>
+<li>参数：当参数不会被改变，一般按const引用来传递(若是使用成员函数重载，函数也为const)  </li>
+<li>返回值：</li>
+</ol>
+<ul>
+<li>如果返回值可能出现在=号左边, 则只能作为左值, 返回非const引用。</li>
+<li>如果返回值只能出现在=号右边, 则只需作为右值, 返回const型引用或者const型值。</li>
+<li>如果返回值既可能出现在=号左边或者右边, 则其返回值须作为左值, 返回非const引用。</li>
+</ul>
+<h4 id="6-TIPS"><a href="#6-TIPS" target="_blank" rel="noopener" class="headerlink" title="6.TIPS:"></a>6.TIPS:</h4><ul>
+<li>成员函数一般传一个参数，还有个隐藏的this指针。普通函数一般传两个参数。</li>
+<li>this指针的const是放在 函数名() const {} 这里的。</li>
+<li>*this是一个对象。</li>
+<li>类型转换函数：<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X:: <span class="function"><span class="keyword">operator</span> <span class="title">T</span><span class="params">()</span> <span class="comment">//把X类的对象转化为T类对象</span></span></span><br></pre></td></tr></table></figure>
+<h4 id="7-常用运算符重载函数原型："><a href="#7-常用运算符重载函数原型：" target="_blank" rel="noopener" class="headerlink" title="7.常用运算符重载函数原型："></a>7.常用运算符重载函数原型：</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>+ - * / % ^ &amp; | ~  <span class="function"><span class="keyword">const</span> T <span class="title">operatorX</span><span class="params">(<span class="keyword">const</span> T&amp; l,<span class="keyword">const</span> T&amp; r)</span> <span class="keyword">const</span></span>;</span><br><span class="line"><span class="number">2.</span>! &amp;&amp; || &lt; &lt;= == &gt;= &gt; <span class="keyword">bool</span> operatorX(<span class="keyword">const</span> T&amp; l,<span class="keyword">const</span> T&amp;r) <span class="keyword">const</span>;</span><br><span class="line"><span class="number">3.</span>[] T&amp; T::<span class="keyword">operator</span>[](<span class="keyword">int</span> index);</span><br><span class="line"><span class="number">4.</span>++x <span class="keyword">const</span> T&amp; <span class="keyword">operator</span>++();    返回值为对象本身</span><br><span class="line"><span class="number">5.</span>x++ <span class="keyword">const</span> T <span class="keyword">operator</span>++(<span class="keyword">int</span>)   其中的<span class="keyword">int</span>只用于区分，返回值为新的对象</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<br>
+
+<p>参考：<a href="https://www.cnblogs.com/rmdmn/p/10539296.html" target="_blank" rel="noopener">https://www.cnblogs.com/rmdmn/p/10539296.html</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -243,326 +257,76 @@
 		</ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/02/19/C++Note10/" target="_blank" rel="noopener" class="archive-article-date">
-  	<time datetime="2020-02-19T07:24:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-19</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="2020/02/23/C++Note12/" target="_blank" rel="noopener" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          C++Note12
+        
+      </div>
+    </a>
+  
+  
+    <a href="2020/02/20/数据结构与算法4/" target="_blank" rel="noopener" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">数据结构与算法4</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="2020/02/19/C++Note10/" target="_blank" rel="noopener">C++Note10</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++Notes</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、Static关键字：" target="_blank" rel="noopener"><span class="toc-number">1.</span> <span class="toc-text">1、Static关键字：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-概念：" target="_blank" rel="noopener"><span class="toc-number">1.0.1.</span> <span class="toc-text">1.概念：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-静态数据成员：" target="_blank" rel="noopener"><span class="toc-number">1.0.2.</span> <span class="toc-text">2.静态数据成员：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-静态成员函数：" target="_blank" rel="noopener"><span class="toc-number">1.0.3.</span> <span class="toc-text">3.静态成员函数：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-访问方式：" target="_blank" rel="noopener"><span class="toc-number">1.0.4.</span> <span class="toc-text">4.访问方式：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-CARE" target="_blank" rel="noopener"><span class="toc-number">1.0.5.</span> <span class="toc-text">5.CARE:</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、运算符重载：" target="_blank" rel="noopener"><span class="toc-number">2.</span> <span class="toc-text">2、运算符重载：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-基本概念：" target="_blank" rel="noopener"><span class="toc-number">2.0.1.</span> <span class="toc-text">1.基本概念：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-两种方式" target="_blank" rel="noopener"><span class="toc-number">2.0.2.</span> <span class="toc-text">2.两种方式:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-不能重载的运算符：" target="_blank" rel="noopener"><span class="toc-number">2.0.3.</span> <span class="toc-text">3.不能重载的运算符：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-函数一般使用场景：" target="_blank" rel="noopener"><span class="toc-number">2.0.4.</span> <span class="toc-text">4.函数一般使用场景：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-参数和返回值：" target="_blank" rel="noopener"><span class="toc-number">2.0.5.</span> <span class="toc-text">5.参数和返回值：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-TIPS" target="_blank" rel="noopener"><span class="toc-number">2.0.6.</span> <span class="toc-text">6.TIPS:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-常用运算符重载函数原型：" target="_blank" rel="noopener"><span class="toc-number">2.0.7.</span> <span class="toc-text">7.常用运算符重载函数原型：</span></a></li></ol></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/02/18/C++Note9/" target="_blank" rel="noopener" class="archive-article-date">
-  	<time datetime="2020-02-18T07:33:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-18</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="2020/02/18/C++Note9/" target="_blank" rel="noopener">C++Note9</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++Notes</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/02/17/C++Note8/" target="_blank" rel="noopener" class="archive-article-date">
-  	<time datetime="2020-02-17T06:54:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-17</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="2020/02/17/C++Note8/" target="_blank" rel="noopener">C++Note8</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++Notes</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/02/16/C++Note7/" target="_blank" rel="noopener" class="archive-article-date">
-  	<time datetime="2020-02-16T06:34:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="2020/02/16/C++Note7/" target="_blank" rel="noopener">C++Note7</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++Notes</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/02/16/C++Note6/" target="_blank" rel="noopener" class="archive-article-date">
-  	<time datetime="2020-02-16T05:01:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="2020/02/16/C++Note6/" target="_blank" rel="noopener">C++Note6</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++Notes</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/02/15/C++Note5/" target="_blank" rel="noopener" class="archive-article-date">
-  	<time datetime="2020-02-15T08:16:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="2020/02/15/C++Note5/" target="_blank" rel="noopener">C++Note5</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++Notes</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/02/14/C++Note4/" target="_blank" rel="noopener" class="archive-article-date">
-  	<time datetime="2020-02-14T12:50:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="2020/02/14/C++Note4/" target="_blank" rel="noopener">C++Note4</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++Notes</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="2020/02/13/C++Note3/" target="_blank" rel="noopener" class="archive-article-date">
-  	<time datetime="2020-02-13T05:53:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="2020/02/13/C++Note3/" target="_blank" rel="noopener">C++Note3</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++Notes</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="tags/C-Notes/page/2/" target="_blank" rel="noopener">2</a><a class="extend next" rel="next noopener" href="tags/C-Notes/page/2/" target="_blank">Next &amp;raquo;</a>
-    </nav>
   
 
 
@@ -590,9 +354,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

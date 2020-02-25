@@ -8,15 +8,15 @@
   <link rel="dns-prefetch" href="//HelloYmf.github.io">
   <title>C++Note13 | Aurora的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="纯虚函数与接口类">
+  <meta name="description" content="纯虚函数与接口类，异常处理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++Note13">
 <meta property="og:url" content="2020/02/24/C++Note13/index.html">
 <meta property="og:site_name" content="Aurora的博客">
-<meta property="og:description" content="纯虚函数与接口类">
+<meta property="og:description" content="纯虚函数与接口类，异常处理">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-02-24T08:30:14.000Z">
-<meta property="article:modified_time" content="2020-02-24T09:08:52.128Z">
+<meta property="article:modified_time" content="2020-02-25T06:48:21.467Z">
 <meta property="article:author" content="Aurora">
 <meta property="article:tag" content="C++Notes">
 <meta name="twitter:card" content="summary">
@@ -184,7 +184,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><em>纯虚函数与接口类</em></p>
+        <p><em>纯虚函数与接口类，异常处理</em></p>
 <a id="more"></a>
 
 <h2 id="1、纯虚函数："><a href="#1、纯虚函数：" target="_blank" rel="noopener" class="headerlink" title="1、纯虚函数："></a>1、纯虚函数：</h2><p>在类的成员函数中声明一个纯虚函数，就是虚函数的后面让它的等于0。</p>
@@ -193,6 +193,12 @@
 <h2 id="2、接口类："><a href="#2、接口类：" target="_blank" rel="noopener" class="headerlink" title="2、接口类："></a>2、接口类：</h2><p>仅含有纯虚函数的类成为接口类。无数据成员，成员函数都是纯虚函数，无构造函数和析构函数。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">fly</span>&#123;</span>        <span class="comment">//接口类</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">        <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">takeoff</span><span class="params">()</span></span>=<span class="number">0</span>;</span><br><span class="line">        <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">land</span><span class="params">()</span></span>=<span class="number">0</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>接口类也是抽象类，一个类可以同时继承于接口类和非接口类。接口类一般用于表达一种能力。</p>
+<h2 id="2、异常处理："><a href="#2、异常处理：" target="_blank" rel="noopener" class="headerlink" title="2、异常处理："></a>2、异常处理：</h2><p>C++通过throw,和try,catch实现对异常的处理。<br>一个函数在执行到某个条件的时候可以让其抛出异常信息给它的调用者。<br>throw的用法：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">throw</span> 表达式;</span><br></pre></td></tr></table></figure>
+<p>其中表达式的类型可以使基本类型也可以是类。  </p>
+<p>try…catch语句用法：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    语句组</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>(异常类型) &#123;</span><br><span class="line">    异常处理代码</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line"><span class="keyword">catch</span>(...) &#123;</span><br><span class="line">    异常处理代码</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行try块中的代码，如果抛出异常则会被catch块接收，执行异常处理代码。一旦抛出异常，try块将停止执行。最后一个catch块可以处理任何异常。</p>
 
       
 
@@ -254,7 +260,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、纯虚函数：" target="_blank" rel="noopener"><span class="toc-number">1.</span> <span class="toc-text">1、纯虚函数：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、接口类：" target="_blank" rel="noopener"><span class="toc-number">2.</span> <span class="toc-text">2、接口类：</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、纯虚函数：" target="_blank" rel="noopener"><span class="toc-number">1.</span> <span class="toc-text">1、纯虚函数：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、接口类：" target="_blank" rel="noopener"><span class="toc-number">2.</span> <span class="toc-text">2、接口类：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、异常处理：" target="_blank" rel="noopener"><span class="toc-number">3.</span> <span class="toc-text">2、异常处理：</span></a></li></ol>
                     </div>
                 </span>
             </div>

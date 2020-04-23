@@ -6,25 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//HelloYmf.github.io">
-  <title>数据结构与算法3 | Aurora的博客</title>
+  <title>字节，字相关知识 | Aurora的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="堆栈">
+  <meta name="description" content="关于字节，字长，字，计算机位的知识点">
 <meta property="og:type" content="article">
-<meta property="og:title" content="数据结构与算法3">
-<meta property="og:url" content="2020/02/17/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%953/index.html">
+<meta property="og:title" content="字节，字相关知识">
+<meta property="og:url" content="2020/04/23/%E5%AD%97%E8%8A%82%EF%BC%8C%E5%AD%97%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/index.html">
 <meta property="og:site_name" content="Aurora的博客">
-<meta property="og:description" content="堆栈">
+<meta property="og:description" content="关于字节，字长，字，计算机位的知识点">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="/2020/02/17/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%953/%E5%8D%95%E5%A0%86%E6%A0%88.png">
-<meta property="og:image" content="/2020/02/17/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%953/%E5%8F%8C%E5%A0%86%E6%A0%88.png">
-<meta property="og:image" content="/2020/02/17/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%953/%E9%93%BE%E8%A1%A8%E5%A0%86%E6%A0%88%E5%8E%8B%E5%85%A5%E5%8E%9F%E7%90%86.png">
-<meta property="og:image" content="/2020/02/17/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%953/%E9%93%BE%E8%A1%A8%E5%A0%86%E6%A0%881.png">
-<meta property="article:published_time" content="2020-02-17T12:39:20.000Z">
-<meta property="article:modified_time" content="2020-02-19T13:10:05.519Z">
+<meta property="article:published_time" content="2020-04-23T06:14:27.000Z">
+<meta property="article:modified_time" content="2020-04-23T06:18:23.230Z">
 <meta property="article:author" content="Aurora">
-<meta property="article:tag" content="数据结构与算法">
+<meta property="article:tag" content="计算机基础">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="/2020/02/17/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%953/%E5%8D%95%E5%A0%86%E6%A0%88.png">
   
     <link rel="alternative" href="/atom.xml" title="Aurora的博客" type="application/atom+xml">
   
@@ -169,96 +164,32 @@
           </div>
           <div id="js-content" class="content-ll">
             
-<article id="post-数据结构与算法3" class="article article-type-post " itemscope itemprop="blogPost">
+<article id="post-字节，字相关知识" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      数据结构与算法3
+      字节，字相关知识
     </h1>
   
 
         
-        <a href="2020/02/17/数据结构与算法3/" target="_blank" rel="noopener" class="archive-article-date">
-  	<time datetime="2020-02-17T12:39:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-17</time>
+        <a href="2020/04/23/字节，字相关知识/" target="_blank" rel="noopener" class="archive-article-date">
+  	<time datetime="2020-04-23T06:14:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-23</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><em>堆栈</em></p>
+        <p><em>关于字节，字长，字，计算机位的知识点</em></p>
 <a id="more"></a>
-<h2 id="1、堆栈：后进先出"><a href="#1、堆栈：后进先出" target="_blank" rel="noopener" class="headerlink" title="1、堆栈：后进先出"></a>1、堆栈：后进先出</h2><h4 id="单个堆栈的数组实现："><a href="#单个堆栈的数组实现：" target="_blank" rel="noopener" class="headerlink" title="单个堆栈的数组实现："></a>单个堆栈的数组实现：</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Stack</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span>* num;</span><br><span class="line">	<span class="keyword">int</span> top;</span><br><span class="line">	<span class="keyword">int</span> maxsize;</span><br><span class="line">&#125;<span class="built_in">stack</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="built_in">stack</span>* s, <span class="keyword">int</span> number)</span>	<span class="comment">//进栈</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (s-&gt;top == s-&gt;maxsize<span class="number">-1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"堆栈满！！！"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		s-&gt;num[++(s-&gt;top)] = number;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pop</span><span class="params">(<span class="built_in">stack</span>* s)</span>	<span class="comment">//出栈</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (s-&gt;top == <span class="number">-1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"堆栈空！！！"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> s-&gt;num[(s-&gt;top)--];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">stack</span>* <span class="title">create</span><span class="params">(<span class="keyword">int</span> <span class="built_in">size</span>)</span>	<span class="comment">//创建堆栈</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">stack</span>* s = (<span class="built_in">stack</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="built_in">stack</span>));</span><br><span class="line">	s-&gt;num = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>)*<span class="built_in">size</span>);</span><br><span class="line">	s-&gt;maxsize = <span class="built_in">size</span>;</span><br><span class="line">	s-&gt;top = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">return</span> s;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> number;</span><br><span class="line">	<span class="built_in">stack</span>* s = create(<span class="number">2</span>);</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; number;</span><br><span class="line">	push(s, number);</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; number;</span><br><span class="line">	push(s, number); <span class="built_in">cin</span> &gt;&gt; number;</span><br><span class="line">	push(s, number);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"出栈数："</span> &lt;&lt; pop(s) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"出栈数："</span> &lt;&lt; pop(s) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<img src="/2020/02/17/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%953/%E5%8D%95%E5%A0%86%E6%A0%88.png" class title="picture">
-
-
-<h4 id="两个堆栈的数组实现："><a href="#两个堆栈的数组实现：" target="_blank" rel="noopener" class="headerlink" title="两个堆栈的数组实现："></a>两个堆栈的数组实现：</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Stack</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span>* num;</span><br><span class="line">	<span class="keyword">int</span> top1;</span><br><span class="line">	<span class="keyword">int</span> top2;</span><br><span class="line">	<span class="keyword">int</span> maxsize;</span><br><span class="line">&#125;<span class="built_in">stack</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="built_in">stack</span>* s, <span class="keyword">int</span> number,<span class="keyword">int</span> flag)</span>	<span class="comment">//进栈</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (s-&gt;top2-s-&gt;top1==<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"堆栈满！！！"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(flag==<span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		s-&gt;num[++(s-&gt;top1)] = number;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(flag==<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		s-&gt;num[--(s-&gt;top2)] = number;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pop</span><span class="params">(<span class="built_in">stack</span>* s,<span class="keyword">int</span> flag)</span>	<span class="comment">//出栈</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (flag == <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (s-&gt;top1 == <span class="number">-1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">"堆栈一空！！！"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">return</span> s-&gt;num[(s-&gt;top1)--];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (s-&gt;top2 == s-&gt;maxsize)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">"堆栈二空！！！"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">return</span> s-&gt;num[(s-&gt;top2)++];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">stack</span>* <span class="title">create</span><span class="params">(<span class="keyword">int</span> <span class="built_in">size</span>)</span>	<span class="comment">//创建堆栈</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">stack</span>* s = (<span class="built_in">stack</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="built_in">stack</span>));</span><br><span class="line">	s-&gt;num = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>)*<span class="built_in">size</span>);</span><br><span class="line">	s-&gt;maxsize = <span class="built_in">size</span>;</span><br><span class="line">	s-&gt;top1 = <span class="number">-1</span>;</span><br><span class="line">	s-&gt;top2 = s-&gt;maxsize;</span><br><span class="line">	<span class="keyword">return</span> s;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> number;</span><br><span class="line">	<span class="built_in">stack</span>* s = create(<span class="number">4</span>);</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; number;</span><br><span class="line">	push(s, number,<span class="number">0</span>);</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; number;</span><br><span class="line">	push(s, number,<span class="number">0</span>);</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; number;</span><br><span class="line">	push(s, number,<span class="number">1</span>);</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; number;</span><br><span class="line">	push(s, number, <span class="number">1</span>);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"出栈数："</span> &lt;&lt; pop(s,<span class="number">1</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"出栈数："</span> &lt;&lt; pop(s,<span class="number">0</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<img src="/2020/02/17/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%953/%E5%8F%8C%E5%A0%86%E6%A0%88.png" class title="picture">  
-
-<h4 id="链表实现："><a href="#链表实现：" target="_blank" rel="noopener" class="headerlink" title="链表实现："></a>链表实现：</h4><pre><code class="c++"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span>
-<span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span>
-<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;
-
-<span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Node</span>* <span class="title">Stack</span>;</span>
-<span class="class"><span class="keyword">struct</span> <span class="title">Node</span> {</span>
-    <span class="keyword">int</span> value;
-    Stack next;
-};
-
-<span class="function">Stack <span class="title">StackCreate</span><span class="params">()</span>    <span class="comment">//创建头结点</span></span>
-<span class="function"></span>{
-    Stack <span class="built_in">stack</span> = (Stack)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(struct Node));
-    <span class="built_in">stack</span>-&gt;next = <span class="literal">NULL</span>;
-    <span class="keyword">return</span> <span class="built_in">stack</span>;
-}
-
-<span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(Stack <span class="built_in">stack</span>,<span class="keyword">int</span> value)</span>    <span class="comment">//入栈</span></span>
-<span class="function"></span>{
-    Stack s = (Stack)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(struct Node));
-    s-&gt;value = value;
-    s-&gt;next = <span class="built_in">stack</span>-&gt;next;
-    <span class="built_in">stack</span>-&gt;next = s;
-}
-
-<span class="function"><span class="keyword">int</span> <span class="title">pop</span><span class="params">(Stack <span class="built_in">stack</span>)</span>    <span class="comment">//出栈</span></span>
-<span class="function"></span>{
-    Stack s = (Stack)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(struct Node));
-    s = <span class="built_in">stack</span>-&gt;next;
-    <span class="keyword">if</span> (<span class="built_in">stack</span>-&gt;next==<span class="literal">NULL</span>)
-    {
-        <span class="built_in">cout</span> &lt;&lt; <span class="string">"堆栈空！！！"</span> &lt;&lt; <span class="built_in">endl</span>;
-        <span class="keyword">return</span> <span class="number">0</span>;
-    }
-    <span class="built_in">stack</span>-&gt;next = s-&gt;next;
-    <span class="keyword">int</span> value = s-&gt;value;
-    <span class="built_in">free</span>(s);
-    <span class="keyword">return</span> value;
-}
-
-<span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>
-<span class="function"></span>{
-    Stack <span class="built_in">stack</span> = StackCreate();
-    push(<span class="built_in">stack</span>, <span class="number">10</span>);
-    push(<span class="built_in">stack</span>, <span class="number">100</span>);
-    push(<span class="built_in">stack</span>, <span class="number">1000</span>);
-    <span class="built_in">cout</span> &lt;&lt; pop(<span class="built_in">stack</span>) &lt;&lt; <span class="built_in">endl</span>;
-    <span class="built_in">cout</span> &lt;&lt; pop(<span class="built_in">stack</span>) &lt;&lt; <span class="built_in">endl</span>;
-    <span class="built_in">cout</span> &lt;&lt; pop(<span class="built_in">stack</span>) &lt;&lt; <span class="built_in">endl</span>;
-    <span class="built_in">cout</span> &lt;&lt; pop(<span class="built_in">stack</span>) &lt;&lt; <span class="built_in">endl</span>;
-    system(<span class="string">"pause"</span>);
-    <span class="keyword">return</span> <span class="number">0</span>;
-}</code></pre>
-<img src="/2020/02/17/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%953/%E9%93%BE%E8%A1%A8%E5%A0%86%E6%A0%88%E5%8E%8B%E5%85%A5%E5%8E%9F%E7%90%86.png" class title="picture">  
-
-<img src="/2020/02/17/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%953/%E9%93%BE%E8%A1%A8%E5%A0%86%E6%A0%881.png" class title="picture">
-
-
-
+<h3 id="位和字节"><a href="#位和字节" target="_blank" rel="noopener" class="headerlink" title="位和字节:"></a>位和字节:</h3><p>先简单说一下存储容量一些东西，更容易理解。在存储容量上大家都很熟悉什么GB,MB,KB,B啥的，我们也知道字节（B）（*全称是Byte）是最小的存储单位，但还有个更小的、直观看不到的单位就是位，也称为 比特（bit），通常记为b，1个字节等于8位，就是一个字节是用8个二进制数来存储的。所以我们就知道了，1B和1b是不一样滴，1B=8b。这也说明了另一个问题，在存储设备中，我们一般都是按字节换算，就是1MB（1M），3KB（3K）啥的，但在网络传输中，是0和1一个一个传的，一个0或一个1就是一位，所以是按位换算，就是1Mb，3Kb啥的。也就是假如家里宽带是1Mb，但用的时候手机上显示网速只有100K左右了；再比如移动流量用到限速阈值的时候发短信说，上网速率将不高于1Mbps，理论到手机上应该是128K，但总会有些减少，所以用的时候发现在100k左右，这就是原因了。<br>总结一点，1个字节等于8位，其他的就当辅助理解了。</p>
+<h3 id="字和字长："><a href="#字和字长：" target="_blank" rel="noopener" class="headerlink" title="字和字长："></a>字和字长：</h3><p>在计算机中，一串数码作为一个整体来处理或运算的，称为一个计算机字，简称字，字的位数叫做字长。字通常分为若干个字节（具体取决于处理器）。比如一个16位机，意思就是一个字的字长为16位，因为1个字节是8位，那么在这里一个字就是由两个字节构成。实际上，现在的个人电脑一般都是32位或以上的（比如64位）。字长的计算由定义得出，字的位数就是有多少位（b）的问题，比如一个计算机1个字占8个字节，8个字节总位数为64，那么该计算机就是64位字长的。</p>
+<p><em>转载自:<a href="https://blog.csdn.net/qq_41809589/article/details/86523056" target="_blank" rel="noopener">https://blog.csdn.net/qq_41809589/article/details/86523056</a></em></p>
 
       
 
@@ -272,7 +203,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数据结构与算法</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机基础</a>
         		</li>
       		
 		</ul>
@@ -291,18 +222,9 @@
   
 <nav id="article-nav">
   
-    <a href="2020/02/18/C++Note9/" target="_blank" rel="noopener" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          C++Note9
-        
-      </div>
-    </a>
   
-  
-    <a href="2020/02/17/C++Note8/" target="_blank" rel="noopener" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">C++Note8</div>
+    <a href="2020/02/29/vs2017常见错误/" target="_blank" rel="noopener" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">vs2017常见错误</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -329,7 +251,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、堆栈：后进先出" target="_blank" rel="noopener"><span class="toc-number">1.</span> <span class="toc-text">1、堆栈：后进先出</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#单个堆栈的数组实现：" target="_blank" rel="noopener"><span class="toc-number">1.0.1.</span> <span class="toc-text">单个堆栈的数组实现：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#两个堆栈的数组实现：" target="_blank" rel="noopener"><span class="toc-number">1.0.2.</span> <span class="toc-text">两个堆栈的数组实现：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#链表实现：" target="_blank" rel="noopener"><span class="toc-number">1.0.3.</span> <span class="toc-text">链表实现：</span></a></li></ol></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#位和字节" target="_blank" rel="noopener"><span class="toc-number">1.</span> <span class="toc-text">位和字节:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字和字长：" target="_blank" rel="noopener"><span class="toc-number">2.</span> <span class="toc-text">字和字长：</span></a></li></ol>
                     </div>
                 </span>
             </div>

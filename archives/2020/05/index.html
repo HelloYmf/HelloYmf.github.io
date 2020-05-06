@@ -6,19 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//HelloYmf.github.io">
-  <title>C++Note10 | Aurora的博客</title>
+  <title>Archives: 2020/5 | Aurora的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="拷贝构造函数">
-<meta property="og:type" content="article">
-<meta property="og:title" content="C++Note10">
-<meta property="og:url" content="2020/02/19/C++Note10/index.html">
+  <meta name="description" content="此blog用于分享学习经验。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Aurora的博客">
+<meta property="og:url" content="archives/2020/05/index.html">
 <meta property="og:site_name" content="Aurora的博客">
-<meta property="og:description" content="拷贝构造函数">
+<meta property="og:description" content="此blog用于分享学习经验。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-02-19T07:24:16.000Z">
-<meta property="article:modified_time" content="2020-02-19T08:09:20.160Z">
 <meta property="article:author" content="Aurora">
-<meta property="article:tag" content="C++Notes">
+<meta property="article:tag" content="c&#x2F;c++">
+<meta property="article:tag" content="数据结构与算法">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="kali抓包工具">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Aurora的博客" type="application/atom+xml">
@@ -164,137 +165,59 @@
           </div>
           <div id="js-content" class="content-ll">
             
-<article id="post-C++Note10" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 class="article-title" itemprop="name">
-      C++Note10
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="archives/2020" target="_blank" rel="noopener" class="archive-year">2020</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="2020/05/06/struct内存对齐规则/" target="_blank" rel="noopener" class="archive-article-date">
+  	<time datetime="2020-05-06T01:43:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-06</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="2020/05/06/struct内存对齐规则/" target="_blank" rel="noopener">struct内存对齐规则</a>
     </h1>
   
 
-        
-        <a href="2020/02/19/C++Note10/" target="_blank" rel="noopener" class="archive-article-date">
-  	<time datetime="2020-02-19T07:24:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>拷贝构造函数</em></p>
-<a id="more"></a>
-
-<h2 id="1、拷贝构造函数："><a href="#1、拷贝构造函数：" target="_blank" rel="noopener" class="headerlink" title="1、拷贝构造函数："></a>1、拷贝构造函数：</h2><h4 id="1-定义："><a href="#1-定义：" target="_blank" rel="noopener" class="headerlink" title="1.定义："></a>1.定义：</h4><p>当用一个类的对象去初始化这个类的另一个对象的时候，会调用这个类的拷贝构造函数，普通构造函数将不会被调用。常用于以下场景：  </p>
-<ul>
-<li>a.当用类的一个对象去初始化该类的另一个对象（或引用）时系统自动调用拷贝构造函数实现拷贝赋值  </li>
-<li>b.若函数的形参为类对象，调用函数时，实参赋值给形参，系统自动调用拷贝构造函数  </li>
-<li>c.当函数的返回值是类对象时，系统自动调用拷贝构造函数<br><br>如果类中没有主动定义拷贝构造函数，编译器会自动定义一个。  </li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	A() :x(<span class="number">10</span>) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"A()"</span> &lt;&lt; <span class="built_in">endl</span> &lt;&lt; x &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	~A() &#123;&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">int</span> x;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	A a;</span><br><span class="line">	<span class="function">A <span class="title">b</span><span class="params">(a)</span></span>;</span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">执行结果：</span><br><span class="line">A()</span><br><span class="line"><span class="number">10</span></span><br><span class="line">请按任意键继续. . .</span><br><span class="line"></span><br><span class="line">这样只会执行一次构造函数。</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-一般格式："><a href="#2-一般格式：" target="_blank" rel="noopener" class="headerlink" title="2.一般格式："></a>2.一般格式：</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">类名(<span class="keyword">const</span> 类名&amp; 形参对象名)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//函数体</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="3-浅拷贝："><a href="#3-浅拷贝：" target="_blank" rel="noopener" class="headerlink" title="3.浅拷贝："></a>3.浅拷贝：</h4><p>只对普通成员变量（非指针）进行简单赋值。 </p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	A() :x(<span class="number">10</span>) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"A()"</span> &lt;&lt; <span class="built_in">endl</span> &lt;&lt; x &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	A(<span class="keyword">const</span> A&amp; a) :x(<span class="number">10</span>) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"A(const A&amp; a)"</span> &lt;&lt; <span class="built_in">endl</span> &lt;&lt; x &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	~A() &#123;&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">int</span> x;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	A a;</span><br><span class="line">	<span class="function">A <span class="title">b</span><span class="params">(a)</span></span>;</span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">执行结果：</span><br><span class="line">A()</span><br><span class="line"><span class="number">10</span></span><br><span class="line">A(<span class="keyword">const</span> A&amp; a)</span><br><span class="line"><span class="number">10</span></span><br><span class="line">请按任意键继续. . .</span><br></pre></td></tr></table></figure>
-<h4 id="4-深拷贝："><a href="#4-深拷贝：" target="_blank" rel="noopener" class="headerlink" title="4.深拷贝："></a>4.深拷贝：</h4><p>如果成员变量中有指针，要是再通过浅拷贝进行简单的赋值则会使两个对象的成员指针变量指向同一内存地址。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	A() :x(<span class="number">10</span>) &#123;</span><br><span class="line">		p = <span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">10</span>);</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"对象a中p的地址："</span> &lt;&lt; p &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"对象a中p里的值："</span> &lt;&lt; *p &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	A(<span class="keyword">const</span> A&amp; a) :x(<span class="number">10</span>) &#123;</span><br><span class="line">		p = a.p;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"对象b中p的地址："</span> &lt;&lt; p &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"对象a中p里的值："</span> &lt;&lt; *p &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	~A() &#123;</span><br><span class="line">        <span class="keyword">delete</span> p;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">int</span> x;</span><br><span class="line">	<span class="keyword">int</span>* p;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	A a;</span><br><span class="line">	<span class="function">A <span class="title">b</span><span class="params">(a)</span></span>;</span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">执行结果：</span><br><span class="line">对象a中p的地址：<span class="number">00519</span>DF8</span><br><span class="line">对象a中p里的值：<span class="number">10</span></span><br><span class="line">对象b中p的地址：<span class="number">00519</span>DF8</span><br><span class="line">对象a中p里的值：<span class="number">10</span></span><br><span class="line">请按任意键继续. . .  </span><br><span class="line"></span><br><span class="line">如果按了任意键，程序会崩溃。</span><br><span class="line"></span><br><span class="line">可以看出：因为两个对象的指针指向了同一块内存地址，所以在析构的时候会对同一块地址析构两次，而出现程序崩溃。</span><br></pre></td></tr></table></figure>
-
-<p>这个时候就需要进行深拷贝。在深拷贝的情况下，对于对象中指针成员，就不能仅仅简单地赋值了，而应该重新动态分配空间。完成对象的复制后，此时两个对象的指针各自指向一段内存空间，但它们指向的空间具有相同的内容，这就是所谓的“深拷贝”。  </p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	A() :x(<span class="number">10</span>) &#123;</span><br><span class="line">		p = <span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">10</span>);</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"对象a中p的地址："</span> &lt;&lt; p &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"对象a中p里的值："</span> &lt;&lt; *p &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	A(<span class="keyword">const</span> A&amp; a) :x(<span class="number">20</span>) &#123;</span><br><span class="line">		p = <span class="keyword">new</span> <span class="keyword">int</span>;</span><br><span class="line">		*p = *(a.p);</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"对象b中p的地址："</span> &lt;&lt; p &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"对象a中p里的值："</span> &lt;&lt; *p &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	~A() &#123;</span><br><span class="line">		<span class="keyword">delete</span> p;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">int</span> x;</span><br><span class="line">	<span class="keyword">int</span>* p;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	A a;</span><br><span class="line">	<span class="function">A <span class="title">b</span><span class="params">(a)</span></span>;</span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">执行结果：</span><br><span class="line">对象a中p的地址：<span class="number">00</span>A95BF0</span><br><span class="line">对象a中p里的值：<span class="number">10</span></span><br><span class="line">对象b中p的地址：<span class="number">00</span>A9A460</span><br><span class="line">对象a中p里的值：<span class="number">10</span></span><br><span class="line">请按任意键继续. . .</span><br><span class="line"></span><br><span class="line">此时按任意键也不会崩溃。两个对象指向的地址也不同了，但数据还是相同的。</span><br></pre></td></tr></table></figure>
-
-<p>参考：<a href="https://www.jianshu.com/p/fe1059ab07d2" target="_blank" rel="noopener">https://www.jianshu.com/p/fe1059ab07d2</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++Notes</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">C/C++</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
+        </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="2020/02/20/数据结构与算法4/" target="_blank" rel="noopener" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          数据结构与算法4
-        
-      </div>
-    </a>
   
   
-    <a href="2020/02/18/C++Note9/" target="_blank" rel="noopener" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">C++Note9</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、拷贝构造函数：" target="_blank" rel="noopener"><span class="toc-number">1.</span> <span class="toc-text">1、拷贝构造函数：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-定义：" target="_blank" rel="noopener"><span class="toc-number">1.0.1.</span> <span class="toc-text">1.定义：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-一般格式：" target="_blank" rel="noopener"><span class="toc-number">1.0.2.</span> <span class="toc-text">2.一般格式：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-浅拷贝：" target="_blank" rel="noopener"><span class="toc-number">1.0.3.</span> <span class="toc-text">3.浅拷贝：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-深拷贝：" target="_blank" rel="noopener"><span class="toc-number">1.0.4.</span> <span class="toc-text">4.深拷贝：</span></a></li></ol></li></ol></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -321,8 +244,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

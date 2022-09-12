@@ -4,8 +4,14 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hello World, JNZ&#39;s Blog">
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex">
+    <meta name="keywords" content="JNZ&#39;s Blog">
+    <meta name="description" content="1.计算机启动流程
+计算机通电
+BIOS自检：检测硬件故障
+选择引导设备：软盘、U盘、硬盘、网络等启动方式
+执行Boot引导程序
+
+2.Boot引导加载BIOS自检结束后会根据启动项去选择启动设备指向Boot引导程序，即检测软盘的第0磁头第">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +23,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Hello World | JNZ&#39;s Blog</title>
+    <title>JNZ&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -290,12 +296,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hello World</h1>
+                    <h1 class="description center-align post-title"></h1>
                 </div>
             </div>
         </div>
@@ -331,7 +337,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-09-11
+                    2022-09-12
                 </div>
                 
 
@@ -355,19 +361,211 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+                <h2 id="1-计算机启动流程"><a href="#1-计算机启动流程" class="headerlink" title="1.计算机启动流程"></a>1.计算机启动流程</h2><ul>
+<li>计算机通电</li>
+<li>BIOS自检：检测硬件故障</li>
+<li>选择引导设备：软盘、U盘、硬盘、网络等启动方式</li>
+<li>执行Boot引导程序</li>
+</ul>
+<h2 id="2-Boot引导加载"><a href="#2-Boot引导加载" class="headerlink" title="2.Boot引导加载"></a>2.Boot引导加载</h2><p>BIOS自检结束后会根据启动项去选择启动设备指向Boot引导程序，即检测软盘的第0磁头第0磁道第1扇区，是否以0x55和0xaa两个字节作为结尾。如果是BIOS就认为这是一个引导扇区，进而把此扇区的数据复制到物理内存地址0x7c00处，将IP设置为0x7c00。</p>
+<p><img src="C:\Users\yuanmingfei\AppData\Roaming\Typora\typora-user-images\image-20220828170200446.png" alt="image-20220828170200446"></p>
+<p>Boot引导程序由于只有512字节，所以只能作为助推器，将功能更强大的引导加载程序Loader装在进内存。</p>
+<h2 id="3-代码示例"><a href="#3-代码示例" class="headerlink" title="3.代码示例"></a>3.代码示例</h2><pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">	org	0x7c00														; 从bios跳转至引导程序，cs与ip寄存器的值分别为0和0x7c00
+																	; 此时处于实模式下，物理地址 &#x3D; cs &lt;&lt; 4 + ip
+BaseOfStack	equ	0x7c00												; 将0x7c00取别名为BaseOfStack
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+Label_Start:
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+	mov	ax,	cs
+	mov	ds,	ax
+	mov	es,	ax														; 初始化
+	mov	ss,	ax
+	mov	sp,	BaseOfStack												; 设置栈
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+;	int 0x10 BIOS中断	屏幕显示相关操作，通过寄存器设置具体操作
+;	AH 操作编号
+;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;	clear screen
+
+	mov	ax,	0600h													; AH &#x3D; 0x06 刷屏; AL 滚动的列数，0实现清屏，同时其他参数不起作用
+	mov	bx,	0700h													; BH 滚动后空出位置放置的颜色属性(bit)
+	mov	cx,	0														; CH 左上角列号; CL 左上角行号
+	mov	dx,	0184fh													; DH 右下角列号; DL 右下角行号
+	int	10h
+
+;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;	set focus
+
+	mov	ax,	0200h													; AH &#x3D; 0x02 设置光标位置
+	mov	bx,	0000h													; BH 页码
+	mov	dx,	0000h													; DH 光标行数 DL; 光标列数
+	int	10h
+
+;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;	display on screen : Start Booting......
+
+	mov	ax,	1303h													; AH &#x3D; 0x13 显示一行字符串; AL 写入模式
+	mov	bx,	0000h													; BH 页码; BL 字符属性
+	mov	dx,	0000h													; DH 行号; DL 列号
+	mov	cx,	9														; CX 字符串长度
+	push	ax
+	mov	ax,	ds
+	mov	es,	ax
+	pop	ax
+	mov	bp,	StartBootMessage										; ES:BP 字符串内存地址
+	int	10h
+
+;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+;	int 0x13 BIOS中断	软盘驱动器相关操作，通过寄存器设置具体操作
+;	AH 操作编号
+;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+
+;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;	reset floppy
+
+	xor	ah,	ah														; AH &#x3D; 0 重置磁盘驱动器
+	xor	dl,	dl														; DL 驱动器号（软+硬）
+	int	13h
+
+	jmp	$	
+
+; 常量字符串								
+StartBootMessage:	db	&#39;H&#39;, 0xA, &#39;e&#39;, 0xB, &#39;l&#39;, 0x9, &#39;l&#39;, 0xB, &#39;o&#39;, 0xD, &#39; &#39;, 0xA, &#39;J&#39;, 0xB, &#39;N&#39;, 0x9, &#39;Z&#39;, 0xA
+
+;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;	fill zero until whole sector
+
+	times	510 - ($ - $$)	db	0
+	dw	0xaa55		; 引导程序结束标识（固定）
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>编译运行</strong></p>
+<pre class="line-numbers language-none"><code class="language-none">nasm boot.asm -o boot.bin
+dd if&#x3D;boot.bin of&#x3D;boot.img bs&#x3D;512 count&#x3D;1 conv&#x3D;notrunc
+bochs -q<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="4-Boot中实现文件加载"><a href="#4-Boot中实现文件加载" class="headerlink" title="4.Boot中实现文件加载"></a>4.Boot中实现文件加载</h2><h3 id="4-1-FAT12文件系统"><a href="#4-1-FAT12文件系统" class="headerlink" title="4.1 FAT12文件系统"></a>4.1 FAT12文件系统</h3><p>FAT类文件系统将软盘划分为：引导扇区、FAT表、根目录区、数据区。</p>
+<p><img src="C:\Users\yuanmingfei\AppData\Roaming\Typora\typora-user-images\image-20220904150459223.png" alt="image-20220904150459223"></p>
+<h3 id="4-2-FAT12结构"><a href="#4-2-FAT12结构" class="headerlink" title="4.2 FAT12结构"></a>4.2 FAT12结构</h3><p><img src="C:\Users\yuanmingfei\AppData\Roaming\Typora\typora-user-images\image-20220828171354155.png" alt="image-20220828171354155"></p>
+<ul>
+<li><p>BS_jmpBoot：跳转指令，跳过配置信息</p>
+</li>
+<li><p>BS_OEMName：制造商名字</p>
+</li>
+<li><p>BPB_SecPerClus：每簇扇区数，簇是FAT类文件系统的最小数据存储单元。</p>
+</li>
+<li><p>BPB_RsvdSecCnt：保留扇区的数量，FAT12必须为1</p>
+</li>
+<li><p>BPB_NumFATs：FAT表的份数，建议为2，多个备份表</p>
+</li>
+<li><p>BPB_RootEntCnt：根目录可容纳的目录项数，FAT32中，该值乘以32必须为BPB_BytesPerSec偶数倍</p>
+</li>
+<li><p>BPB_TotSec16：总扇区数，为0的话，BPE_TotSec32必须有值</p>
+</li>
+<li><p>BPB_Media：存储介质类型，该值必须与FAT[0]同步</p>
+</li>
+<li><p>BPB_FATSz16：记录着FAT表占用的扇区数</p>
+</li>
+<li><p>BS_VolLab：指定卷标，磁盘名</p>
+</li>
+<li><p>BS_FileSysType：文件系统类型，没用</p>
+<p><img src="C:\Users\yuanmingfei\AppData\Roaming\Typora\typora-user-images\image-20220828174504222.png" alt="image-20220828174504222"></p>
+</li>
+</ul>
+<h3 id="4-3-FAT表结构"><a href="#4-3-FAT表结构" class="headerlink" title="4.3 FAT表结构"></a>4.3 FAT表结构</h3><p><strong>FAT表项结构</strong></p>
+<p><img src="C:\Users\yuanmingfei\AppData\Roaming\Typora\typora-user-images\image-20220828183631319.png" alt="image-20220828183631319"></p>
+<p><strong>目录项结构</strong></p>
+<p><img src="C:\Users\yuanmingfei\AppData\Roaming\Typora\typora-user-images\image-20220828183759941.png" alt="image-20220828183759941"></p>
+<p><strong>数据区的第一个有效簇号是2</strong></p>
+<h3 id="4-4-一些常用的计算"><a href="#4-4-一些常用的计算" class="headerlink" title="4.4  一些常用的计算"></a>4.4  一些常用的计算</h3><p>目录项占用的扇区数 &#x3D; （BPB_RootEntCnt  *  32  +  BPB_BytesPerSec  -  1）&#x2F;  BPB_BytesPerSec</p>
+<p>根目录起始扇区号  &#x3D;  保留扇区数  +  FAT表扇区数  *  FAT表份数</p>
+<h3 id="4-5-封装函数"><a href="#4-5-封装函数" class="headerlink" title="4.5 封装函数"></a>4.5 封装函数</h3><pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+;	功能：
+;		读取指定扇区
+;
+;	参数列表：
+;		AX 待读取的磁盘起始扇区号
+;		CL 读入的扇区数量
+;		BX 目标缓冲区
+;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+Func_ReadOneSector:
+	push bp
+	mov bp, sp
+	sub esp, 2
+	mov byte [bp -2], cl
+	push bx
+	mov bl, [BPB_SecPerTrk]			
+	div bl							; 被除数ax al 商， ah 余数
+	inc ah
+	mov cl, ah						; 扇区号(bit 0~5)，磁道号(高2bit)
+	mov dh, al						; 磁头号
+	shr al, 1
+	mov ch, al						; 磁道号的低8位
+	and dh, 1
+	pop bx
+	mov dl, [BS_DrvNum]
+
+Label_Go_On_Reading:
+	mov ah, 2						; 功能：读取磁盘扇区
+	mov al, byte [bp - 2]			; 读入的扇区数
+	int 13h							; DL 驱动器号 ES:BX -&gt; 缓冲区
+ 
+	jc Label_Go_On_Reading
+
+	add esp, 2
+	pop bp
+	ret
+;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+
+;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+;	功能：
+;		根据当前FAT表项号，得到下一个表项
+;
+;	参数列表：
+;		AX 当前FAT表项号（也是输出参数）
+;		
+;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+Func_GetFATEntry:
+	push es
+	push bx
+
+	push ax
+	mov ax, 0
+	mov es, ax
+	pop ax
+
+	mov byte [Odd], 0
+	mov bx, 3
+	mul bx
+	mov bx, 2
+	div bx
+	cmp dx, 0			; 判断余数
+	jz Label_Even
+	mov byte [Odd], 1
+
+Label_Even:
+
+	xor	dx,	dx
+	mov	bx,	[BPB_BytesPerSec]
+	div	bx
+	push	dx
+	mov	bx,	8000h
+	add	ax,	SectorNumOfFAT1Start
+	mov	cl,	2
+	call	Func_ReadOneSector
+	
+	pop	dx
+	add	bx,	dx
+	mov	ax,	[es:bx]
+	cmp	byte	[Odd],	1
+	jnz	Label_Even_2
+	shr	ax,	4
+
+Label_Even_2:
+	and	ax,	0fffh
+	pop bx
+	pop es
+	ret<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 
                 
             </div>
@@ -394,7 +592,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://helloymf.github.io/2022/09/11/hello-world/">http://helloymf.github.io/2022/09/11/hello-world/</a>
+                    <a href="http://helloymf.github.io/2022/09/12/1.boot-yin-dao/">http://helloymf.github.io/2022/09/12/1.boot-yin-dao/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -508,9 +706,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2022/09/12/1.boot-yin-dao/">
                     <div class="card-image">
@@ -528,9 +727,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-12
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-12
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -539,6 +738,7 @@
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -546,7 +746,7 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
                 <a href="/2022/09/11/hello-world/">
@@ -576,7 +776,6 @@
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>

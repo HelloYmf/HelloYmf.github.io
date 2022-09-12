@@ -347,112 +347,112 @@ pop rax<span aria-hidden="true" class="line-numbers-rows"><span></span><span></s
 <tbody><tr>
 <td>JZ&#x2F;JE</td>
 <td>0x74</td>
-<td>0x0F 0X84</td>
+<td>0x0F 0x84</td>
 <td>相等则跳转</td>
 <td>ZF &#x3D;&#x3D; 1</td>
 </tr>
 <tr>
 <td>JNZ&#x2F;JNE</td>
 <td>0x75</td>
-<td>0x0F 0X85</td>
+<td>0x0F 0x85</td>
 <td>不相等则跳转</td>
 <td>ZF &#x3D;&#x3D; 0</td>
 </tr>
 <tr>
 <td>JS</td>
 <td>0x78</td>
-<td>0x0F 0X88</td>
+<td>0x0F 0x88</td>
 <td>负数则跳转</td>
 <td>SF &#x3D;&#x3D; 1</td>
 </tr>
 <tr>
 <td>JNS</td>
 <td>0x79</td>
-<td>0x0F 0X89</td>
+<td>0x0F 0x89</td>
 <td>正数则跳转</td>
 <td>SF &#x3D;&#x3D; 0</td>
 </tr>
 <tr>
 <td>JP&#x2F;JPE</td>
 <td>0x7A</td>
-<td>0x0F 0X8A</td>
+<td>0x0F 0x8A</td>
 <td>1出现次数为偶数则跳转</td>
 <td>PF &#x3D;&#x3D; 1</td>
 </tr>
 <tr>
 <td>JNP&#x2F;JPO</td>
 <td>0x7B</td>
-<td>0x0F 0X8B</td>
+<td>0x0F 0x8B</td>
 <td>1出现次数为奇数则跳转</td>
 <td>PF &#x3D;&#x3D; 0</td>
 </tr>
 <tr>
 <td>JC&#x2F;JB&#x2F;JNAE</td>
 <td>0x72</td>
-<td>0x0F 0X82</td>
+<td>0x0F 0x82</td>
 <td>无符号数 (进位)低于则跳转</td>
 <td>CF &#x3D;&#x3D; 1</td>
 </tr>
 <tr>
 <td>JNC&#x2F;JNB&#x2F;JAE</td>
 <td>0x73</td>
-<td>0x0F 0X83</td>
+<td>0x0F 0x83</td>
 <td>无符号数 (不进位)高于等于则跳转</td>
 <td>CF &#x3D;&#x3D; 0</td>
 </tr>
 <tr>
 <td>JO</td>
 <td>0x70</td>
-<td>0x0F 0X80</td>
+<td>0x0F 0x80</td>
 <td>有符号数 溢出则跳转</td>
 <td>OF &#x3D;&#x3D; 1</td>
 </tr>
 <tr>
 <td>JNO</td>
 <td>0x71</td>
-<td>0x0F 0X81</td>
+<td>0x0F 0x81</td>
 <td>有符号数 无溢出则跳转</td>
 <td>OF &#x3D;&#x3D; 0</td>
 </tr>
 <tr>
 <td>JBE&#x2F;JNA</td>
 <td>0x76</td>
-<td>0x0F 0X86</td>
+<td>0x0F 0x86</td>
 <td>无符号数 低于等于则跳转</td>
 <td>ZF &#x3D;&#x3D; 1 || CF &#x3D;&#x3D; 1</td>
 </tr>
 <tr>
 <td>JNBE&#x2F;JA</td>
 <td>0x77</td>
-<td>0x0F 0X87</td>
+<td>0x0F 0x87</td>
 <td>无符号数 高于则跳转</td>
 <td>ZF &#x3D;&#x3D; 0 || CF &#x3D;&#x3D; 0</td>
 </tr>
 <tr>
 <td>JL&#x2F;JNGE</td>
 <td>0x7C</td>
-<td>0x0F 0X8C</td>
+<td>0x0F 0x8C</td>
 <td>有符号数 小于则跳转</td>
 <td>SF !&#x3D; OF</td>
 </tr>
 <tr>
 <td>JNL&#x2F;JGE</td>
 <td>0x7D</td>
-<td>0x0F 0X8D</td>
+<td>0x0F 0x8D</td>
 <td>有符号数 大于等于则跳转</td>
 <td>SF &#x3D;&#x3D; OF</td>
 </tr>
 <tr>
 <td>JLE&#x2F;JNG</td>
 <td>0x7E</td>
-<td>0x0F 0X8E</td>
+<td>0x0F 0x8E</td>
 <td>有符号数 小于等于则跳转</td>
 <td>ZF !&#x3D; OF || ZF &#x3D;&#x3D; 1</td>
 </tr>
 <tr>
 <td>JNLE&#x2F;JG</td>
 <td>0x7F</td>
-<td>0x0F 0X8F</td>
+<td>0x0F 0x8F</td>
 <td>有符号数 大于则跳转</td>
 <td>SF &#x3D;&#x3D; 0F &amp;&amp; ZF &#x3D;&#x3D; 0</td>
 </tr>

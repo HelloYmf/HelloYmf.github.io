@@ -4,14 +4,18 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Boot 引导, JNZ&#39;s Blog">
-    <meta name="description" content="1.计算机启动流程
-计算机通电
-BIOS自检：检测硬件故障
-选择引导设备：软盘、U盘、硬盘、网络等启动方式
-执行Boot引导程序
+    <meta name="keywords" content="assembly basic, JNZ&#39;s Blog">
+    <meta name="description" content="1.EFLAGS
+2.测试与比较2.1 testtest rax, rbx
+; 等价形式如下
+push rax
+and rax, rbx
+pop rax
 
-2.Boot引导加载BIOS自检结束后会根据启动项去选择启动设备指向Boot引导程序，即检测软盘的第0磁头第">
+2.2 cmpcmp rax, rbx
+; 等价形式如下
+push rax
+sub ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -23,7 +27,7 @@ BIOS自检：检测硬件故障
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Boot 引导 | JNZ&#39;s Blog</title>
+    <title>assembly basic | JNZ&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -231,12 +235,12 @@ BIOS自检：检测硬件故障
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Boot 引导</h1>
+                    <h1 class="description center-align post-title">assembly basic</h1>
                 </div>
             </div>
         </div>
@@ -258,12 +262,29 @@ BIOS自检：检测硬件故障
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/basic/">
+                                <span class="chip bg-color">basic</span>
+                            </a>
+                        
+                            <a href="/tags/x86-x64/">
+                                <span class="chip bg-color">x86/x64</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/reverse/" class="post-category">
+                                reverse
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -296,210 +317,327 @@ BIOS自检：检测硬件故障
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-计算机启动流程"><a href="#1-计算机启动流程" class="headerlink" title="1.计算机启动流程"></a>1.计算机启动流程</h2><ul>
-<li>计算机通电</li>
-<li>BIOS自检：检测硬件故障</li>
-<li>选择引导设备：软盘、U盘、硬盘、网络等启动方式</li>
-<li>执行Boot引导程序</li>
+                <h2 id="1-EFLAGS"><a href="#1-EFLAGS" class="headerlink" title="1.EFLAGS"></a>1.EFLAGS</h2><p><img src="/./assembly-basic/eflags.png" alt="eflags"></p>
+<h2 id="2-测试与比较"><a href="#2-测试与比较" class="headerlink" title="2.测试与比较"></a>2.测试与比较</h2><h3 id="2-1-test"><a href="#2-1-test" class="headerlink" title="2.1 test"></a>2.1 test</h3><pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">test rax, rbx
+; 等价形式如下
+push rax
+and rax, rbx
+pop rax<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="2-2-cmp"><a href="#2-2-cmp" class="headerlink" title="2.2 cmp"></a>2.2 cmp</h3><pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">cmp rax, rbx
+; 等价形式如下
+push rax
+sub rax, rbx
+pop rax<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="3-跳转"><a href="#3-跳转" class="headerlink" title="3.跳转"></a>3.跳转</h2><h3 id="3-1-JCC条件跳转"><a href="#3-1-JCC条件跳转" class="headerlink" title="3.1 JCC条件跳转"></a>3.1 JCC条件跳转</h3><ul>
+<li><strong>短跳：</strong>2字节，1字节硬编码 + 1字节有符号偏移</li>
+<li><strong>长跳：</strong>6字节，2字节硬编码 + 4字节有符号地址</li>
 </ul>
-<h2 id="2-Boot引导加载"><a href="#2-Boot引导加载" class="headerlink" title="2.Boot引导加载"></a>2.Boot引导加载</h2><p>BIOS自检结束后会根据启动项去选择启动设备指向Boot引导程序，即检测软盘的第0磁头第0磁道第1扇区，是否以0x55和0xaa两个字节作为结尾。如果是BIOS就认为这是一个引导扇区，进而把此扇区的数据复制到物理内存地址0x7c00处，将IP设置为0x7c00。</p>
-<p><img src="C:\Users\yuanmingfei\AppData\Roaming\Typora\typora-user-images\image-20220828170200446.png" alt="image-20220828170200446"></p>
-<p>Boot引导程序由于只有512字节，所以只能作为助推器，将功能更强大的引导加载程序Loader装在进内存。</p>
-<h2 id="3-代码示例"><a href="#3-代码示例" class="headerlink" title="3.代码示例"></a>3.代码示例</h2><pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">	org	0x7c00														; 从bios跳转至引导程序，cs与ip寄存器的值分别为0和0x7c00
-																	; 此时处于实模式下，物理地址 &#x3D; cs &lt;&lt; 4 + ip
-BaseOfStack	equ	0x7c00												; 将0x7c00取别名为BaseOfStack
-
-Label_Start:
-
-	mov	ax,	cs
-	mov	ds,	ax
-	mov	es,	ax														; 初始化
-	mov	ss,	ax
-	mov	sp,	BaseOfStack												; 设置栈
-
-;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
-;	int 0x10 BIOS中断	屏幕显示相关操作，通过寄存器设置具体操作
-;	AH 操作编号
-;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
-
-;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;	clear screen
-
-	mov	ax,	0600h													; AH &#x3D; 0x06 刷屏; AL 滚动的列数，0实现清屏，同时其他参数不起作用
-	mov	bx,	0700h													; BH 滚动后空出位置放置的颜色属性(bit)
-	mov	cx,	0														; CH 左上角列号; CL 左上角行号
-	mov	dx,	0184fh													; DH 右下角列号; DL 右下角行号
-	int	10h
-
-;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;	set focus
-
-	mov	ax,	0200h													; AH &#x3D; 0x02 设置光标位置
-	mov	bx,	0000h													; BH 页码
-	mov	dx,	0000h													; DH 光标行数 DL; 光标列数
-	int	10h
-
-;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;	display on screen : Start Booting......
-
-	mov	ax,	1303h													; AH &#x3D; 0x13 显示一行字符串; AL 写入模式
-	mov	bx,	0000h													; BH 页码; BL 字符属性
-	mov	dx,	0000h													; DH 行号; DL 列号
-	mov	cx,	9														; CX 字符串长度
-	push	ax
-	mov	ax,	ds
-	mov	es,	ax
-	pop	ax
-	mov	bp,	StartBootMessage										; ES:BP 字符串内存地址
-	int	10h
-
-;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
-;	int 0x13 BIOS中断	软盘驱动器相关操作，通过寄存器设置具体操作
-;	AH 操作编号
-;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
-
-;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;	reset floppy
-
-	xor	ah,	ah														; AH &#x3D; 0 重置磁盘驱动器
-	xor	dl,	dl														; DL 驱动器号（软+硬）
-	int	13h
-
-	jmp	$	
-
-; 常量字符串								
-StartBootMessage:	db	&#39;H&#39;, 0xA, &#39;e&#39;, 0xB, &#39;l&#39;, 0x9, &#39;l&#39;, 0xB, &#39;o&#39;, 0xD, &#39; &#39;, 0xA, &#39;J&#39;, 0xB, &#39;N&#39;, 0x9, &#39;Z&#39;, 0xA
-
-;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;	fill zero until whole sector
-
-	times	510 - ($ - $$)	db	0
-	dw	0xaa55		; 引导程序结束标识（固定）
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><strong>编译运行</strong></p>
-<pre class="line-numbers language-none"><code class="language-none">nasm boot.asm -o boot.bin
-dd if&#x3D;boot.bin of&#x3D;boot.img bs&#x3D;512 count&#x3D;1 conv&#x3D;notrunc
-bochs -q<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="4-Boot中实现文件加载"><a href="#4-Boot中实现文件加载" class="headerlink" title="4.Boot中实现文件加载"></a>4.Boot中实现文件加载</h2><h3 id="4-1-FAT12文件系统"><a href="#4-1-FAT12文件系统" class="headerlink" title="4.1 FAT12文件系统"></a>4.1 FAT12文件系统</h3><p>FAT类文件系统将软盘划分为：引导扇区、FAT表、根目录区、数据区。</p>
-<p><img src="C:\Users\yuanmingfei\AppData\Roaming\Typora\typora-user-images\image-20220904150459223.png" alt="image-20220904150459223"></p>
-<h3 id="4-2-FAT12结构"><a href="#4-2-FAT12结构" class="headerlink" title="4.2 FAT12结构"></a>4.2 FAT12结构</h3><p><img src="C:\Users\yuanmingfei\AppData\Roaming\Typora\typora-user-images\image-20220828171354155.png" alt="image-20220828171354155"></p>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>短跳</th>
+<th>长跳</th>
+<th>含义</th>
+<th>EFLAGS</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>JZ&#x2F;JE</td>
+<td>0x74</td>
+<td>0x0F 0X84</td>
+<td>相等则跳转</td>
+<td>ZF &#x3D;&#x3D; 1</td>
+</tr>
+<tr>
+<td>JNZ&#x2F;JNE</td>
+<td>0x75</td>
+<td>0x0F 0X85</td>
+<td>不相等则跳转</td>
+<td>ZF &#x3D;&#x3D; 0</td>
+</tr>
+<tr>
+<td>JS</td>
+<td>0x78</td>
+<td>0x0F 0X88</td>
+<td>负数则跳转</td>
+<td>SF &#x3D;&#x3D; 1</td>
+</tr>
+<tr>
+<td>JNS</td>
+<td>0x79</td>
+<td>0x0F 0X89</td>
+<td>正数则跳转</td>
+<td>SF &#x3D;&#x3D; 0</td>
+</tr>
+<tr>
+<td>JP&#x2F;JPE</td>
+<td>0x7A</td>
+<td>0x0F 0X8A</td>
+<td>1出现次数为偶数则跳转</td>
+<td>PF &#x3D;&#x3D; 1</td>
+</tr>
+<tr>
+<td>JNP&#x2F;JPO</td>
+<td>0x7B</td>
+<td>0x0F 0X8B</td>
+<td>1出现次数为奇数则跳转</td>
+<td>PF &#x3D;&#x3D; 0</td>
+</tr>
+<tr>
+<td>JC&#x2F;JB&#x2F;JNAE</td>
+<td>0x72</td>
+<td>0x0F 0X82</td>
+<td>无符号数 (进位)低于则跳转</td>
+<td>CF &#x3D;&#x3D; 1</td>
+</tr>
+<tr>
+<td>JNC&#x2F;JNB&#x2F;JAE</td>
+<td>0x73</td>
+<td>0x0F 0X83</td>
+<td>无符号数 (不进位)高于等于则跳转</td>
+<td>CF &#x3D;&#x3D; 0</td>
+</tr>
+<tr>
+<td>JO</td>
+<td>0x70</td>
+<td>0x0F 0X80</td>
+<td>有符号数 溢出则跳转</td>
+<td>OF &#x3D;&#x3D; 1</td>
+</tr>
+<tr>
+<td>JNO</td>
+<td>0x71</td>
+<td>0x0F 0X81</td>
+<td>有符号数 无溢出则跳转</td>
+<td>OF &#x3D;&#x3D; 0</td>
+</tr>
+<tr>
+<td>JBE&#x2F;JNA</td>
+<td>0x76</td>
+<td>0x0F 0X86</td>
+<td>无符号数 低于等于则跳转</td>
+<td>ZF &#x3D;&#x3D; 1 || CF &#x3D;&#x3D; 1</td>
+</tr>
+<tr>
+<td>JNBE&#x2F;JA</td>
+<td>0x77</td>
+<td>0x0F 0X87</td>
+<td>无符号数 高于则跳转</td>
+<td>ZF &#x3D;&#x3D; 0 || CF &#x3D;&#x3D; 0</td>
+</tr>
+<tr>
+<td>JL&#x2F;JNGE</td>
+<td>0x7C</td>
+<td>0x0F 0X8C</td>
+<td>有符号数 小于则跳转</td>
+<td>SF !&#x3D; OF</td>
+</tr>
+<tr>
+<td>JNL&#x2F;JGE</td>
+<td>0x7D</td>
+<td>0x0F 0X8D</td>
+<td>有符号数 大于等于则跳转</td>
+<td>SF &#x3D;&#x3D; OF</td>
+</tr>
+<tr>
+<td>JLE&#x2F;JNG</td>
+<td>0x7E</td>
+<td>0x0F 0X8E</td>
+<td>有符号数 小于等于则跳转</td>
+<td>ZF !&#x3D; OF || ZF &#x3D;&#x3D; 1</td>
+</tr>
+<tr>
+<td>JNLE&#x2F;JG</td>
+<td>0x7F</td>
+<td>0x0F 0X8F</td>
+<td>有符号数 大于则跳转</td>
+<td>SF &#x3D;&#x3D; 0F &amp;&amp; ZF &#x3D;&#x3D; 0</td>
+</tr>
+</tbody></table>
+<h3 id="3-2-CALL无条件跳转"><a href="#3-2-CALL无条件跳转" class="headerlink" title="3.2 CALL无条件跳转"></a>3.2 CALL无条件跳转</h3><hr>
+<p><strong>E8 + 4字节有符号偏移：</strong>偏移CALL，最常见用法。</p>
+<p>​	<strong>跳转目标地址 &#x3D; 当前指令地址 + 当前指令长度 + 4字节偏移</strong></p>
+<hr>
+<p><strong>FF 15 + 4字节：</strong>间接CALL，长用于调用导入表中函数。</p>
 <ul>
-<li><p>BS_jmpBoot：跳转指令，跳过配置信息</p>
+<li><p>x86：后面跟4字节内存地址。</p>
+<p><strong>跳转目标地址 &#x3D; ptr:[ 4字节内存地址 ]</strong></p>
 </li>
-<li><p>BS_OEMName：制造商名字</p>
-</li>
-<li><p>BPB_SecPerClus：每簇扇区数，簇是FAT类文件系统的最小数据存储单元。</p>
-</li>
-<li><p>BPB_RsvdSecCnt：保留扇区的数量，FAT12必须为1</p>
-</li>
-<li><p>BPB_NumFATs：FAT表的份数，建议为2，多个备份表</p>
-</li>
-<li><p>BPB_RootEntCnt：根目录可容纳的目录项数，FAT32中，该值乘以32必须为BPB_BytesPerSec偶数倍</p>
-</li>
-<li><p>BPB_TotSec16：总扇区数，为0的话，BPE_TotSec32必须有值</p>
-</li>
-<li><p>BPB_Media：存储介质类型，该值必须与FAT[0]同步</p>
-</li>
-<li><p>BPB_FATSz16：记录着FAT表占用的扇区数</p>
-</li>
-<li><p>BS_VolLab：指定卷标，磁盘名</p>
-</li>
-<li><p>BS_FileSysType：文件系统类型，没用</p>
-<p><img src="C:\Users\yuanmingfei\AppData\Roaming\Typora\typora-user-images\image-20220828174504222.png" alt="image-20220828174504222"></p>
+<li><p>x64：后面跟4字节偏移，再使用偏移计算公式得到4字节内存地址。</p>
 </li>
 </ul>
-<h3 id="4-3-FAT表结构"><a href="#4-3-FAT表结构" class="headerlink" title="4.3 FAT表结构"></a>4.3 FAT表结构</h3><p><strong>FAT表项结构</strong></p>
-<p><img src="C:\Users\yuanmingfei\AppData\Roaming\Typora\typora-user-images\image-20220828183631319.png" alt="image-20220828183631319"></p>
-<p><strong>目录项结构</strong></p>
-<p><img src="C:\Users\yuanmingfei\AppData\Roaming\Typora\typora-user-images\image-20220828183759941.png" alt="image-20220828183759941"></p>
-<p><strong>数据区的第一个有效簇号是2</strong></p>
-<h3 id="4-4-一些常用的计算"><a href="#4-4-一些常用的计算" class="headerlink" title="4.4  一些常用的计算"></a>4.4  一些常用的计算</h3><p>目录项占用的扇区数 &#x3D; （BPB_RootEntCnt  *  32  +  BPB_BytesPerSec  -  1）&#x2F;  BPB_BytesPerSec</p>
-<p>根目录起始扇区号  &#x3D;  保留扇区数  +  FAT表扇区数  *  FAT表份数</p>
-<h3 id="4-5-封装函数"><a href="#4-5-封装函数" class="headerlink" title="4.5 封装函数"></a>4.5 封装函数</h3><pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
-;	功能：
-;		读取指定扇区
-;
-;	参数列表：
-;		AX 待读取的磁盘起始扇区号
-;		CL 读入的扇区数量
-;		BX 目标缓冲区
-;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
-Func_ReadOneSector:
-	push bp
-	mov bp, sp
-	sub esp, 2
-	mov byte [bp -2], cl
-	push bx
-	mov bl, [BPB_SecPerTrk]			
-	div bl							; 被除数ax al 商， ah 余数
-	inc ah
-	mov cl, ah						; 扇区号(bit 0~5)，磁道号(高2bit)
-	mov dh, al						; 磁头号
-	shr al, 1
-	mov ch, al						; 磁道号的低8位
-	and dh, 1
-	pop bx
-	mov dl, [BS_DrvNum]
+<p>​	<strong>跳转目标地址 &#x3D; ptr:[ 当前指令地址 + 当前指令长度 + 4字节偏移 ]</strong></p>
+<hr>
+<p><strong>9A + 4字节地址 + 目标cs：</strong>绝对CALL，仅x86有效，可以跳转到绝对地址同时改变cs的值，far常用于实现调用门。</p>
+<p>​	<strong>跳转目标地址 &#x3D; 4字节地址、cs &#x3D; 目标cs</strong></p>
+<hr>
+<h3 id="3-3-JMP无条件跳转"><a href="#3-3-JMP无条件跳转" class="headerlink" title="3.3 JMP无条件跳转"></a>3.3 JMP无条件跳转</h3><p><strong>EB + 1字节有符号偏移：</strong>偏移短跳转</p>
+<p>​	<strong>跳转目标地址 &#x3D; 当前指令地址 + 当前指令长度 + 1字节偏移</strong></p>
+<hr>
+<p><strong>E9 + 4字节有符号偏移：</strong>偏移近跳转</p>
+<p>​	<strong>跳转目标地址 &#x3D; 当前指令地址 + 当前指令长度 + 4字节偏移</strong></p>
+<hr>
+<p><strong>FF 25 + 4字节：</strong>间接跳转</p>
+<ul>
+<li><p>x86：后面跟4字节内存地址。</p>
+<p><strong>跳转目标地址 &#x3D; ptr:[ 4字节内存地址 ]</strong></p>
+</li>
+<li><p>x64：后面跟4字节偏移，再使用偏移计算公式得到4字节内存地址。</p>
+</li>
+</ul>
+<p>​	<strong>跳转目标地址 &#x3D; ptr:[ 当前指令地址 + 当前指令长度 + 4字节偏移 ]</strong></p>
+<hr>
+<p><strong>EA + 4字节地址 + 目标cs：</strong>绝对跳转，仅x86有效，可以跳转到绝对地址同时改变cs的值，far常用于实现调用门。</p>
+<p>​	<strong>跳转目标地址 &#x3D; 4字节地址、cs &#x3D; 目标cs</strong></p>
+<hr>
+<h3 id="3-4-x64下的Inline-HOOK"><a href="#3-4-x64下的Inline-HOOK" class="headerlink" title="3.4 x64下的Inline HOOK"></a>3.4 x64下的Inline HOOK</h3><p>进入</p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">方法1：12字节
+mov rax, 0x123456789
+jmp rax
+方法2：12字节
+mov rax, 0x123456789
+push rax
+ret
+方法3：不破坏寄存器  13字节
+push rax
+mov rax, 0x123456789
+jmp rax
+&#96;&#96;&#96;
+pop rax<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-Label_Go_On_Reading:
-	mov ah, 2						; 功能：读取磁盘扇区
-	mov al, byte [bp - 2]			; 读入的扇区数
-	int 13h							; DL 驱动器号 ES:BX -&gt; 缓冲区
- 
-	jc Label_Go_On_Reading
+<p>返回</p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">方法1：20字节
+sub rsp, 0x8
+mov dword ptr ss:[rsp], 0x1234
+mov dword ptr ss:[rsp+0x4], 0x56789ABC
+ret
 
-	add esp, 2
-	pop bp
-	ret
-;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+方法2：14字节
+push 0x12345678
+mov dword ptr ss:[rsp+4], 0x9ABC
+ret<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
-;	功能：
-;		根据当前FAT表项号，得到下一个表项
-;
-;	参数列表：
-;		AX 当前FAT表项号（也是输出参数）
-;		
-;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
-Func_GetFATEntry:
-	push es
-	push bx
+<h2 id="4-基本运算"><a href="#4-基本运算" class="headerlink" title="4.基本运算"></a>4.基本运算</h2><h3 id="4-1-除法"><a href="#4-1-除法" class="headerlink" title="4.1 除法"></a>4.1 除法</h3><p>无符号：div + 除数</p>
+<p>有符号：idiv + 除数，余数的符号与被除数相同。</p>
+<table>
+<thead>
+<tr>
+<th>被除数</th>
+<th>除数</th>
+<th>商</th>
+<th>余数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ax</td>
+<td>reg&#x2F;mem8</td>
+<td>al</td>
+<td>ah</td>
+</tr>
+<tr>
+<td>dx:ax</td>
+<td>reg&#x2F;mem16</td>
+<td>ax</td>
+<td>dx</td>
+</tr>
+<tr>
+<td>edx:eax</td>
+<td>reg&#x2F;mem32</td>
+<td>eax</td>
+<td>edx</td>
+</tr>
+<tr>
+<td>rdx:rax</td>
+<td>reg&#x2F;mem64</td>
+<td>rax</td>
+<td>rdx</td>
+</tr>
+</tbody></table>
+<h3 id="4-2-乘法"><a href="#4-2-乘法" class="headerlink" title="4.2 乘法"></a>4.2 乘法</h3><p><strong>单操作数：</strong></p>
+<p>​	无符号：mul + 乘数</p>
+<p>​	有符号：imul + 乘数</p>
+<table>
+<thead>
+<tr>
+<th>被乘数</th>
+<th>乘数</th>
+<th>乘积</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>al</td>
+<td>reg&#x2F;mem8</td>
+<td>ax</td>
+</tr>
+<tr>
+<td>ax</td>
+<td>reg&#x2F;mem16</td>
+<td>dx:ax</td>
+</tr>
+<tr>
+<td>eax</td>
+<td>reg&#x2F;mem32</td>
+<td>edx:eax</td>
+</tr>
+<tr>
+<td>rax</td>
+<td>reg&#x2F;mem64</td>
+<td>rdx:rax</td>
+</tr>
+</tbody></table>
+<p>对于无符号数，计算后如果dx&#x2F;edx&#x2F;rdx寄存器不为0，则CF位被置位。</p>
+<p>对于有符号数，计算后如果dx&#x2F;edx&#x2F;rdx寄存器不为ax&#x2F;eax&#x2F;rax的符号扩展，则OF和CF位被置位。</p>
+<p><strong>双操作数：</strong>不支持8位，必须是有符号数。</p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">imul reg1, reg2&#x2F;mem&#x2F;imm
+; 等价形式如下
+reg1 &#x3D; reg1 * reg2&#x2F;mem&#x2F;imm<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-	push ax
-	mov ax, 0
-	mov es, ax
-	pop ax
+<p><strong>三操作数：</strong>不支持8位，必须是有符号数。</p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">imul reg1, reg2&#x2F;mem, imm
+; 等价形式如下
+reg1 &#x3D; reg2&#x2F;mem * imm<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-	mov byte [Odd], 0
-	mov bx, 3
-	mul bx
-	mov bx, 2
-	div bx
-	cmp dx, 0			; 判断余数
-	jz Label_Even
-	mov byte [Odd], 1
+<h3 id="4-3-移位"><a href="#4-3-移位" class="headerlink" title="4.3 移位"></a>4.3 移位</h3><p><strong>逻辑：</strong>shl、shr</p>
+<p><strong>算数：</strong>sal、sar</p>
+<p>逻辑左移与逻辑左移没区别，算数右移左边补符号位，逻辑右移坐标补0。右移除以2，左移乘以2。</p>
+<h2 id="5-数据传送"><a href="#5-数据传送" class="headerlink" title="5.数据传送"></a>5.数据传送</h2><h3 id="5-1-扩展传送"><a href="#5-1-扩展传送" class="headerlink" title="5.1 扩展传送"></a>5.1 扩展传送</h3><pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">movsx：符号位扩展
+movzx：0扩展<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-Label_Even:
+<h3 id="5-2-隐式传送"><a href="#5-2-隐式传送" class="headerlink" title="5.2 隐式传送"></a>5.2 隐式传送</h3><pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">movs_b&#x2F;w&#x2F;d&#x2F;q
+; 等价形式如下
+if(DF &#x3D;&#x3D; 0)	; cld
+&#123;
+	[edi++] &#x3D; [esi++]
+&#125;
+else		; std
+&#123;
+	[edi--] &#x3D; [esi--]
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-	xor	dx,	dx
-	mov	bx,	[BPB_BytesPerSec]
-	div	bx
-	push	dx
-	mov	bx,	8000h
-	add	ax,	SectorNumOfFAT1Start
-	mov	cl,	2
-	call	Func_ReadOneSector
-	
-	pop	dx
-	add	bx,	dx
-	mov	ax,	[es:bx]
-	cmp	byte	[Odd],	1
-	jnz	Label_Even_2
-	shr	ax,	4
+<h3 id="5-3-字符串获取"><a href="#5-3-字符串获取" class="headerlink" title="5.3 字符串获取"></a>5.3 字符串获取</h3><pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">lods_b&#x2F;w&#x2F;d&#x2F;q
+; 等价形式如下
+if(DF &#x3D;&#x3D; 0)	; cld
+&#123;
+	eax &#x3D; [esi++]
+&#125;
+else		; std
+&#123;
+	eax &#x3D; [esi--]
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-Label_Even_2:
-	and	ax,	0fffh
-	pop bx
-	pop es
-	ret<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="5-4-字符串加载"><a href="#5-4-字符串加载" class="headerlink" title="5.4 字符串加载"></a>5.4 字符串加载</h3><pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">stos_b&#x2F;w&#x2F;d&#x2F;q
+; 等价形式如下
+if(DF &#x3D;&#x3D; 0)	; cld
+&#123;
+	[edi++] &#x3D; eax 
+&#125;
+else		; std
+&#123;
+	[edi--] &#x3D; eax 
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
                 
@@ -514,7 +652,15 @@ Label_Even_2:
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/basic/">
+                                    <span class="chip bg-color">basic</span>
+                                </a>
+                            
+                                <a href="/tags/x86-x64/">
+                                    <span class="chip bg-color">x86/x64</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -560,13 +706,13 @@ Label_Even_2:
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/2022/09/12/1.boot/">
+                <a href="/2022/09/12/assembly-basic/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="Boot 引导">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="assembly basic">
                         
-                        <span class="card-title">Boot 引导</span>
+                        <span class="card-title">assembly basic</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -581,13 +727,29 @@ Label_Even_2:
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            JNZ
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/reverse/" class="post-category">
+                                    reverse
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
 
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/basic/">
+                        <span class="chip bg-color">basic</span>
+                    </a>
+                    
+                    <a href="/tags/x86-x64/">
+                        <span class="chip bg-color">x86/x64</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -595,16 +757,16 @@ Label_Even_2:
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+                本篇&nbsp;<i class="far fa-dot-circle"></i>
             </div>
             <div class="card">
-                <a href="/2022/09/11/hello-world/">
+                <a href="/2022/09/12/assembly-basic/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="assembly basic">
                         
-                        <span class="card-title">Hello World</span>
+                        <span class="card-title">assembly basic</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -615,15 +777,32 @@ Label_Even_2:
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-11
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-12
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            JNZ
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/reverse/" class="post-category">
+                                    reverse
+                                </a>
+                            
                             
                         </span>
                     </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/basic/">
+                        <span class="chip bg-color">basic</span>
+                    </a>
+                    
+                    <a href="/tags/x86-x64/">
+                        <span class="chip bg-color">x86/x64</span>
+                    </a>
+                    
                 </div>
                 
             </div>

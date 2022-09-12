@@ -446,26 +446,30 @@
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2022/09/12/1.boot/">
+                    <a href="/2022/09/12/assembly-basic/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="Boot 引导">
+                            <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="assembly basic">
                             
-                            <span class="card-title">Boot 引导</span>
+                            <span class="card-title">assembly basic</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                1.计算机启动流程
-计算机通电
-BIOS自检：检测硬件故障
-选择引导设备：软盘、U盘、硬盘、网络等启动方式
-执行Boot引导程序
+                                1.EFLAGS
+2.测试与比较2.1 testtest rax, rbx
+; 等价形式如下
+push rax
+and rax, rbx
+pop rax
 
-2.Boot引导加载BIOS自检结束后会根据启动项去选择启动设备指向Boot引导程序，即检测软盘的第0磁头第
+2.2 cmpcmp rax, rbx
+; 等价形式如下
+push rax
+sub 
                             
                         </div>
                         <div class="publish-info">
@@ -474,50 +478,29 @@ BIOS自检：检测硬件故障
                             </span>
                             <span class="publish-author">
                                 
-                                <i class="fas fa-user fa-fw"></i>
-                                JNZ
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/reverse/" class="post-category">
+                                    reverse
+                                </a>
+                                
                                 
                             </span>
                         </div>
                     </div>
 
                     
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2022/09/11/hello-world/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
-                            
-                            <span class="card-title">Hello World</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-11
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-user fa-fw"></i>
-                                JNZ
-                                
-                            </span>
-                        </div>
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/basic/">
+                            <span class="chip bg-color">basic</span>
+                        </a>
+                        
+                        <a href="/tags/x86-x64/">
+                            <span class="chip bg-color">x86/x64</span>
+                        </a>
+                        
                     </div>
-
                     
                 </div>
             </div>

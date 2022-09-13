@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>ida-basic</title>
+      <link href="/2022/09/13/ida-basic/"/>
+      <url>/2022/09/13/ida-basic/</url>
+      
+        <content type="html"><![CDATA[<h2 id="1-常用快捷键"><a href="#1-常用快捷键" class="headerlink" title="1.常用快捷键"></a>1.常用快捷键</h2><table><thead><tr><th>快捷键</th><th>功能</th></tr></thead><tbody><tr><td>Shift + F12</td><td>打开字符串窗口</td></tr><tr><td>Y</td><td>改变函数原型或变量类型</td></tr><tr><td>D</td><td>宽度转换以及结构体中新增成员</td></tr><tr><td>R</td><td>字符转换</td></tr><tr><td>H</td><td>进制转换</td></tr><tr><td>&#x2F;</td><td>伪代码中添加注释</td></tr><tr><td>X</td><td>查看交叉引用</td></tr><tr><td>TAB</td><td>汇编指令和伪代码之间切换</td></tr><tr><td>Shift + E</td><td>得到数组</td></tr><tr><td>Alt + T</td><td>搜索字符串</td></tr><tr><td>Alt + I</td><td>搜索立即数</td></tr><tr><td>Alt + B</td><td>搜索二进制</td></tr></tbody></table><h2 id="2-伪代码修复"><a href="#2-伪代码修复" class="headerlink" title="2.伪代码修复"></a>2.伪代码修复</h2><h3 id="2-1-逆向命名规则"><a href="#2-1-逆向命名规则" class="headerlink" title="2.1 逆向命名规则"></a>2.1 逆向命名规则</h3><h4 id="2-1-1-类型命名"><a href="#2-1-1-类型命名" class="headerlink" title="2.1.1 类型命名"></a><strong>2.1.1 类型命名</strong></h4><table><thead><tr><th>类型</th><th>前缀</th></tr></thead><tbody><tr><td>数组</td><td>a</td></tr><tr><td>布尔</td><td>b</td></tr><tr><td>字符byte</td><td>c</td></tr><tr><td>短整型word</td><td>w</td></tr><tr><td>整型dowrd</td><td>dw</td></tr><tr><td>整形qword</td><td>qw</td></tr><tr><td>指针</td><td>p</td></tr><tr><td>类成员</td><td>m_</td></tr><tr><td>字符串</td><td>sz</td></tr></tbody></table><h4 id="2-1-2-符号命名"><a href="#2-1-2-符号命名" class="headerlink" title="2.1.2 符号命名"></a><strong>2.1.2 符号命名</strong></h4><table><thead><tr><th>符号类型</th><th>规则</th><th>示例</th></tr></thead><tbody><tr><td>栈变量</td><td>类型前缀 + 名字</td><td>szWelcome</td></tr><tr><td>全局变量</td><td>g_类型前缀 + 名字</td><td>g_dwTime</td></tr><tr><td>普通函数</td><td>大功能 + 具体功能</td><td>memAlloc</td></tr><tr><td>成员函数</td><td>类名字::函数名</td><td>Student::getNum</td></tr></tbody></table><h3 id="2-2-不规则代码"><a href="#2-2-不规则代码" class="headerlink" title="2.2 不规则代码"></a>2.2 不规则代码</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c">def <span class="token function">LOBYTE</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token operator">:</span>     <span class="token keyword">return</span> x <span class="token operator">&amp;</span> <span class="token number">0xff</span>def <span class="token function">HIBYTE</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token operator">:</span>     <span class="token keyword">return</span> <span class="token punctuation">(</span>x <span class="token operator">>></span> <span class="token number">8</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xff</span>def <span class="token function">LOWORD</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token operator">:</span>     <span class="token keyword">return</span> x <span class="token operator">&amp;</span> <span class="token number">0xffff</span>def <span class="token function">HIWORD</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token operator">:</span>     <span class="token keyword">return</span> <span class="token punctuation">(</span>x <span class="token operator">>></span> <span class="token number">16</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xffff</span>def <span class="token function">LODWORD</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token operator">:</span>    <span class="token keyword">return</span> x <span class="token operator">&amp;</span> <span class="token number">0xffffffff</span>def <span class="token function">HIDWORD</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token operator">:</span>    <span class="token keyword">return</span> <span class="token punctuation">(</span>x <span class="token operator">>></span> <span class="token number">32</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xffffffff</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="2-3-修复函数原型"><a href="#2-3-修复函数原型" class="headerlink" title="2.3 修复函数原型"></a>2.3 修复函数原型</h3><h4 id="2-3-1-返回值类型"><a href="#2-3-1-返回值类型" class="headerlink" title="2.3.1 返回值类型"></a>2.3.1 返回值类型</h4><p>​当分析出某个函数的返回值类型始终（交叉引用）不会被使用后，可以将函数原型的返回值类型改成void，可以优化掉多余代码。</p><h4 id="2-3-2-参数个数和类型"><a href="#2-3-2-参数个数和类型" class="headerlink" title="2.3.2 参数个数和类型"></a>2.3.2 参数个数和类型</h4><p>​在x64下，有些函数没有参数，但由于调用约定，F5后的伪代码中可能出现参数，将多余的参数删除，可以优化代码。而且有些参数是使用寄存器传递，如浮点寄存器，这时伪代码中可能无法正确识别，需要结合汇编分析，并手动添加参数，可以增加可读性。</p><h3 id="2-4-修复变量类型"><a href="#2-4-修复变量类型" class="headerlink" title="2.4 修复变量类型"></a>2.4 修复变量类型</h3><h4 id="2-4-1-结构体定义"><a href="#2-4-1-结构体定义" class="headerlink" title="2.4.1 结构体定义"></a>2.4.1 结构体定义</h4><p>​恢复结构体类型可以大大代码可读性，可以根据new的大小和分析成员使用情况来确定结构体边界和成员类型。下面展示类的结构定义模板：</p><p><img src="/2022/09/13/ida-basic/image-20220913182821578.png" alt="类结构模板"></p><h4 id="2-4-2-数组定义"><a href="#2-4-2-数组定义" class="headerlink" title="2.4.2 数组定义"></a>2.4.2 数组定义</h4><p>​对于连续的内存空间的操作，可以酌情还原为数组，增加可读性。</p><h2 id="3-符号还原"><a href="#3-符号还原" class="headerlink" title="3.符号还原"></a>3.符号还原</h2>]]></content>
+      
+      
+      <categories>
+          
+          <category> reverse </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> basic </tag>
+            
+            <tag> ida </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Assembly Basic</title>
       <link href="/2022/09/12/asm-basic/"/>
       <url>/2022/09/12/asm-basic/</url>
@@ -22,7 +49,7 @@
             
             <tag> basic </tag>
             
-            <tag> x86/x64 </tag>
+            <tag> x86/x64 asm </tag>
             
         </tags>
       

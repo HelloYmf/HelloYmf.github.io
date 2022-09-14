@@ -231,7 +231,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/09/14/class-reverse/" target="_self">
         <div>
-          1.对象内存布局1.1 基本类1234567891011121314151617181920212223242526272829303132#include &lt;iostream&gt;// 基本类class A1&#123;public:	A1(int x, char y, short z)	&#123;		this-&gt;x = x;		this-&gt;y = y;		this-&gt
+          1.对象内存布局1234567891011121314151617181920class A1&#123;	struct pvTable								// 虚表结构    &#123;          void fun1();          void fun2();          destor();    &#125;;	struct class_members						// 成员结
         </div>
       </a>
 

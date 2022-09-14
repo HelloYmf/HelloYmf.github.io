@@ -16,12 +16,12 @@
   <meta name="author" content="JNZ">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1.对象内存布局123456789101112131415161718192021class A1: public Base&amp;#123;	class Base    &amp;#123;        class Base_vtable        &amp;#123;           int64 fun1;           int64 fun2;        &amp;#125;;        class">
+    <meta name="description" content="1.对象内存布局123456789101112131415161718192021222324252627class A1: public Base&amp;#123;	class Base    &amp;#123;        &#x2F;&#x2F; 虚表指针        class Base_vtable*			    &#x2F;&#x2F; 父类成员结构        class Base_member        &amp;#123;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Class Reverse">
 <meta property="og:url" content="http://helloymf.github.io/2022/09/14/class-reverse/index.html">
 <meta property="og:site_name" content="JNZ">
-<meta property="og:description" content="1.对象内存布局123456789101112131415161718192021class A1: public Base&amp;#123;	class Base    &amp;#123;        class Base_vtable        &amp;#123;           int64 fun1;           int64 fun2;        &amp;#125;;        class">
+<meta property="og:description" content="1.对象内存布局123456789101112131415161718192021222324252627class A1: public Base&amp;#123;	class Base    &amp;#123;        &#x2F;&#x2F; 虚表指针        class Base_vtable*			    &#x2F;&#x2F; 父类成员结构        class Base_member        &amp;#123;">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://helloymf.github.io/2022/09/14/class-reverse/image-20220914173617123.png">
 <meta property="og:image" content="http://helloymf.github.io/2022/09/14/class-reverse/image-20220914104738064.png">
@@ -33,7 +33,7 @@
 <meta property="og:image" content="http://helloymf.github.io/2022/09/14/class-reverse/image-20220914181153384.png">
 <meta property="og:image" content="http://helloymf.github.io/2022/09/14/class-reverse/image-20220914181409983.png">
 <meta property="article:published_time" content="2022-09-14T02:23:40.000Z">
-<meta property="article:modified_time" content="2022-09-14T10:18:13.007Z">
+<meta property="article:modified_time" content="2022-09-14T10:32:19.094Z">
 <meta property="article:author" content="JNZ">
 <meta property="article:tag" content="basic">
 <meta property="article:tag" content="C++">
@@ -230,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.6k 字
+          4.7k 字
         
       </span>
     
@@ -241,7 +241,7 @@
         
         
         
-          39 分钟
+          40 分钟
         
       </span>
     
@@ -284,7 +284,7 @@
             
               <div class="markdown-body">
                 
-                <h2 id="1-对象内存布局"><a href="#1-对象内存布局" class="headerlink" title="1.对象内存布局"></a>1.对象内存布局</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">A1</span>: <span class="hljs-keyword">public</span> Base<br>&#123;<br>	<span class="hljs-keyword">class</span> <span class="hljs-title class_">Base</span><br>    &#123;<br>        <span class="hljs-keyword">class</span> <span class="hljs-title class_">Base_vtable</span><br>        &#123;<br>           int64 fun1;<br>           int64 fun2;<br>        &#125;;<br>        <span class="hljs-keyword">class</span> <span class="hljs-title class_">Base_member</span><br>        &#123;<br>            <span class="hljs-type">int</span> m_iVal1;<br>            <span class="hljs-type">char</span> m_cVal2;<br>        &#125;;<br>    &#125;;<br>    <span class="hljs-keyword">class</span> <span class="hljs-title class_">A1_member</span><br>    &#123;<br>        <span class="hljs-type">float</span> m_fVal1;<br>        <span class="hljs-type">char</span>* m_pcVal2;<br>    &#125;;<br>&#125;;<br></code></pre></td></tr></table></figure>
+                <h2 id="1-对象内存布局"><a href="#1-对象内存布局" class="headerlink" title="1.对象内存布局"></a>1.对象内存布局</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">A1</span>: <span class="hljs-keyword">public</span> Base<br>&#123;<br>	<span class="hljs-keyword">class</span> <span class="hljs-title class_">Base</span><br>    &#123;<br>        <span class="hljs-comment">// 虚表指针</span><br>        <span class="hljs-keyword">class</span> <span class="hljs-title class_">Base_vtable</span>*		<br>	    <span class="hljs-comment">// 父类成员结构</span><br>        <span class="hljs-keyword">class</span> <span class="hljs-title class_">Base_member</span><br>        &#123;<br>            <span class="hljs-type">int</span> m_iVal1;<br>            <span class="hljs-type">char</span> m_cVal2;<br>        &#125;;<br>    &#125;;<br>    <span class="hljs-comment">// 子类自身成员结构</span><br>    <span class="hljs-keyword">class</span> <span class="hljs-title class_">A1_member</span><br>    &#123;<br>        <span class="hljs-type">float</span> m_fVal1;<br>        <span class="hljs-type">char</span>* m_pcVal2;<br>    &#125;;<br>&#125;;<br><br><span class="hljs-comment">// Base虚表结构</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Base_vtable</span><br>&#123;<br>   int64 fun1;<br>   int64 fun2;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <h3 id="1-1-基本类"><a href="#1-1-基本类" class="headerlink" title="1.1 基本类"></a>1.1 基本类</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">A1</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">A1</span>(<span class="hljs-type">int</span> x, <span class="hljs-type">char</span> y, <span class="hljs-type">short</span> z)<br>	&#123;<br>		<span class="hljs-keyword">this</span>-&gt;x = x;<br>		<span class="hljs-keyword">this</span>-&gt;y = y;<br>		<span class="hljs-keyword">this</span>-&gt;z = z;<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">show</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		std::cout &lt;&lt; x &lt;&lt; std::endl;<br>		std::cout &lt;&lt; y &lt;&lt; std::endl;<br>	&#125;<br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">int</span> x;<br>	<span class="hljs-type">char</span> y;<br>	<span class="hljs-type">short</span> z;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br><br>	<span class="hljs-function">A1 <span class="hljs-title">a1</span><span class="hljs-params">(<span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-number">7</span>)</span></span>;<br>	a1.<span class="hljs-built_in">show</span>();<br><br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 

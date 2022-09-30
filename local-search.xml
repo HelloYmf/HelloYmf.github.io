@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>To do list</title>
+    <link href="/2022/09/30/to-do-list/"/>
+    <url>/2022/09/30/to-do-list/</url>
+    
+    <content type="html"><![CDATA[<h2 id="1-国庆假期学习计划"><a href="#1-国庆假期学习计划" class="headerlink" title="1.国庆假期学习计划"></a>1.国庆假期学习计划</h2><ul><li><input disabled type="checkbox"> <strong>逆向Win10 x64异常处理</strong></li><li><input disabled type="checkbox"> <strong>逆向Win10 x64内存管理</strong></li><li><input disabled type="checkbox"> <strong>复习C++</strong></li><li><input disabled type="checkbox"> <strong>STL源码</strong></li><li><input disabled type="checkbox"> <strong>学习国外恶意代码分析文章</strong></li><li><input disabled type="checkbox"> <strong>学习TCP&#x2F;IP协议</strong></li></ul><h2 id="2-项目计划"><a href="#2-项目计划" class="headerlink" title="2.项目计划"></a>2.项目计划</h2><ul><li><input disabled type="checkbox"> <strong>实现Tiny Kernel</strong></li><li><input disabled type="checkbox"> <strong>实现武器库（高阶HOOK、注入、ShellCode生成）</strong></li><li><input disabled type="checkbox"> <strong>原始套接字实现TCP&#x2F;IP协议栈</strong></li><li><input disabled type="checkbox"> <strong>学习编译原理，实现脚本引擎</strong></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>tasks</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>goal</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>特征码搜索</title>
     <link href="/2022/09/23/te-zheng-ma-sou-suo/"/>
     <url>/2022/09/23/te-zheng-ma-sou-suo/</url>
@@ -13,7 +38,7 @@
     
     <categories>
       
-      <category>reverse</category>
+      <category>lib</category>
       
     </categories>
     

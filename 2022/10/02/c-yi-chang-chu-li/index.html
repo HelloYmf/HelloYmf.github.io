@@ -33,10 +33,17 @@
 <meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/image-20221002171219284.png">
 <meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/image-20221002171302166.png">
 <meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/image-20221002171335263.png">
+<meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/image-20221002222308026.png">
+<meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/image-20221002222149322.png">
+<meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/image-20221002224707704.png">
+<meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/image-20221002224551011.png">
+<meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/image-20221002230141065.png">
+<meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/image-20221002230309773.png">
+<meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/image-20221002230512362.png">
 <meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/image-20221002175014250.png">
 <meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/image-20221002175156338.png">
 <meta property="article:published_time" content="2022-10-02T07:50:33.000Z">
-<meta property="article:modified_time" content="2022-10-02T12:57:43.653Z">
+<meta property="article:modified_time" content="2022-10-02T15:05:24.946Z">
 <meta property="article:author" content="JNZ">
 <meta property="article:tag" content="basic">
 <meta property="article:tag" content="C++">
@@ -233,7 +240,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.1k 字
+          4.4k 字
         
       </span>
     
@@ -244,7 +251,7 @@
         
         
         
-          35 分钟
+          37 分钟
         
       </span>
     
@@ -334,7 +341,21 @@
 <p>其中，catch_code1和catch_code2就是编写的catch块内的异常处理代码，如下所示：</p>
 <p><img src="/2022/10/02/c-yi-chang-chu-li/image-20221002171302166.png" srcset="/img/loading.gif" lazyload alt="异常处理代码1"></p>
 <p><img src="/2022/10/02/c-yi-chang-chu-li/image-20221002171335263.png" srcset="/img/loading.gif" lazyload alt="异常处理代码2"></p>
-<h3 id="3-2-throw过程分析"><a href="#3-2-throw过程分析" class="headerlink" title="3.2 throw过程分析"></a>3.2 throw过程分析</h3><p>异常对象抛出位置，可以看到ThrowInfo作为参数传递。</p>
+<h3 id="3-2-回调注册分析–对象类型异常"><a href="#3-2-回调注册分析–对象类型异常" class="headerlink" title="3.2 回调注册分析–对象类型异常"></a>3.2 回调注册分析–对象类型异常</h3><p>__CxxFrameHandler3函数将参数向下传递。</p>
+<p><img src="/2022/10/02/c-yi-chang-chu-li/image-20221002222308026.png" srcset="/img/loading.gif" lazyload alt="__CxxFrameHandler3"></p>
+<p>__InternalCxxFrameHandler函数主要是对一些信息进行校验，然后调用FindHandler函数查找try&#x2F;catch块。</p>
+<p><img src="/2022/10/02/c-yi-chang-chu-li/image-20221002222149322.png" srcset="/img/loading.gif" lazyload alt="__InternalCxxFrameHandler"></p>
+<p>FindHandler函数中使用三层循环对try块的范围进行校验，并将符合要求的try与catch进行类型比对，比对成功调用CatchIt完成异常处理。</p>
+<p><img src="/2022/10/02/c-yi-chang-chu-li/image-20221002224707704.png" srcset="/img/loading.gif" lazyload alt="FindHandler"></p>
+<p>__TypeMatch函数中使用strcmp比较了RTTI的name字符串。</p>
+<p><img src="/2022/10/02/c-yi-chang-chu-li/image-20221002224551011.png" srcset="/img/loading.gif" lazyload alt="__TypeMatch"></p>
+<p>CatchIt函数中主要是处理异常对象、执行栈展开、执行catch块。</p>
+<p><img src="/2022/10/02/c-yi-chang-chu-li/image-20221002230141065.png" srcset="/img/loading.gif" lazyload alt="CatchIt"></p>
+<p>其中栈展开是通过调用API完成，如下所示：</p>
+<p><img src="/2022/10/02/c-yi-chang-chu-li/image-20221002230309773.png" srcset="/img/loading.gif" lazyload alt="栈展开API"></p>
+<p>最终执行catch块代码，完成异常处理。</p>
+<p><img src="/2022/10/02/c-yi-chang-chu-li/image-20221002230512362.png" srcset="/img/loading.gif" lazyload alt="catch块执行"></p>
+<h3 id="3-3-throw过程分析"><a href="#3-3-throw过程分析" class="headerlink" title="3.3 throw过程分析"></a>3.3 throw过程分析</h3><p>异常对象抛出位置，可以看到ThrowInfo作为参数传递。<strong>如果抛出的是对象类型的异常，这里会调用它的构造函数。</strong></p>
 <p><img src="/2022/10/02/c-yi-chang-chu-li/image-20221002175014250.png" srcset="/img/loading.gif" lazyload alt="抛出异常位置"></p>
 <p>相关结构信息如下：</p>
 <p><img src="/2022/10/02/c-yi-chang-chu-li/image-20221002175156338.png" srcset="/img/loading.gif" lazyload alt="抛出异常结构"></p>

@@ -42,12 +42,12 @@
 <meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/image-20221003153615756.png">
 <meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/image-20221002230512362.png">
 <meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/image-20221003151051042.png">
-<meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/blogs/fluid_blog/source_posts/C-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/image-20221003151150445.png">
+<meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/image-20221003151150445.png">
 <meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/image-20221002175014250.png">
 <meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/image-20221002175156338.png">
 <meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/image-20221003151505632.png">
 <meta property="article:published_time" content="2022-10-02T07:50:33.000Z">
-<meta property="article:modified_time" content="2022-10-03T07:36:57.046Z">
+<meta property="article:modified_time" content="2022-10-03T07:37:39.975Z">
 <meta property="article:author" content="JNZ">
 <meta property="article:tag" content="basic">
 <meta property="article:tag" content="C++">
@@ -364,7 +364,7 @@
 <p>在catch块代码执行完后，会将eax修改为catch块结束位置，返回给上一层函数。</p>
 <p><img src="/2022/10/02/c-yi-chang-chu-li/image-20221003151051042.png" srcset="/img/loading.gif" lazyload alt="设置eax"></p>
 <p>最终由JumpToContinuation函数跳转到catch块结束位置完成异常处理。</p>
-<p><img src="/2022/10/02/c-yi-chang-chu-li/blogs\fluid_blog\source_posts\C-异常处理\image-20221003151150445.png" srcset="/img/loading.gif" lazyload alt="JumpToContinuation函数"></p>
+<p><img src="/2022/10/02/c-yi-chang-chu-li/image-20221003151150445.png" srcset="/img/loading.gif" lazyload alt="JumpToContinuation函数"></p>
 <h3 id="3-3-throw过程分析"><a href="#3-3-throw过程分析" class="headerlink" title="3.3 throw过程分析"></a>3.3 throw过程分析</h3><p>异常对象抛出位置，可以看到ThrowInfo作为参数传递。<strong>如果抛出的是对象类型的异常，这里会调用它的构造函数。</strong></p>
 <p><img src="/2022/10/02/c-yi-chang-chu-li/image-20221002175014250.png" srcset="/img/loading.gif" lazyload alt="抛出异常位置"></p>
 <p>相关结构信息如下：</p>

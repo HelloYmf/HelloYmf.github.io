@@ -39,6 +39,7 @@
 <meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/image-20221002224551011.png">
 <meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/image-20221003150849299.png">
 <meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/image-20221002230309773.png">
+<meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/image-20221003153615756.png">
 <meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/image-20221002230512362.png">
 <meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/image-20221003151051042.png">
 <meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/blogs/fluid_blog/source_posts/C-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/image-20221003151150445.png">
@@ -46,7 +47,7 @@
 <meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/image-20221002175156338.png">
 <meta property="og:image" content="http://helloymf.github.io/2022/10/02/c-yi-chang-chu-li/image-20221003151505632.png">
 <meta property="article:published_time" content="2022-10-02T07:50:33.000Z">
-<meta property="article:modified_time" content="2022-10-03T07:27:04.262Z">
+<meta property="article:modified_time" content="2022-10-03T07:36:57.046Z">
 <meta property="article:author" content="JNZ">
 <meta property="article:tag" content="basic">
 <meta property="article:tag" content="C++">
@@ -354,8 +355,10 @@
 <p><img src="/2022/10/02/c-yi-chang-chu-li/image-20221002224551011.png" srcset="/img/loading.gif" lazyload alt="__TypeMatch"></p>
 <p>CatchIt函数中主要是处理异常对象、执行栈展开、执行catch块。</p>
 <p><img src="/2022/10/02/c-yi-chang-chu-li/image-20221003150849299.png" srcset="/img/loading.gif" lazyload alt="CatchIt"></p>
-<p>其中栈展开是通过调用API完成，如下所示：</p>
+<p>其中栈展开调用了如下API：</p>
 <p><img src="/2022/10/02/c-yi-chang-chu-li/image-20221002230309773.png" srcset="/img/loading.gif" lazyload alt="栈展开API"></p>
+<p>之后循环调用UnwindMapEntry.action完成局部对象的析构。</p>
+<p><img src="/2022/10/02/c-yi-chang-chu-li/image-20221003153615756.png" srcset="/img/loading.gif" lazyload alt="执行action"></p>
 <p>最终执行catch块代码，完成异常处理。</p>
 <p><img src="/2022/10/02/c-yi-chang-chu-li/image-20221002230512362.png" srcset="/img/loading.gif" lazyload alt="catch块执行"></p>
 <p>在catch块代码执行完后，会将eax修改为catch块结束位置，返回给上一层函数。</p>

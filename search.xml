@@ -160,31 +160,6 @@
     
     
     <entry>
-      <title>To do list</title>
-      <link href="/2022/09/30/to-do-list/"/>
-      <url>/2022/09/30/to-do-list/</url>
-      
-        <content type="html"><![CDATA[<h2 id="想做的项目"><a href="#想做的项目" class="headerlink" title="想做的项目"></a>想做的项目</h2><p>1.Tiny Kernel</p><p>2.武器库</p><p>3.原始套接字实现TCP&#x2F;IP协议栈</p><p>4.脚本引擎</p><p>5.Tiny STL</p><h2 id="近期安排"><a href="#近期安排" class="headerlink" title="近期安排"></a>近期安排</h2><p>1.键盘打字正确指法</p><p>2.Python 与 Jupyter Notebook</p><p>3.动态插桩工具Pin</p><p>4.密码学</p><p>5.数据结构分析</p><p>6.网络流量分析</p><p>7.Arm汇编</p><p>8.提高英语水平</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> tasks </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> goal </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>特征码搜索</title>
       <link href="/2022/09/23/te-zheng-ma-sou-suo/"/>
       <url>/2022/09/23/te-zheng-ma-sou-suo/</url>

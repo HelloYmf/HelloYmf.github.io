@@ -16,17 +16,17 @@
   <meta name="author" content="JNZ">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1.基础配置：1.1 源码调试安装cgdb图形化外壳，支持源码级断点 1sudo apt-get install cgdb  修改cgdb配置文件 CGDB Manual 0.8.0 12345vim ~&#x2F;.cgdb&#x2F;cgdbrcfile &lt;cgdbrc&gt;:     # 设置源码指针高亮    set arrowstyle &#x3D; highlight  演示如下：cgdb upx.out">
+    <meta name="description" content="1.基础配置1.1 源码调试安装cgdb图形化外壳，支持源码级断点 1sudo apt-get install cgdb  修改cgdb配置文件 CGDB Manual 0.8.0 12345vim ~&#x2F;.cgdb&#x2F;cgdbrcfile &lt;cgdbrc&gt;:     # 设置源码指针高亮    set arrowstyle &#x3D; highlight  演示如下：cgdb upx.out">
 <meta property="og:type" content="article">
 <meta property="og:title" content="gdb基础用法">
 <meta property="og:url" content="http://helloymf.github.io/2022/10/19/gdb-ji-chu-yong-fa/index.html">
 <meta property="og:site_name" content="JNZ">
-<meta property="og:description" content="1.基础配置：1.1 源码调试安装cgdb图形化外壳，支持源码级断点 1sudo apt-get install cgdb  修改cgdb配置文件 CGDB Manual 0.8.0 12345vim ~&#x2F;.cgdb&#x2F;cgdbrcfile &lt;cgdbrc&gt;:     # 设置源码指针高亮    set arrowstyle &#x3D; highlight  演示如下：cgdb upx.out">
+<meta property="og:description" content="1.基础配置1.1 源码调试安装cgdb图形化外壳，支持源码级断点 1sudo apt-get install cgdb  修改cgdb配置文件 CGDB Manual 0.8.0 12345vim ~&#x2F;.cgdb&#x2F;cgdbrcfile &lt;cgdbrc&gt;:     # 设置源码指针高亮    set arrowstyle &#x3D; highlight  演示如下：cgdb upx.out">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://helloymf.github.io/2022/10/19/gdb-ji-chu-yong-fa/image-20221019164033240.png">
 <meta property="og:image" content="http://helloymf.github.io/2022/10/19/gdb-ji-chu-yong-fa/image-20221019164434466.png">
 <meta property="article:published_time" content="2022-10-19T07:45:38.000Z">
-<meta property="article:modified_time" content="2022-10-19T09:32:13.032Z">
+<meta property="article:modified_time" content="2022-10-19T09:35:09.251Z">
 <meta property="article:author" content="JNZ">
 <meta property="article:tag" content="basic">
 <meta property="article:tag" content="gdb">
@@ -277,7 +277,7 @@
             
               <div class="markdown-body">
                 
-                <h2 id="1-基础配置："><a href="#1-基础配置：" class="headerlink" title="1.基础配置："></a>1.基础配置：</h2><h3 id="1-1-源码调试"><a href="#1-1-源码调试" class="headerlink" title="1.1 源码调试"></a>1.1 源码调试</h3><p>安装cgdb图形化外壳，支持源码级断点</p>
+                <h2 id="1-基础配置"><a href="#1-基础配置" class="headerlink" title="1.基础配置"></a>1.基础配置</h2><h3 id="1-1-源码调试"><a href="#1-1-源码调试" class="headerlink" title="1.1 源码调试"></a>1.1 源码调试</h3><p>安装cgdb图形化外壳，支持源码级断点</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt-get install cgdb<br></code></pre></td></tr></table></figure>
 
 <p>修改cgdb配置文件</p>
@@ -293,7 +293,8 @@
 
 <p><strong>演示如下：gdb -tui upx.out</strong></p>
 <p><img src="/2022/10/19/gdb-ji-chu-yong-fa/image-20221019164434466.png" srcset="/img/loading.gif" lazyload alt="gdb调试汇编"></p>
-<h2 id="2-调试命令："><a href="#2-调试命令：" class="headerlink" title="2.调试命令："></a>2.调试命令：</h2><h3 id="2-1-启动"><a href="#2-1-启动" class="headerlink" title="2.1 启动"></a>2.1 启动</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">gdb upx.out<br><span class="hljs-meta prompt_"># </span><span class="language-bash">设置参数</span><br>set args test.out<br><span class="hljs-meta prompt_"># </span><span class="language-bash">运行到main</span><br>start<br><span class="hljs-meta prompt_"># </span><span class="language-bash">结束调试</span><br>quit					<br></code></pre></td></tr></table></figure>
+<h2 id="2-调试命令"><a href="#2-调试命令" class="headerlink" title="2.调试命令"></a>2.调试命令</h2><p><a target="_blank" rel="noopener" href="https://linuxtools-rst.readthedocs.io/zh_CN/latest/base/index.html">Linux基础 — Linux Tools Quick Tutorial (linuxtools-rst.readthedocs.io)</a></p>
+<h3 id="2-1-启动"><a href="#2-1-启动" class="headerlink" title="2.1 启动"></a>2.1 启动</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">gdb upx.out<br><span class="hljs-meta prompt_"># </span><span class="language-bash">设置参数</span><br>set args test.out<br><span class="hljs-meta prompt_"># </span><span class="language-bash">运行到main</span><br>start<br><span class="hljs-meta prompt_"># </span><span class="language-bash">结束调试</span><br>quit					<br></code></pre></td></tr></table></figure>
 
 <h3 id="2-2-执行"><a href="#2-2-执行" class="headerlink" title="2.2 执行"></a>2.2 执行</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell">run / continue 			放行<br><br>n	 					源码级单步步过<br>ni						汇编级单步步过<br>s						源码级单步步入<br>si						汇编级单步步入<br><br>finish					执行完当前函数<br><br>until					运行到循环结束<br>until + 行号			   运行到某行<br></code></pre></td></tr></table></figure>
 

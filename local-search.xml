@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>Win10内核环境配置</title>
+    <link href="/2022/10/23/win10-nei-he-huan-jing-pei-zhi/"/>
+    <url>/2022/10/23/win10-nei-he-huan-jing-pei-zhi/</url>
+    
+    <content type="html"><![CDATA[<h2 id="1-双机调试"><a href="#1-双机调试" class="headerlink" title="1.双机调试"></a>1.双机调试</h2><h3 id="1-1-虚拟机中执行命令"><a href="#1-1-虚拟机中执行命令" class="headerlink" title="1.1 虚拟机中执行命令"></a>1.1 虚拟机中执行命令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">管理员身份--powershell</span><br>bcdedit  /set  “&#123;current&#125;”  bootmenupolicy  Legacy<br>bcdedit  /dbgsettings  SERIAL  DEBUGPORT:1  BAUDRATE:115200<br>bcdedit  /copy  “&#123;current&#125;”   /d  “Debug”<br>bcdedit  /debug  “&#123;&lt;新建的启动配置的标识符&gt;&#125;”   on<br></code></pre></td></tr></table></figure><h3 id="1-2-VMVare设置"><a href="#1-2-VMVare设置" class="headerlink" title="1.2 VMVare设置"></a>1.2 VMVare设置</h3><p>添加串行端口，配置如下：</p><p><img src="/2022/10/23/win10-nei-he-huan-jing-pei-zhi/image-20221023174153708.png" alt="VMVare设置"></p><h3 id="1-3-Windbg设置"><a href="#1-3-Windbg设置" class="headerlink" title="1.3 Windbg设置"></a>1.3 Windbg设置</h3><p><img src="/2022/10/23/win10-nei-he-huan-jing-pei-zhi/image-20221023174338400.png" alt="Windbg设置"></p><h2 id="2-驱动框架"><a href="#2-驱动框架" class="headerlink" title="2.驱动框架"></a>2.驱动框架</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// Empty WDM Driver</span><br><span class="hljs-comment">// 关闭警告视为错误</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;ntifs.h&gt;</span></span><br><br>VOID <span class="hljs-title function_">DriverUnloadProc</span><span class="hljs-params">(PDRIVER_OBJECT DriverObject)</span><br>&#123;<br>DbgPrintEx(<span class="hljs-number">77</span>, <span class="hljs-number">0</span>, <span class="hljs-string">&quot;Driver unload.\r\n&quot;</span>);<br>&#125;<br><br>NTSTATUS <span class="hljs-title function_">DriverEntry</span><span class="hljs-params">(PDRIVER_OBJECT pDriver, PUNICODE_STRING pReg)</span><br>&#123;<br>pDriver-&gt;DriverUnload = DriverUnloadProc;<br>DbgPrintEx(<span class="hljs-number">77</span>, <span class="hljs-number">0</span>, <span class="hljs-string">&quot;Driver load.\r\n&quot;</span>);<br><br><span class="hljs-keyword">return</span> STATUS_SUCCESS;<br>&#125;<br></code></pre></td></tr></table></figure><h2 id="3-x64内联汇编"><a href="#3-x64内联汇编" class="headerlink" title="3.x64内联汇编"></a>3.x64内联汇编</h2><p>源文件中添加.asm文件</p><p><img src="/2022/10/23/win10-nei-he-huan-jing-pei-zhi/image-20220819101126465.png" alt="添加.asm文件"></p><p>右键汇编文件，如下设置</p><p><img src="/2022/10/23/win10-nei-he-huan-jing-pei-zhi/image-20220819101145950.png" alt="右键汇编文件"></p><p>应用后设置自定义生成工具选项</p><p><img src="/2022/10/23/win10-nei-he-huan-jing-pei-zhi/image-20220819101234574.png" alt="General"></p><p>配置如下</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">ml64 /c %(filename).asm<br><span class="hljs-meta prompt_">%</span><span class="language-bash">(filename).obj;%(Outputs)</span><br></code></pre></td></tr></table></figure><p><strong>函数框架</strong></p><p>tools.asm</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs assembly">; 读取MSR寄存器<br>.code<br><br>ReadMsr proc<br>    ; rcx msr地址  rdx 接收的地址<br>    push rdi<br>    push rax<br>    mov  rdi,rdx<br>    xor  rax,rax<br>    xor  rdx,rdx<br>    rdmsr<br>    mov  [rdi],eax<br>    mov  [rdi+4],edx<br>    pop  rax<br>    pop  rdi<br>    ret<br>ReadMsr endp<br><br>end<br></code></pre></td></tr></table></figure><p>main.cpp</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">ReadMsr</span><span class="hljs-params">(<span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> <span class="hljs-type">long</span>, <span class="hljs-type">void</span> *)</span>;<br></code></pre></td></tr></table></figure><p><strong>VS2015汇编高亮插件</strong></p><p>插件地址：<a href="https://github.com/HJLebbink/asm-dude/releases">https://github.com/HJLebbink/asm-dude/releases</a></p><p>找到Common7\IDE\VSIXInstaller.exe运行，并将要安装的插件拖入即可。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>tools</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Windows</tag>
+      
+      <tag>Basic</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>ShellCode编程</title>
     <link href="/2022/10/22/shellcode-bian-cheng/"/>
     <url>/2022/10/22/shellcode-bian-cheng/</url>

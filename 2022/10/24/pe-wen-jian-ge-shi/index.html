@@ -16,29 +16,24 @@
   <meta name="author" content="JNZ">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1.双机调试1.1 虚拟机中执行命令12345# 管理员身份--powershellbcdedit  &#x2F;set  “&amp;#123;current&amp;#125;”  bootmenupolicy  Legacybcdedit  &#x2F;dbgsettings  SERIAL  DEBUGPORT:1  BAUDRATE:115200bcdedit  &#x2F;copy  “&amp;#123;current&amp;#125;”">
+    <meta name="description" content="1.overview![整体结构](.&#x2F;PE文件格式&#x2F;树形 3 ooo.png) 2.headers_offset![header_offset](.&#x2F;PE文件格式&#x2F;偏移 1 oo.png) 3.tables_offset![table_offset](.&#x2F;PE文件格式&#x2F;偏移 2 oo.JPG) 4.othersSunshine’s Ho">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Win10内核环境配置">
-<meta property="og:url" content="http://helloymf.github.io/2022/10/23/win10-nei-he-huan-jing-pei-zhi/index.html">
+<meta property="og:title" content="PE文件格式">
+<meta property="og:url" content="http://helloymf.github.io/2022/10/24/pe-wen-jian-ge-shi/index.html">
 <meta property="og:site_name" content="JNZ">
-<meta property="og:description" content="1.双机调试1.1 虚拟机中执行命令12345# 管理员身份--powershellbcdedit  &#x2F;set  “&amp;#123;current&amp;#125;”  bootmenupolicy  Legacybcdedit  &#x2F;dbgsettings  SERIAL  DEBUGPORT:1  BAUDRATE:115200bcdedit  &#x2F;copy  “&amp;#123;current&amp;#125;”">
+<meta property="og:description" content="1.overview![整体结构](.&#x2F;PE文件格式&#x2F;树形 3 ooo.png) 2.headers_offset![header_offset](.&#x2F;PE文件格式&#x2F;偏移 1 oo.png) 3.tables_offset![table_offset](.&#x2F;PE文件格式&#x2F;偏移 2 oo.JPG) 4.othersSunshine’s Ho">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://helloymf.github.io/2022/10/23/win10-nei-he-huan-jing-pei-zhi/image-20221023174153708.png">
-<meta property="og:image" content="http://helloymf.github.io/2022/10/23/win10-nei-he-huan-jing-pei-zhi/image-20221023174338400.png">
-<meta property="og:image" content="http://helloymf.github.io/2022/10/23/win10-nei-he-huan-jing-pei-zhi/image-20220819101126465.png">
-<meta property="og:image" content="http://helloymf.github.io/2022/10/23/win10-nei-he-huan-jing-pei-zhi/image-20220819101145950.png">
-<meta property="og:image" content="http://helloymf.github.io/2022/10/23/win10-nei-he-huan-jing-pei-zhi/image-20220819101234574.png">
-<meta property="article:published_time" content="2022-10-23T08:56:53.000Z">
-<meta property="article:modified_time" content="2022-10-23T11:58:17.017Z">
+<meta property="article:published_time" content="2022-10-24T03:03:53.000Z">
+<meta property="article:modified_time" content="2022-10-24T03:38:38.576Z">
 <meta property="article:author" content="JNZ">
-<meta property="article:tag" content="Windows">
-<meta property="article:tag" content="Basic">
+<meta property="article:tag" content="basic">
+<meta property="article:tag" content="pe">
+<meta property="article:tag" content="windows">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://helloymf.github.io/2022/10/23/win10-nei-he-huan-jing-pei-zhi/image-20221023174153708.png">
   
   
   
-  <title>Win10内核环境配置 - JNZ</title>
+  <title>PE文件格式 - JNZ</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -203,7 +198,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Win10内核环境配置"></span>
+            <span id="subtitle" data-typed-text="PE文件格式"></span>
           
         </div>
 
@@ -214,8 +209,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-10-23 16:56" pubdate>
-          2022年10月23日 下午
+        <time datetime="2022-10-24 11:03" pubdate>
+          2022年10月24日 上午
         </time>
       </span>
     
@@ -226,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.1k 字
+          260 字
         
       </span>
     
@@ -237,7 +232,7 @@
         
         
         
-          9 分钟
+          3 分钟
         
       </span>
     
@@ -275,37 +270,16 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Win10内核环境配置</h1>
+            <h1 style="display: none">PE文件格式</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="1-双机调试"><a href="#1-双机调试" class="headerlink" title="1.双机调试"></a>1.双机调试</h2><h3 id="1-1-虚拟机中执行命令"><a href="#1-1-虚拟机中执行命令" class="headerlink" title="1.1 虚拟机中执行命令"></a>1.1 虚拟机中执行命令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">管理员身份--powershell</span><br>bcdedit  /set  “&#123;current&#125;”  bootmenupolicy  Legacy<br>bcdedit  /dbgsettings  SERIAL  DEBUGPORT:1  BAUDRATE:115200<br>bcdedit  /copy  “&#123;current&#125;”   /d  “Debug”<br>bcdedit  /debug  “&#123;&lt;新建的启动配置的标识符&gt;&#125;”   on<br></code></pre></td></tr></table></figure>
-
-<h3 id="1-2-VMVare设置"><a href="#1-2-VMVare设置" class="headerlink" title="1.2 VMVare设置"></a>1.2 VMVare设置</h3><p>添加串行端口，配置如下：</p>
-<p><img src="/2022/10/23/win10-nei-he-huan-jing-pei-zhi/image-20221023174153708.png" srcset="/img/loading.gif" lazyload alt="VMVare设置"></p>
-<h3 id="1-3-Windbg设置"><a href="#1-3-Windbg设置" class="headerlink" title="1.3 Windbg设置"></a>1.3 Windbg设置</h3><p><img src="/2022/10/23/win10-nei-he-huan-jing-pei-zhi/image-20221023174338400.png" srcset="/img/loading.gif" lazyload alt="Windbg设置"></p>
-<h2 id="2-驱动框架"><a href="#2-驱动框架" class="headerlink" title="2.驱动框架"></a>2.驱动框架</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// Empty WDM Driver</span><br><span class="hljs-comment">// 关闭警告视为错误</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;ntifs.h&gt;</span></span><br><br>VOID <span class="hljs-title function_">DriverUnloadProc</span><span class="hljs-params">(PDRIVER_OBJECT DriverObject)</span><br>&#123;<br>	DbgPrintEx(<span class="hljs-number">77</span>, <span class="hljs-number">0</span>, <span class="hljs-string">&quot;Driver unload.\r\n&quot;</span>);<br>&#125;<br><br>NTSTATUS <span class="hljs-title function_">DriverEntry</span><span class="hljs-params">(PDRIVER_OBJECT pDriver, PUNICODE_STRING pReg)</span><br>&#123;<br>	pDriver-&gt;DriverUnload = DriverUnloadProc;<br>	DbgPrintEx(<span class="hljs-number">77</span>, <span class="hljs-number">0</span>, <span class="hljs-string">&quot;Driver load.\r\n&quot;</span>);<br><br>	<span class="hljs-keyword">return</span> STATUS_SUCCESS;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="3-x64内联汇编"><a href="#3-x64内联汇编" class="headerlink" title="3.x64内联汇编"></a>3.x64内联汇编</h2><p>源文件中添加.asm文件</p>
-<p><img src="/2022/10/23/win10-nei-he-huan-jing-pei-zhi/image-20220819101126465.png" srcset="/img/loading.gif" lazyload alt="添加.asm文件"></p>
-<p>右键汇编文件，如下设置</p>
-<p><img src="/2022/10/23/win10-nei-he-huan-jing-pei-zhi/image-20220819101145950.png" srcset="/img/loading.gif" lazyload alt="右键汇编文件"></p>
-<p>应用后设置自定义生成工具选项</p>
-<p><img src="/2022/10/23/win10-nei-he-huan-jing-pei-zhi/image-20220819101234574.png" srcset="/img/loading.gif" lazyload alt="General"></p>
-<p>配置如下</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">ml64 /c %(filename).asm<br><span class="hljs-meta prompt_">%</span><span class="language-bash">(filename).obj;%(Outputs)</span><br></code></pre></td></tr></table></figure>
-
-<p><strong>函数框架</strong></p>
-<p>tools.asm</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs assembly">; 读取MSR寄存器<br>.code<br><br>ReadMsr proc<br>    ; rcx msr地址  rdx 接收的地址<br>    push rdi<br>    push rax<br>    mov  rdi,rdx<br>    xor  rax,rax<br>    xor  rdx,rdx<br>    rdmsr<br>    mov  [rdi],eax<br>    mov  [rdi+4],edx<br>    pop  rax<br>    pop  rdi<br>    ret<br>ReadMsr endp<br><br>end<br></code></pre></td></tr></table></figure>
-
-<p>main.cpp</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">ReadMsr</span><span class="hljs-params">(<span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> <span class="hljs-type">long</span>, <span class="hljs-type">void</span> *)</span>;<br></code></pre></td></tr></table></figure>
-
-<p><strong>VS2015汇编高亮插件</strong></p>
-<p>插件地址：<a target="_blank" rel="noopener" href="https://github.com/HJLebbink/asm-dude/releases">https://github.com/HJLebbink/asm-dude/releases</a></p>
-<p>找到Common7\IDE\VSIXInstaller.exe运行，并将要安装的插件拖入即可。</p>
+                <h2 id="1-overview"><a href="#1-overview" class="headerlink" title="1.overview"></a>1.overview</h2><p>![整体结构](.&#x2F;PE文件格式&#x2F;树形 3 ooo.png)</p>
+<h2 id="2-headers-offset"><a href="#2-headers-offset" class="headerlink" title="2.headers_offset"></a>2.headers_offset</h2><p>![header_offset](.&#x2F;PE文件格式&#x2F;偏移 1 oo.png)</p>
+<h2 id="3-tables-offset"><a href="#3-tables-offset" class="headerlink" title="3.tables_offset"></a>3.tables_offset</h2><p>![table_offset](.&#x2F;PE文件格式&#x2F;偏移 2 oo.JPG)</p>
+<h2 id="4-others"><a href="#4-others" class="headerlink" title="4.others"></a>4.others</h2><p><a target="_blank" rel="noopener" href="http://www.sunshine2k.de/reversing/tuts/tut_pe.htm">Sunshine’s Homepage - PE file format (sunshine2k.de)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/panjunnn/article/details/115458877">(27条消息) PE文件资源表_边缘计算机的博客-CSDN博客_pe资源表</a></p>
 
                 
               </div>
@@ -324,7 +298,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/tools/" class="category-chain-item">tools</a>
+  <a href="/categories/reverse/" class="category-chain-item">reverse</a>
   
   
 
@@ -339,9 +313,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Windows/">#Windows</a>
+        <a href="/tags/basic/">#basic</a>
       
-        <a href="/tags/Basic/">#Basic</a>
+        <a href="/tags/pe/">#pe</a>
+      
+        <a href="/tags/windows/">#windows</a>
       
     </div>
   
@@ -353,8 +329,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Win10内核环境配置</div>
-      <div>http://helloymf.github.io/2022/10/23/win10-nei-he-huan-jing-pei-zhi/</div>
+      <div>PE文件格式</div>
+      <div>http://helloymf.github.io/2022/10/24/pe-wen-jian-ge-shi/</div>
     </div>
     <div class="license-meta">
       
@@ -405,18 +381,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/10/24/pe-wen-jian-ge-shi/" title="PE文件格式">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">PE文件格式</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/10/22/shellcode-bian-cheng/" title="ShellCode编程">
-                        <span class="hidden-mobile">ShellCode编程</span>
+                      <a href="/2022/10/23/win10-nei-he-huan-jing-pei-zhi/" title="Win10内核环境配置">
+                        <span class="hidden-mobile">Win10内核环境配置</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

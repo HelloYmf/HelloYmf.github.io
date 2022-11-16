@@ -1,0 +1,713 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/logo.png">
+  <link rel="icon" href="/img/logo.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="JNZ">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1.ELF文件格式​	ELF (Executable and Linkable Format)是一种为可执行文件，目标文件，共享链接库和内核转储(core dumps)准备的标准文件格式。ELF文件有两个平行视角：一个是程序链接视角，一个是程序装载视角。从链接视角来看，ELF文件时按Section划分的；而从装载的视角来看，ELF文件又可以按Segment来划分。如图所示：  从整体来看，完整的E">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ELF文件格式">
+<meta property="og:url" content="http://helloymf.github.io/2022/11/15/elf-wen-jian-ge-shi/index.html">
+<meta property="og:site_name" content="JNZ">
+<meta property="og:description" content="1.ELF文件格式​	ELF (Executable and Linkable Format)是一种为可执行文件，目标文件，共享链接库和内核转储(core dumps)准备的标准文件格式。ELF文件有两个平行视角：一个是程序链接视角，一个是程序装载视角。从链接视角来看，ELF文件时按Section划分的；而从装载的视角来看，ELF文件又可以按Segment来划分。如图所示：  从整体来看，完整的E">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://helloymf.github.io/2022/11/15/elf-wen-jian-ge-shi/844554_FV5D8AW37MUCV33.png">
+<meta property="og:image" content="http://helloymf.github.io/2022/11/15/elf-wen-jian-ge-shi/844554_XHZJRQ8CAFEQDJK.png">
+<meta property="article:published_time" content="2022-11-15T09:14:45.000Z">
+<meta property="article:modified_time" content="2022-11-16T08:35:56.575Z">
+<meta property="article:author" content="JNZ">
+<meta property="article:tag" content="basic">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://helloymf.github.io/2022/11/15/elf-wen-jian-ge-shi/844554_FV5D8AW37MUCV33.png">
+  
+  
+  
+  <title>ELF文件格式 - JNZ</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"helloymf.github.io","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>JNZ</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="ELF文件格式"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-11-15 17:14" pubdate>
+          2022年11月15日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          39 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">ELF文件格式</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="1-ELF文件格式"><a href="#1-ELF文件格式" class="headerlink" title="1.ELF文件格式"></a>1.ELF文件格式</h1><p>​	<strong>ELF</strong> (<strong>Executable and Linkable Format</strong>)是一种为可执行文件，目标文件，共享链接库和内核转储(core dumps)准备的标准文件格式。ELF文件有两个平行视角：一个是程序链接视角，一个是程序装载视角。从链接视角来看，ELF文件时按Section划分的；而从装载的视角来看，ELF文件又可以按Segment来划分。如图所示：</p>
+<p><img src="/2022/11/15/elf-wen-jian-ge-shi/844554_FV5D8AW37MUCV33.png" srcset="/img/loading.gif" lazyload alt="ELF双视图"></p>
+<p>从整体来看，完整的ELF文件由ELF头（<strong>ELF header</strong>）、程序头表（<strong>Program header table</strong>）、节头表（<strong>Section header table</strong>）组成。</p>
+<h2 id="1-1-ELF-Header"><a href="#1-1-ELF-Header" class="headerlink" title="1.1 ELF Header"></a>1.1 ELF Header</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> EI_NIDENT	16</span><br><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">elf32_hdr</span>&#123;</span><br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>	e_ident[EI_NIDENT];<br>  Elf32_Half	e_type;<br>  Elf32_Half	e_machine;<br>  Elf32_Word	e_version;<br>  Elf32_Addr	e_entry;  <span class="hljs-comment">/* Entry point */</span><br>  Elf32_Off	e_phoff;<br>  Elf32_Off	e_shoff;<br>  Elf32_Word	e_flags;<br>  Elf32_Half	e_ehsize;<br>  Elf32_Half	e_phentsize;<br>  Elf32_Half	e_phnum;<br>  Elf32_Half	e_shentsize;<br>  Elf32_Half	e_shnum;<br>  Elf32_Half	e_shstrndx;<br>&#125; Elf32_Ehdr;<br><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">elf64_hdr</span> &#123;</span><br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>	e_ident[EI_NIDENT];	<span class="hljs-comment">/* ELF Magic number and other info */</span><br>  Elf64_Half e_type;				<span class="hljs-comment">/* Object file type */</span><br>  Elf64_Half e_machine;				<span class="hljs-comment">/* CPU Architecture */</span><br>  Elf64_Word e_version;				<span class="hljs-comment">/* Object file version */</span><br>  Elf64_Addr e_entry;				<span class="hljs-comment">/* OEP */</span><br>  Elf64_Off e_phoff;				<span class="hljs-comment">/* Program header table foa */</span><br>  Elf64_Off e_shoff;				<span class="hljs-comment">/* Section header table foa */</span><br>  Elf64_Word e_flags;				<span class="hljs-comment">/* Processor-specific flags */</span><br>  Elf64_Half e_ehsize;				<span class="hljs-comment">/* ELF header size in bytes */</span><br>  Elf64_Half e_phentsize;			<span class="hljs-comment">/* Program header table entry size */</span><br>  Elf64_Half e_phnum;				<span class="hljs-comment">/* Program header table entry count */</span><br>  Elf64_Half e_shentsize;			<span class="hljs-comment">/* Section header table entry size */</span><br>  Elf64_Half e_shnum;				<span class="hljs-comment">/* Section header table entry count */</span><br>  Elf64_Half e_shstrndx;			<span class="hljs-comment">/* Section header string table index */</span><br>&#125; Elf64_Ehdr;<br></code></pre></td></tr></table></figure>
+
+<p><strong>详细字段说明：</strong><a target="_blank" rel="noopener" href="https://refspecs.linuxfoundation.org/elf/gabi4+/ch4.eheader.html">ELF Header (linuxfoundation.org)</a></p>
+<h3 id="1-1-1-e-type"><a href="#1-1-1-e-type" class="headerlink" title="1.1.1 e_type"></a>1.1.1 e_type</h3><p>表示ELF文件类型，有以下几种：</p>
+<ul>
+<li>ET_NONE: 位置类型</li>
+<li>ET_REL: 可重定向类型(relocatable)，通常是编译后的*.o文件</li>
+<li>ET_EXEC: 可执行类型(executable)，静态链接后的可执行文件 *.out</li>
+<li>ET_DYN: 共享对象(shared object)，动态链接的可执行文件或动态库 *.so</li>
+<li>ET_CORE: 程序崩溃生成的核心转储文件(coredump)</li>
+</ul>
+<h3 id="1-1-2-e-machine"><a href="#1-1-2-e-machine" class="headerlink" title="1.1.2 e_machine"></a>1.1.2 e_machine</h3><p>表示当前程序所需的CPU架构，常见有以下几种：</p>
+<ul>
+<li>EM_ARM: arm指令集</li>
+<li>EM_X86_64: amd x86-64指令集</li>
+</ul>
+<h3 id="1-1-3-e-entry"><a href="#1-1-3-e-entry" class="headerlink" title="1.1.3 e_entry"></a>1.1.3 e_entry</h3><p>指定程序的入口虚拟地址，不是main函数地址，而是.text段的首地址_start。当然这也要求程序本身非PIE(<code>-no-pie</code>)编译的且ASLR关闭的情况下，对于非<code>ET_EXEC</code>类型通常并不是实际的虚拟地址值。</p>
+<h3 id="1-1-4-e-shstrndx"><a href="#1-1-4-e-shstrndx" class="headerlink" title="1.1.4 e_shstrndx"></a>1.1.4 e_shstrndx</h3><p>表示section table名称字符串表在section table中的索引。</p>
+<h2 id="1-2-Section-header-table"><a href="#1-2-Section-header-table" class="headerlink" title="1.2 Section header table"></a>1.2 Section header table</h2><p>一个由 e_shentsize 个大小为 e_shentsize 元素组成的数组，主要用来指定静态链接所使用的一些信息。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">elf32_shdr</span> &#123;</span><br>  Elf32_Word	sh_name;<br>  Elf32_Word	sh_type;<br>  Elf32_Word	sh_flags;<br>  Elf32_Addr	sh_addr;<br>  Elf32_Off	sh_offset;<br>  Elf32_Word	sh_size;<br>  Elf32_Word	sh_link;<br>  Elf32_Word	sh_info;<br>  Elf32_Word	sh_addralign;<br>  Elf32_Word	sh_entsize;<br>&#125; Elf32_Shdr;<br><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">elf64_shdr</span> &#123;</span><br>  Elf64_Word sh_name;		<span class="hljs-comment">/* Section name, index in string tbl */</span><br>  Elf64_Word sh_type;		<span class="hljs-comment">/* Type of section */</span><br>  Elf64_Xword sh_flags;		<span class="hljs-comment">/* Miscellaneous section attributes */</span><br>  Elf64_Addr sh_addr;		<span class="hljs-comment">/* Section virtual addr at execution */</span><br>  Elf64_Off sh_offset;		<span class="hljs-comment">/* Section file offset */</span><br>  Elf64_Xword sh_size;		<span class="hljs-comment">/* Size of section in bytes */</span><br>  Elf64_Word sh_link;		<span class="hljs-comment">/* Index of another section */</span><br>  Elf64_Word sh_info;		<span class="hljs-comment">/* Additional section information */</span><br>  Elf64_Xword sh_addralign;	<span class="hljs-comment">/* Section alignment */</span><br>  Elf64_Xword sh_entsize;	<span class="hljs-comment">/* Entry size if section holds table */</span><br>&#125; Elf64_Shdr;<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-2-1-sh-name"><a href="#1-2-1-sh-name" class="headerlink" title="1.2.1 sh_name"></a>1.2.1 sh_name</h3><p>表示节名在字符串表中的偏移</p>
+<h3 id="1-2-2-sh-type"><a href="#1-2-2-sh-type" class="headerlink" title="1.2.2 sh_type"></a>1.2.2 sh_type</h3><p>表示节的类型，常见的类型枚举如下：</p>
+<ul>
+<li>SHT_NULL: 表示无效节，通常第0号节区为该类型</li>
+<li>SHT_PROGBITS: 表示该section包含由程序决定的内容，如<code>.text</code>、<code>.data</code>、<code>.plt</code>、<code>.got</code></li>
+<li>SHT_SYMTAB&#x2F;SHT_DYNSYM: 表示该section中包含符号表，如<code>.symtab</code>、<code>.dynsym</code></li>
+<li>SHT_DYNAMIC: 表示该section中包含动态链接阶段所需要的信息</li>
+<li>SHT_STRTAB: 表示该section中包含字符串信息，如<code>.strtab</code>、<code>.shstrtab</code></li>
+<li>SHT_REL&#x2F;SHT_RELA: 表示该section中包含重定向项信息</li>
+</ul>
+<h3 id="1-2-3-文件时信息"><a href="#1-2-3-文件时信息" class="headerlink" title="1.2.3 文件时信息"></a>1.2.3 文件时信息</h3><ul>
+<li>sh_offset: 内容起始地址相对于文件开头的偏移</li>
+<li>sh_size: 内容的大小</li>
+<li>sh_entsize: 有的内容是也是一个数组，这个字段就表示数组的元素大小</li>
+</ul>
+<h3 id="1-2-4-装载时信息"><a href="#1-2-4-装载时信息" class="headerlink" title="1.2.4 装载时信息"></a>1.2.4 装载时信息</h3><ul>
+<li>sh_addr: 如果该section需要在运行时加载到虚拟内存中，该字段就是对应section内容(第一个字节)的虚拟地址</li>
+<li>sh_addralign: 内容地址的对齐，如果有的话需要满足<code>sh_addr % sh_addralign = 0</code></li>
+<li>sh_flags: 表示所映射内容的权限，可根据<code>SHF_WRITE/ALLOC/EXECINSTR</code>进行组合</li>
+</ul>
+<h3 id="1-2-5-拓展字段"><a href="#1-2-5-拓展字段" class="headerlink" title="1.2.5 拓展字段"></a>1.2.5 拓展字段</h3><p><code>sh_link</code>和<code>sh_info</code>的含义根据section类型的不同而不同，如下表所示：</p>
+<p><img src="/2022/11/15/elf-wen-jian-ge-shi/844554_XHZJRQ8CAFEQDJK.png" srcset="/img/loading.gif" lazyload alt="Section header拓展字段"></p>
+<p>具体细节需要具体分析。</p>
+<h2 id="1-3-Program-header-table"><a href="#1-3-Program-header-table" class="headerlink" title="1.3 Program header table"></a>1.3 Program header table</h2><p>一个由 e_phnum个大小为 e_phentsize元素组成的数组，主要用来保存程序加载到内存中所使用的一些信息，使用段 (segment) 来表示。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">elf32_phdr</span>&#123;</span><br>  Elf32_Word	p_type;<br>  Elf32_Off	p_offset;<br>  Elf32_Addr	p_vaddr;<br>  Elf32_Addr	p_paddr;<br>  Elf32_Word	p_filesz;<br>  Elf32_Word	p_memsz;<br>  Elf32_Word	p_flags;<br>  Elf32_Word	p_align;<br>&#125; Elf32_Phdr;<br><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">elf64_phdr</span> &#123;</span><br>  Elf64_Word p_type;<br>  Elf64_Word p_flags;<br>  Elf64_Off p_offset;		<span class="hljs-comment">/* Segment file offset */</span><br>  Elf64_Addr p_vaddr;		<span class="hljs-comment">/* Segment virtual address */</span><br>  Elf64_Addr p_paddr;		<span class="hljs-comment">/* Segment physical address */</span><br>  Elf64_Xword p_filesz;		<span class="hljs-comment">/* Segment size in file */</span><br>  Elf64_Xword p_memsz;		<span class="hljs-comment">/* Segment size in memory */</span><br>  Elf64_Xword p_align;		<span class="hljs-comment">/* Segment alignment, file &amp; memory */</span><br>&#125; Elf64_Phdr;<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-3-1-p-type"><a href="#1-3-1-p-type" class="headerlink" title="1.3.1 p_type"></a>1.3.1 p_type</h3><p>表示段的类型，常见的类型枚举如下：</p>
+<ul>
+<li>PT_NULL: 表示该段未使用</li>
+<li>PT_LOAD: Loadable Segment，将文件中的segment内容映射到进程内存中对应的地址上。值得一提的是SPEC中说在program header中的多个PT_LOAD地址是按照虚拟地址递增排序的。</li>
+<li>PT_DYNAMIC: 动态链接中用到的段，通常是RW映射，因为需要由<code>interpreter</code>(ld.so)修复对应的的入口</li>
+<li>PT_INTERP: 包含interpreter的路径，动态连接时，类似ELF用户态加载器</li>
+<li>PT_HDR: 表示program header table本身。如果有这个segment的话，必须要在所有可加载的segment之前，并且在文件中不能出现超过<strong>一次</strong>。</li>
+</ul>
+<h3 id="1-3-2-装载信息"><a href="#1-3-2-装载信息" class="headerlink" title="1.3.2 装载信息"></a>1.3.2 装载信息</h3><ul>
+<li>p_offset: 该segment的数据在文件中的偏移地址(相对文件头)</li>
+<li>p_vaddr: segment数据应该加载到进程的虚拟地址</li>
+<li>p_paddr: segment数据应该加载到进程的物理地址(如果对应系统使用的是物理地址)</li>
+<li>p_filesz: 该segment数据在文件中的大小</li>
+<li>p_memsz: 该segment数据在进程内存中的大小。注意需要满足<code>p_memsz&gt;=p_filesz</code>，多出的部分初始化为0，通常作为<code>.bss</code>段内容</li>
+<li>p_flags: 进程中该segment的权限(R&#x2F;W&#x2F;X)</li>
+<li>p_align: 该segment数据的对齐，2的整数次幂。即要求<code>p_offset % p_align = p_vaddr</code>。</li>
+</ul>
+<h1 id="2-符号表"><a href="#2-符号表" class="headerlink" title="2.符号表"></a>2.符号表</h1>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/build/" class="category-chain-item">build</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/basic/">#basic</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>ELF文件格式</div>
+      <div>http://helloymf.github.io/2022/11/15/elf-wen-jian-ge-shi/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>JNZ</div>
+        </div>
+      
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/11/14/cheng-xu-gou-jian-ji-chu/" title="程序构建基础">
+                        <span class="hidden-mobile">程序构建基础</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      Have a nice day
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

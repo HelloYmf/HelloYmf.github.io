@@ -25,8 +25,10 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://helloymf.github.io/2022/11/15/elf-wen-jian-ge-shi/844554_FV5D8AW37MUCV33.png">
 <meta property="og:image" content="http://helloymf.github.io/2022/11/15/elf-wen-jian-ge-shi/844554_XHZJRQ8CAFEQDJK.png">
+<meta property="og:image" content="http://helloymf.github.io/2022/11/15/elf-wen-jian-ge-shi/image-20221117111939956.png">
+<meta property="og:image" content="http://helloymf.github.io/2022/11/15/elf-wen-jian-ge-shi/image-20221117113416156.png">
 <meta property="article:published_time" content="2022-11-15T09:14:45.000Z">
-<meta property="article:modified_time" content="2022-11-16T14:07:34.209Z">
+<meta property="article:modified_time" content="2022-11-17T06:45:03.209Z">
 <meta property="article:author" content="JNZ">
 <meta property="article:tag" content="basic">
 <meta name="twitter:card" content="summary_large_image">
@@ -222,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7.7k 字
+          7.8k 字
         
       </span>
     
@@ -233,7 +235,7 @@
         
         
         
-          65 分钟
+          66 分钟
         
       </span>
     
@@ -505,7 +507,7 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 声明printf函数使用C链接</span><br><span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">printf</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *fmt, ...)</span></span>;<br><br><span class="hljs-comment">//声明指定的头文件内所有的东西都使用 C 链接</span><br><span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> &#123;<br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br>&#125;<br><br><span class="hljs-comment">// 声明全局变量 errno 为C链接</span><br><span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> <span class="hljs-type">int</span> errno;<br><br><span class="hljs-comment">//  定义函数 ShowChar 使用 C 链接</span><br><span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> <span class="hljs-function"><span class="hljs-type">char</span> <span class="hljs-title">ShowChar</span><span class="hljs-params">(<span class="hljs-type">char</span> ch)</span> </span>&#123;<br>    <span class="hljs-built_in">putchar</span>(ch);<br>    <span class="hljs-keyword">return</span> ch;<br>&#125;<br><br><span class="hljs-comment">// C++常见的预编译写法</span><br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> __cplusplus  </span><br><span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> &#123;  <br><span class="hljs-meta">#<span class="hljs-keyword">endif</span>  </span><br>  <br><span class="hljs-comment">/**** some declaration or so *****/</span>  <br>  <br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> __cplusplus  </span><br>&#125;  <br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br></code></pre></td></tr></table></figure>
 
 <h2 id="2-3-弱符号与强符号"><a href="#2-3-弱符号与强符号" class="headerlink" title="2.3 弱符号与强符号"></a>2.3 弱符号与强符号</h2><p>在C&#x2F;C++中，编译器默认函数和初始化的全局变量为强符号，未初始化的全局变量为弱符号。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">int</span> waek;								<span class="hljs-comment">// 弱符号</span><br><span class="hljs-type">int</span> strong = <span class="hljs-number">1</span>;							<span class="hljs-comment">// 强符号</span><br>__attribute__((weak)) waek2 = <span class="hljs-number">2</span>;		<span class="hljs-comment">// 弱符号</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">int</span> waek;								<span class="hljs-comment">// 弱符号</span><br><span class="hljs-type">int</span> strong = <span class="hljs-number">1</span>;							<span class="hljs-comment">// 强符号</span><br>__attribute__((weak)) waek2 = <span class="hljs-number">2</span>;		<span class="hljs-comment">// 指定弱符号</span><br></code></pre></td></tr></table></figure>
 
 <p>针对强弱符号的概念，链接器会按照如下规则处理与选择被多次定义的全局符号：</p>
 <ul>
@@ -513,12 +515,14 @@
 <li>如果一个符号在某个目标文件中是强符号，在其他文件中都是弱符号，那么最终强符号有效</li>
 <li>如果一个符号在所有目标文件中都是弱符号，那么选择其中占用空间最大的一个</li>
 </ul>
+<p>可以用来重载函数，测试实例如下：</p>
+<p><img src="/2022/11/15/elf-wen-jian-ge-shi/image-20221117111939956.png" srcset="/img/loading.gif" lazyload alt="强弱符号测试"></p>
+<p><a target="_blank" rel="noopener" href="https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#Common-Function-Attributes">Common Function Attributes (Using the GNU Compiler Collection (GCC))</a></p>
 <h2 id="2-4-弱引用与强引用"><a href="#2-4-弱引用与强引用" class="headerlink" title="2.4 弱引用与强引用"></a>2.4 弱引用与强引用</h2><p>在C&#x2F;C++中，链接阶段需要对目标文件引用的外部符号进行决议，如果没有找到该符号的定义，会报符号为定义链接错误，这种被称为强引用。弱引用与其相反，在没有找到该符号时，并不会产生错误，而是获得默认0值或特殊值，以便程序能够识别。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">extern</span> <span class="hljs-type">void</span> <span class="hljs-title">foo</span><span class="hljs-params">()</span></span>;							<span class="hljs-comment">// 强引用</span><br><br>__attribute__ ((weakref)) <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">foo</span><span class="hljs-params">()</span></span>;		<span class="hljs-comment">// 弱引用</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">extern</span> <span class="hljs-type">void</span> <span class="hljs-title">func</span><span class="hljs-params">()</span></span>;												<span class="hljs-comment">// 强引用</span><br><br><span class="hljs-type">static</span> __attribute__ ((<span class="hljs-built_in">weakref</span>(<span class="hljs-string">&quot;same_func&quot;</span>))) <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">func</span><span class="hljs-params">()</span></span>;		<span class="hljs-comment">// 弱引用</span><br><span class="hljs-comment">// 其中same_func为func的别名，函数必须指定static，作用域为当前文件</span><br></code></pre></td></tr></table></figure>
 
-<p>可以实现拓展，如果foo函数在外部定义了，就使用外部定义的，如果未定义，则指定为0，如下代码：</p>
-<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs scss">__attribute__ ((weakref)) void <span class="hljs-built_in">foo</span>();		<br><br>int <span class="hljs-selector-tag">main</span>()<br>&#123;<br>	<span class="hljs-built_in">if</span>(foo)	<span class="hljs-built_in">foo</span>();<br>	return <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
+<p>可以实现拓展，如果same_func函数在外部定义了，就执行外部定义的；如果未定义，就不执行这个功能，如下图所示：</p>
+<p><img src="/2022/11/15/elf-wen-jian-ge-shi/image-20221117113416156.png" srcset="/img/loading.gif" lazyload alt="弱引用与强引用测试"></p>
 
                 
               </div>

@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://helloymf.github.io/2022/11/15/elf-wen-jian-ge-shi/image-20221117111939956.png">
 <meta property="og:image" content="http://helloymf.github.io/2022/11/15/elf-wen-jian-ge-shi/image-20221117113416156.png">
 <meta property="article:published_time" content="2022-11-15T09:14:45.000Z">
-<meta property="article:modified_time" content="2022-11-20T13:03:43.841Z">
+<meta property="article:modified_time" content="2022-11-20T13:47:21.538Z">
 <meta property="article:author" content="JNZ">
 <meta property="article:tag" content="basic">
 <meta name="twitter:card" content="summary_large_image">
@@ -225,7 +225,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          8.8k 字
+          10k 字
         
       </span>
     
@@ -236,7 +236,7 @@
         
         
         
-          74 分钟
+          84 分钟
         
       </span>
     
@@ -530,7 +530,13 @@
 
 <p><strong>一般来说，32 位程序只使用 Elf32_Rel，64 位程序只使用 Elf32_Rela。</strong></p>
 <h3 id="3-1-1-r-offset"><a href="#3-1-1-r-offset" class="headerlink" title="3.1.1 r_offset"></a>3.1.1 r_offset</h3><p><strong>此成员给出了需要重定位的位置。</strong>对于一个可重定位文件而言，此值是从需要重定位的符号所在节区头部开始到将被重定位的位置之间的字节偏移。对于可执行文件或者共享目标文件而言，其取值是需要重定位的<strong>虚拟地址</strong>，一般而言，也就是说我们所说的 GOT 表的地址。</p>
-<h3 id="3-1-2-r-info"><a href="#3-1-2-r-info" class="headerlink" title="3.1.2 r_info"></a>3.1.2 r_info</h3><p><strong>此成员给出需要重定位的符号的符号表索引（高三个字节），以及相应的重定位类型。</strong>根据符号来获取外部地址，重定位类型决定修复方式，比如对e8 call的修复和全局变量的修复方式存在差异。</p>
+<h3 id="3-1-2-r-info"><a href="#3-1-2-r-info" class="headerlink" title="3.1.2 r_info"></a>3.1.2 r_info</h3><p><strong>此成员给出需要重定位的符号的符号表索引，以及相应的重定位类型。</strong>根据符号来获取外部地址，重定位类型决定修复方式，比如对e8 call的修复和全局变量的修复方式存在差异。</p>
+<p>位运算表示如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> ELF32_R_SYM(info)             ((info)&gt;&gt;8)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> ELF32_R_TYPE(info)            ((unsigned char)(info))</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> ELF32_R_INFO(sym, type)       (((sym)&lt;&lt;8)+(unsigned char)(type))</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> ELF64_R_SYM(info)             ((info)&gt;&gt;32)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> ELF64_R_TYPE(info)            ((Elf64_Word)(info))</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> ELF64_R_INFO(sym, type)       (((Elf64_Xword)(sym)&lt;&lt;32) + (Elf64_Xword)(type))</span><br></code></pre></td></tr></table></figure>
+
+<p>常用类型枚举如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* x86-64 relocation types */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> R_X86_64_NONE       0   <span class="hljs-comment">/* No reloc */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> R_X86_64_64         1   <span class="hljs-comment">/* Direct 64 bit  */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> R_X86_64_PC32       2   <span class="hljs-comment">/* PC relative 32 bit signed */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> R_X86_64_GOT32      3   <span class="hljs-comment">/* 32 bit GOT entry */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> R_X86_64_PLT32      4   <span class="hljs-comment">/* 32 bit PLT address */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> R_X86_64_COPY       5   <span class="hljs-comment">/* Copy symbol at runtime */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> R_X86_64_GLOB_DAT   6   <span class="hljs-comment">/* Create GOT entry */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> R_X86_64_JUMP_SLOT  7   <span class="hljs-comment">/* Create PLT entry */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> R_X86_64_RELATIVE   8   <span class="hljs-comment">/* Adjust by program base */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> R_X86_64_GOTPCREL   9   <span class="hljs-comment">/* 32 bit signed pc relative offset to GOT */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> R_X86_64_32         10  <span class="hljs-comment">/* Direct 32 bit zero extended */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> R_X86_64_32S        11  <span class="hljs-comment">/* Direct 32 bit sign extended */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> R_X86_64_16         12  <span class="hljs-comment">/* Direct 16 bit zero extended */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> R_X86_64_PC16       13  <span class="hljs-comment">/* 16 bit sign extended pc relative */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> R_X86_64_8          14  <span class="hljs-comment">/* Direct 8 bit sign extended  */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> R_X86_64_PC8        15  <span class="hljs-comment">/* 8 bit sign extended pc relative */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> R_X86_64_NUM        16</span><br></code></pre></td></tr></table></figure>
+
 <h3 id="3-1-2-r-addend"><a href="#3-1-2-r-addend" class="headerlink" title="3.1.2 r_addend"></a>3.1.2 r_addend</h3><p>此成员给出一个常量补齐，用来计算将被填充到可重定位字段的数值。</p>
 <h1 id="Linux查看ELF命令"><a href="#Linux查看ELF命令" class="headerlink" title="Linux查看ELF命令"></a>Linux查看ELF命令</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">查看符号表</span><br>readelf -s xxx<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">查看Section header table</span><br>readelf -S xxx<br></code></pre></td></tr></table></figure>
 

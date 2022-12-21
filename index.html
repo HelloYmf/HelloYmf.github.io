@@ -223,6 +223,67 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2022/12/21/raii-yu-zhi-neng-zhi-zhen/" target="_self">
+          RAII与智能指针
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/12/21/raii-yu-zhi-neng-zhi-zhen/" target="_self">
+        <div>
+          循环引用问题 12345678910111213141516171819struct C &#123;	std::shared_ptr&lt;C&gt; m_child;	std::shared_ptr&lt;C&gt; m_parent;&#125;;int main() &#123;    auto parent = std::make_shared&lt;C&gt;();    auto c
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-12-21 10:18" pubdate>
+              2022-12-21
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/coding/" class="category-chain-item">coding</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/C-C/">#C/C++</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2022/12/06/cmake-ji-chu/" target="_self">
           cmake基础
         </a>
@@ -897,69 +958,6 @@
               <a href="/tags/open-source/">#open-source</a>
             
               <a href="/tags/pe/">#pe</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/10/19/linux-chang-yong-ming-ling/" target="_self">
-          Linux常用命令
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/10/19/linux-chang-yong-ming-ling/" target="_self">
-        <div>
-          1.帮助命令1234567891011# 查看命令简要说明whatis ls# 查看官方文档man ls# 使用正则表达式man -w &quot;ta*&quot;# 查看路径whereis ls  2.组合命令123456789101112131415161718# 连续运行多个命令cmd1 ; cmd2# 只有前一个命令OK，才会继续执行后面的cmd1 &amp;&amp; cmd2# 只有
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-10-19 17:36" pubdate>
-              2022-10-19
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/tools/" class="category-chain-item">tools</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/basic/">#basic</a>
-            
-              <a href="/tags/Linux/">#Linux</a>
             
           </div>
         

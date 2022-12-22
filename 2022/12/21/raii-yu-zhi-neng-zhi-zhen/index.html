@@ -28,7 +28,7 @@
 <meta property="og:image" content="http://helloymf.github.io/2022/12/21/raii-yu-zhi-neng-zhi-zhen/RAII%E4%B8%8E%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%5Cimage-20221222155104758.png">
 <meta property="og:image" content="http://helloymf.github.io/2022/12/21/raii-yu-zhi-neng-zhi-zhen/RAII%E4%B8%8E%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%5Cimage-20221222173040427.png">
 <meta property="article:published_time" content="2022-12-21T02:18:06.000Z">
-<meta property="article:modified_time" content="2022-12-22T10:25:19.995Z">
+<meta property="article:modified_time" content="2022-12-22T10:28:57.727Z">
 <meta property="article:author" content="JNZ">
 <meta property="article:tag" content="C&#x2F;C++">
 <meta name="twitter:card" content="summary_large_image">
@@ -235,7 +235,7 @@
         
         
         
-          155 分钟
+          156 分钟
         
       </span>
     
@@ -282,7 +282,7 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyLock</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-keyword">explicit</span> <span class="hljs-title">MyLock</span><span class="hljs-params">(T&amp; mutex)</span></span><br><span class="hljs-function">		:_mutex(mutex) &#123;</span><br>		_mutex.<span class="hljs-built_in">lock</span>();	<br>	&#125;<br>    ~<span class="hljs-built_in">MyLock</span>() &#123;<br>        _mutex.<span class="hljs-built_in">unlock</span>();<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <p>这段代码可以保证初始化的时候加锁，生命周期结束后自动释放锁，同时天生异常安全，因为C++异常栈展开时会调用局部对象的析构函数。</p>
-<h1 id="2-智能指针"><a href="#2-智能指针" class="headerlink" title="2.智能指针"></a>2.智能指针</h1><h2 id="2-1-基本介绍"><a href="#2-1-基本介绍" class="headerlink" title="2.1 基本介绍"></a>2.1 基本介绍</h2><p>智能指针就是采用RAII思想实现的资源管理模板类，由标准库提供，需要包含<memory>头文件。</memory></p>
+<h1 id="2-智能指针"><a href="#2-智能指针" class="headerlink" title="2.智能指针"></a>2.智能指针</h1><h2 id="2-1-基本介绍"><a href="#2-1-基本介绍" class="headerlink" title="2.1 基本介绍"></a>2.1 基本介绍</h2><p>智能指针就是采用RAII思想实现的资源管理模板类，由标准库提供，需要包含&lt;memory&gt;头文件。</p>
 <table>
 <thead>
 <tr>

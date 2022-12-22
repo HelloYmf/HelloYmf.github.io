@@ -231,7 +231,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/12/21/raii-yu-zhi-neng-zhi-zhen/" target="_self">
         <div>
-          循环引用问题 12345678910111213141516171819struct C &#123;	std::shared_ptr&lt;C&gt; m_child;	std::shared_ptr&lt;C&gt; m_parent;&#125;;int main() &#123;    auto parent = std::make_shared&lt;C&gt;();    auto c
+          1.RAII思想RAII是C++内存管理的一种思想，资源获取视为初始化。使用对象封装资源的获取与释放操作，对象初始化时调用构造函数完成资源获取，对象离开作用域自动调用析构函数完成资源释放，避免了忘记调用销毁函数的情况，降低内存泄漏风险。如下例子： 1234567891011template &lt;typename T&gt;class MyLock &#123;public:	explicit
         </div>
       </a>
 

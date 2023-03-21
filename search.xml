@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>git常用命令</title>
+      <link href="/2023/03/21/git-chang-yong-ming-ling/"/>
+      <url>/2023/03/21/git-chang-yong-ming-ling/</url>
+      
+        <content type="html"><![CDATA[<h1 id="1-基础操作"><a href="#1-基础操作" class="headerlink" title="1.基础操作"></a>1.基础操作</h1><p><strong>克隆项目</strong></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs git">// 常规用法<br>git clone [url]<br>// 同时克隆子模块并更新子模块<br>git clone --recurse-submodules  &lt;url&gt;<br></code></pre></td></tr></table></figure><p><strong>忽略文件</strong></p><p>.gitingore文件</p><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># 忽略根目录下的bin文件夹中的所有文件</span><br>/bin<br><span class="hljs-comment"># 忽略全部.c后缀的文件</span><br>*.c<br></code></pre></td></tr></table></figure><p><strong>提交暂存区</strong></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs git">// 提交单个文件到暂存区<br>git add &lt;file&gt;<br>// 提交全部文件到暂存区<br>git add .<br></code></pre></td></tr></table></figure><p><strong>本地提交</strong></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs git">git commit -m &quot;提交说明&quot;<br></code></pre></td></tr></table></figure><p><strong>远程提交</strong></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs git">// 查看当前的远程仓库<br>git remote -v<br>// 新增远程仓库<br>git remote add origin &lt;XXX.git&gt;<br>// 删除远程仓库<br>git remote rm &lt;仓库别名&gt;<br>// 提交到远程仓库<br>git push origin main<br></code></pre></td></tr></table></figure><h1 id="2-分支管理"><a href="#2-分支管理" class="headerlink" title="2.分支管理"></a>2.分支管理</h1><p><strong>查看当前分支</strong></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs git">git branch<br></code></pre></td></tr></table></figure><p><strong>新建分支</strong></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs git">git branch &lt;分支名&gt;<br></code></pre></td></tr></table></figure><p><strong>切换分支</strong></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs git">git checkout &lt;分支名&gt; <br></code></pre></td></tr></table></figure><p><strong>合并分支</strong></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs git">git merge &lt;待合并的分支名&gt;<br></code></pre></td></tr></table></figure><p><strong>删除分支</strong></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs git">git branch -d &lt;分支名&gt;<br></code></pre></td></tr></table></figure><h1 id="3-版本管理"><a href="#3-版本管理" class="headerlink" title="3.版本管理"></a>3.版本管理</h1><p><strong>提交历史</strong></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs git">// 常规模式<br>git log<br>// 精简模式<br>git log --pretty=oneline<br>// 查看所有操作的历史<br>git reflog<br></code></pre></td></tr></table></figure><p><strong>为提交打标签</strong></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs git">git tag -a &lt;提交版本号&gt;<br></code></pre></td></tr></table></figure><p><strong>删除标签</strong></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs git">git tag -d &lt;标签名&gt;<br></code></pre></td></tr></table></figure><p><strong>回滚版本</strong></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs git">git reset --hard &lt;提交版本号&gt;<br></code></pre></td></tr></table></figure><p><strong>回滚指定文件</strong></p><p>需要在文件所在目录中执行操作</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs git">git reset --hard &lt;提交版本号&gt; filename<br></code></pre></td></tr></table></figure><h1 id="4-版本管理"><a href="#4-版本管理" class="headerlink" title="4.版本管理"></a>4.版本管理</h1>]]></content>
+      
+      
+      <categories>
+          
+          <category> tools </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> basic </tag>
+            
+            <tag> Git </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>golang基础语法</title>
       <link href="/2023/02/22/golang-ji-chu-yu-fa/"/>
       <url>/2023/02/22/golang-ji-chu-yu-fa/</url>

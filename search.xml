@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>COFF文件格式</title>
+      <link href="/2023/03/24/coff-wen-jian-ge-shi/"/>
+      <url>/2023/03/24/coff-wen-jian-ge-shi/</url>
+      
+        <content type="html"><![CDATA[<p><em>COFF文件就是.obj文件，链接器使用。</em></p><h1 id="1-整体结构"><a href="#1-整体结构" class="headerlink" title="1.整体结构"></a>1.整体结构</h1><p>下图显示了COFF文件的整体结构：</p><p><img src="/2023/03/24/coff-wen-jian-ge-shi/%E6%95%B4%E4%BD%93%E7%BB%93%E6%9E%84%E5%9B%BE.png" alt="整体结构"></p><p>从图中可以看出，COFF文件结构比PE文件要简单很多，而二者FileHeader是一致的。</p><h1 id="2-局部结构"><a href="#2-局部结构" class="headerlink" title="2.局部结构"></a>2.局部结构</h1><h2 id="2-1-文件头"><a href="#2-1-文件头" class="headerlink" title="2.1 文件头"></a>2.1 文件头</h2><p>在COFF文件的开头</p><table><thead><tr><th>偏移</th><th>大小</th><th>域</th><th>描述</th></tr></thead><tbody><tr><td>0</td><td>2</td><td>Machine</td><td>标识目标机器类型的数字</td></tr><tr><td>2</td><td>2</td><td>NumberOfSections</td><td>节表项的数目</td></tr><tr><td>4</td><td>4</td><td>TimeDateStamp</td><td>时间戳</td></tr><tr><td>8</td><td>4</td><td>PointerToSymbolTable</td><td>符号表的文件指针</td></tr><tr><td>12</td><td>4</td><td>NumberOfSymbols</td><td>符号表中的元素数目</td></tr><tr><td>16</td><td>2</td><td>SizeOfOptionalHeader</td><td>COFF文件都为0</td></tr><tr><td>18</td><td>2</td><td>Characteristics</td><td>文件属性</td></tr></tbody></table><h2 id="2-2-节表"><a href="#2-2-节表" class="headerlink" title="2.2 节表"></a>2.2 节表</h2><p><strong>定位：</strong>必须紧跟在FileHeader之后，否则链接器找不到。</p><table><thead><tr><th>偏移</th><th>大小</th><th>域</th><th>描述</th></tr></thead><tbody><tr><td>0</td><td>8</td><td>Name</td><td>节区名字，目标文件中如果名字很长，导致8字节存不下，<br>可以将节名字变成&#x2F;offset，这种形式，offset对应字符串表中偏移。</td></tr><tr><td>8</td><td>4</td><td>VirtualSize</td><td>obj文件始终为0</td></tr><tr><td>12</td><td>4</td><td>VirtualAddress</td><td>obj文件中大多数为0，不为0的话重定位时需要减去</td></tr><tr><td>16</td><td>4</td><td>SizeOfRawData</td><td>对于obj文件，节区的大小</td></tr><tr><td>20</td><td>4</td><td>PointerToRawData</td><td>节区的文件指针</td></tr><tr><td>24</td><td>4</td><td>PointerToRelocations</td><td>obj节中重定位项的文件指针，PE有重定位表，不需要这个</td></tr><tr><td>28</td><td>4</td><td>PointerToLinenumbers</td><td>一般都为0，微软已不建议obj中保留行号信息</td></tr><tr><td>32</td><td>2</td><td>NumberOfRelocations</td><td>obj节中重定位项个数</td></tr><tr><td>34</td><td>2</td><td>NumberOfLinenumbers</td><td>一般都为0，微软已不建议obj中保留行号信息</td></tr><tr><td>36</td><td>4</td><td>Characteristics</td><td>描述节特征的标志</td></tr></tbody></table><p>一些对于obj文件节区有用的标志字段：</p><table><thead><tr><th>标志</th><th>值</th><th>描述</th></tr></thead><tbody><tr><td>IMAGE_SCN_CNT_CODE</td><td>0x00000020</td><td>此节包含可执行代码</td></tr><tr><td>IMAGE_SCN_CNT_INITIALIZED_DATA</td><td>0x00000040</td><td>此节包含已初始化的数据</td></tr><tr><td>IMAGE_SCN_CNT_UNINITIALIZED_DATA</td><td>0x00000080</td><td>此节包含未初始化的数据</td></tr><tr><td>IMAGE_SCN_LNK_INFO</td><td>0x00000200</td><td>此节包含注释或者其它信息</td></tr><tr><td><strong>IMAGE_SCN_LNK_REMOVE</strong></td><td><strong>0x00000800</strong></td><td><strong>此节不会成为最终形成的映像文件<br>的一部分</strong></td></tr><tr><td>IMAGE_SCN_LNK_COMDAT</td><td>0x00001000</td><td>此节包含 COMDAT 数据</td></tr><tr><td>IMAGE_SCN_GPREL</td><td>0x00008000</td><td>此节包含通过全局指针（GP）来引<br>用的数据</td></tr><tr><td>IMAGE_SCN_ALIGN_1BYTES</td><td>0x00100000</td><td>按 1 字节边界对齐数据，有很多类似的标志<br>这里不全部列举了</td></tr><tr><td>IMAGE_SCN_LNK_NRELOC_OVFL</td><td>0x01000000</td><td>此节包含扩展的重定位信息</td></tr></tbody></table><p>[^IMAGE_SCN_LNK_NRELOC_OVFL]: IMAGE_SCN_LNK_NRELOC_OVFL 标志表明节中重定位项的个数超出了节头中为每个 节保留的 16 位所能表示的范围。如果设置了此标志并且节头中的 NumberOfRelocations 域的值是 0xffff，那么实际的重定位项个数被保存在第一个重 定位项的 VirtualAddress 域（32 位）中。如果设置了 IMAGE_SCN_LNK_NRELOC_OVFL 标志但节中的重定位项的个数少于 0xffff，则表示出现了错误。<br>[^节名中的$符号]: obj文件的节名字中出现$符号，表示这些个节是连续一组，最终生成可执行文件时会去掉$符号后面的字符，并将这些节合并。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> build </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> basic </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Git常用命令</title>
       <link href="/2023/03/21/git-chang-yong-ming-ling/"/>
       <url>/2023/03/21/git-chang-yong-ming-ling/</url>

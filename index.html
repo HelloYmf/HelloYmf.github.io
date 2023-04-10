@@ -223,15 +223,76 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/04/10/rust-xi-tong-bian-cheng-part3/" target="_self">
-          Rust系统编程part3
+        <a href="/2023/04/10/rust-xi-tong-bian-cheng-zhi-cuo-wu-chu-li/" target="_self">
+          Rust系统编程之错误处理
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/10/rust-xi-tong-bian-cheng-part3/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/10/rust-xi-tong-bian-cheng-zhi-cuo-wu-chu-li/" target="_self">
         <div>
-          1.调用Windows APIRust Windows官方文档： windows - Rust (microsoft.github.io) 使用Windows API的例子： [Cargo.toml] 1234567891011121314[package]name = &quot;windowsapi&quot;version = &quot;0.1.0&quot;edition = &quot
+          错误处理1 pacnic主动退出，类似exit(0)，但是可以携带信息。 12345678910fn give_princess(gift: &amp;str) &#123;    // 公主讨厌蛇，所以如果公主表示厌恶的话我们要停止！    if gift == &quot;snake&quot; &#123; panic!(&quot;AAAaaaaa!!!!&quot;); &#125;
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-04-10 21:50" pubdate>
+              2023-04-10
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/coding/" class="category-chain-item">coding</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Rust/">#Rust</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/04/10/rust-xi-tong-bian-cheng-zhi-windows-api/" target="_self">
+          Rust系统编程之Windows API
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/10/rust-xi-tong-bian-cheng-zhi-windows-api/" target="_self">
+        <div>
+          调用Windows API1.Rust Windows官方文档windows - Rust (microsoft.github.io) 2.使用Windows API的例子[Cargo.toml] 1234567891011121314[package]name = &quot;windowsapi&quot;version = &quot;0.1.0&quot;edition = &quot;2
         </div>
       </a>
 
@@ -284,13 +345,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/04/10/rust-xi-tong-bian-cheng-part2/" target="_self">
-          Rust系统编程part2
+        <a href="/2023/04/10/rust-xi-tong-bian-cheng-zhi-nei-cun-mo-xing/" target="_self">
+          Rust系统编程之内存模型
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/10/rust-xi-tong-bian-cheng-part2/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/10/rust-xi-tong-bian-cheng-zhi-nei-cun-mo-xing/" target="_self">
         <div>
           1.所有权（owenership）1.1 规则 Rust 中的每一个值都有一个所有者（owner） 值在任一时刻有且只有一个所有者 当所有者（变量）离开作用域，这个值将被丢弃（销毁）  1.1 解释Rust中每一个复杂类型都被一个unique_ptr包裹，如下图所示：  这使得在这个对象离开作用域的时候会自动调用drop函数来销毁，满足RAII思想。 对于默认的赋值操作，全部发生的是移动语义，如下
         </div>
@@ -345,13 +406,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/04/10/rust-xi-tong-bian-cheng-part1/" target="_self">
-          Rust系统编程part1
+        <a href="/2023/04/10/rust-xi-tong-bian-cheng-zhi-ji-chu-yu-fa/" target="_self">
+          Rust系统编程之基础语法
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/10/rust-xi-tong-bian-cheng-part1/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/10/rust-xi-tong-bian-cheng-zhi-ji-chu-yu-fa/" target="_self">
         <div>
           1.变量1.1 特性a.不可变性在rust中，变量默认是不可变的，除非指定mut属性。 12345let a = 1;a = 2;	// wronglet mut a = 1;a = 2;	// right  b.变量隐藏12345678910let a = 1;&#123;	let a = 2;	println!(&quot;&#123;&#125;&quot;, a);&#125;printl
         </div>
@@ -885,71 +946,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/basic/">#basic</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/11/02/cobalt-strike-ji-chu-cao-zuo/" target="_self">
-          Cobalt Strike 基础
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/11/02/cobalt-strike-ji-chu-cao-zuo/" target="_self">
-        <div>
-          1.基本配置1.1 组成部分 teamserver – teamserver       – C2服务器 cs客户端      – cobaltstrike.jar – 控制端 beacon                                       – 被控端  1.2 启动teamserver其中teamserver必须运行在Linux  Java环境下，ubuntu相关命令如
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-11-02 20:50" pubdate>
-              2022-11-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/red-team/" class="category-chain-item">red-team</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/basic/">#basic</a>
-            
-              <a href="/tags/cs/">#cs</a>
-            
-              <a href="/tags/tools/">#tools</a>
             
           </div>
         

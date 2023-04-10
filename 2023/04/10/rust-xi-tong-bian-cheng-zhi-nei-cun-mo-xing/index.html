@@ -18,28 +18,28 @@
   
     <meta name="description" content="1.所有权（owenership）1.1 规则 Rust 中的每一个值都有一个所有者（owner） 值在任一时刻有且只有一个所有者 当所有者（变量）离开作用域，这个值将被丢弃（销毁）  1.1 解释Rust中每一个复杂类型都被一个unique_ptr包裹，如下图所示：  这使得在这个对象离开作用域的时候会自动调用drop函数来销毁，满足RAII思想。 对于默认的赋值操作，全部发生的是移动语义，如下">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Rust系统编程part2">
-<meta property="og:url" content="http://helloymf.github.io/2023/04/10/rust-xi-tong-bian-cheng-part2/index.html">
+<meta property="og:title" content="Rust系统编程之内存模型">
+<meta property="og:url" content="http://helloymf.github.io/2023/04/10/rust-xi-tong-bian-cheng-zhi-nei-cun-mo-xing/index.html">
 <meta property="og:site_name" content="JNZ">
 <meta property="og:description" content="1.所有权（owenership）1.1 规则 Rust 中的每一个值都有一个所有者（owner） 值在任一时刻有且只有一个所有者 当所有者（变量）离开作用域，这个值将被丢弃（销毁）  1.1 解释Rust中每一个复杂类型都被一个unique_ptr包裹，如下图所示：  这使得在这个对象离开作用域的时候会自动调用drop函数来销毁，满足RAII思想。 对于默认的赋值操作，全部发生的是移动语义，如下">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://helloymf.github.io/2023/04/10/rust-xi-tong-bian-cheng-part2/image-20230410142307761.png">
-<meta property="og:image" content="http://helloymf.github.io/2023/04/10/rust-xi-tong-bian-cheng-part2/image-20230410145939378.png">
-<meta property="og:image" content="http://helloymf.github.io/2023/04/10/rust-xi-tong-bian-cheng-part2/image-20230410150240702.png">
-<meta property="og:image" content="http://helloymf.github.io/2023/04/10/rust-xi-tong-bian-cheng-part2/image-20230410151401998.png">
-<meta property="og:image" content="http://helloymf.github.io/2023/04/10/rust-xi-tong-bian-cheng-part2/image-20230410152618564.png">
-<meta property="og:image" content="http://helloymf.github.io/2023/04/10/rust-xi-tong-bian-cheng-part2/image-20230410160026953.png">
-<meta property="og:image" content="http://helloymf.github.io/2023/04/10/rust-xi-tong-bian-cheng-part2/image-20230410160216265.png">
+<meta property="og:image" content="http://helloymf.github.io/2023/04/10/rust-xi-tong-bian-cheng-zhi-nei-cun-mo-xing/image-20230410142307761.png">
+<meta property="og:image" content="http://helloymf.github.io/2023/04/10/rust-xi-tong-bian-cheng-zhi-nei-cun-mo-xing/image-20230410145939378.png">
+<meta property="og:image" content="http://helloymf.github.io/2023/04/10/rust-xi-tong-bian-cheng-zhi-nei-cun-mo-xing/image-20230410150240702.png">
+<meta property="og:image" content="http://helloymf.github.io/2023/04/10/rust-xi-tong-bian-cheng-zhi-nei-cun-mo-xing/image-20230410151401998.png">
+<meta property="og:image" content="http://helloymf.github.io/2023/04/10/rust-xi-tong-bian-cheng-zhi-nei-cun-mo-xing/image-20230410152618564.png">
+<meta property="og:image" content="http://helloymf.github.io/2023/04/10/rust-xi-tong-bian-cheng-zhi-nei-cun-mo-xing/image-20230410160026953.png">
+<meta property="og:image" content="http://helloymf.github.io/2023/04/10/rust-xi-tong-bian-cheng-zhi-nei-cun-mo-xing/image-20230410160216265.png">
 <meta property="article:published_time" content="2023-04-10T03:42:49.000Z">
-<meta property="article:modified_time" content="2023-04-10T08:06:40.975Z">
+<meta property="article:modified_time" content="2023-04-10T13:50:10.459Z">
 <meta property="article:author" content="JNZ">
 <meta property="article:tag" content="Rust">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://helloymf.github.io/2023/04/10/rust-xi-tong-bian-cheng-part2/image-20230410142307761.png">
+<meta name="twitter:image" content="http://helloymf.github.io/2023/04/10/rust-xi-tong-bian-cheng-zhi-nei-cun-mo-xing/image-20230410142307761.png">
   
   
   
-  <title>Rust系统编程part2 - JNZ</title>
+  <title>Rust系统编程之内存模型 - JNZ</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -204,7 +204,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Rust系统编程part2"></span>
+            <span id="subtitle" data-typed-text="Rust系统编程之内存模型"></span>
           
         </div>
 
@@ -276,7 +276,7 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Rust系统编程part2</h1>
+            <h1 style="display: none">Rust系统编程之内存模型</h1>
             
             
               <div class="markdown-body">
@@ -287,24 +287,24 @@
 <li>当所有者（变量）离开作用域，这个值将被<strong>丢弃</strong>（销毁）</li>
 </ul>
 <h2 id="1-1-解释"><a href="#1-1-解释" class="headerlink" title="1.1 解释"></a>1.1 解释</h2><p>Rust中每一个复杂类型都被一个unique_ptr包裹，如下图所示：</p>
-<p><img src="/2023/04/10/rust-xi-tong-bian-cheng-part2/image-20230410142307761.png" srcset="/img/loading.gif" lazyload alt="unique_ptr结构"></p>
+<p><img src="/2023/04/10/rust-xi-tong-bian-cheng-zhi-nei-cun-mo-xing/image-20230410142307761.png" srcset="/img/loading.gif" lazyload alt="unique_ptr结构"></p>
 <p>这使得在这个对象离开作用域的时候会自动调用drop函数来销毁，满足RAII思想。</p>
 <p>对于默认的赋值操作，全部发生的是移动语义，如下代码：</p>
 <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-keyword">let</span> a = <span class="hljs-string">&quot;hello World&quot;</span>.<span class="hljs-keyword">to</span><span class="hljs-constructor">_string()</span>;<br><span class="hljs-keyword">let</span> b = a;		<span class="hljs-comment">// 此时将a移动到b</span><br></code></pre></td></tr></table></figure>
 
 <p>上面操作本质上是将在栈上的智能指针对象进行值拷贝，然后在编译器语法层面控制变量a不可用，汇编代码如下：</p>
-<p><img src="/2023/04/10/rust-xi-tong-bian-cheng-part2/image-20230410145939378.png" srcset="/img/loading.gif" lazyload alt="rust移动语义"></p>
+<p><img src="/2023/04/10/rust-xi-tong-bian-cheng-zhi-nei-cun-mo-xing/image-20230410145939378.png" srcset="/img/loading.gif" lazyload alt="rust移动语义"></p>
 <p>此时String对象的所有者从a转到了b，最终在局部变量离开作用域时调用drop函数进行销毁。</p>
-<p><img src="/2023/04/10/rust-xi-tong-bian-cheng-part2/image-20230410150240702.png" srcset="/img/loading.gif" lazyload alt="drop销毁"></p>
+<p><img src="/2023/04/10/rust-xi-tong-bian-cheng-zhi-nei-cun-mo-xing/image-20230410150240702.png" srcset="/img/loading.gif" lazyload alt="drop销毁"></p>
 <h2 id="1-3-指定深拷贝"><a href="#1-3-指定深拷贝" class="headerlink" title="1.3 指定深拷贝"></a>1.3 指定深拷贝</h2><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">a</span> = <span class="hljs-string">&quot;hello World&quot;</span>.<span class="hljs-title function_ invoke__">to_string</span>();<br><span class="hljs-keyword">let</span> <span class="hljs-variable">b</span> = a.<span class="hljs-title function_ invoke__">clone</span>();		<span class="hljs-comment">// 此时深拷贝a的数据，a继续有效</span><br></code></pre></td></tr></table></figure>
 
 <p>相关汇编实现如下：</p>
-<p><img src="/2023/04/10/rust-xi-tong-bian-cheng-part2/image-20230410151401998.png" srcset="/img/loading.gif" lazyload alt="clone函数实现"></p>
+<p><img src="/2023/04/10/rust-xi-tong-bian-cheng-zhi-nei-cun-mo-xing/image-20230410151401998.png" srcset="/img/loading.gif" lazyload alt="clone函数实现"></p>
 <p><strong>上述规则适用于一切赋值，包括参数传递和返回值。</strong></p>
 <h1 id="2-引用"><a href="#2-引用" class="headerlink" title="2.引用"></a>2.引用</h1><h2 id="2-1-不可变引用"><a href="#2-1-不可变引用" class="headerlink" title="2.1 不可变引用"></a>2.1 不可变引用</h2><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">a</span> = <span class="hljs-string">&quot;hello World&quot;</span>.<span class="hljs-title function_ invoke__">to_string</span>();<br><span class="hljs-keyword">let</span> <span class="hljs-variable">b</span> = &amp;a;<br></code></pre></td></tr></table></figure>
 
 <p>汇编代码如下：</p>
-<p><img src="/2023/04/10/rust-xi-tong-bian-cheng-part2/image-20230410152618564.png" srcset="/img/loading.gif" lazyload alt="引用实现"></p>
+<p><img src="/2023/04/10/rust-xi-tong-bian-cheng-zhi-nei-cun-mo-xing/image-20230410152618564.png" srcset="/img/loading.gif" lazyload alt="引用实现"></p>
 <p>b中仅仅保存了一份a智能指针对象在栈上的地址。</p>
 <h2 id="2-2-可变引用"><a href="#2-2-可变引用" class="headerlink" title="2.2 可变引用"></a>2.2 可变引用</h2><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">a</span> = <span class="hljs-string">&quot;hello World&quot;</span>.<span class="hljs-title function_ invoke__">to_string</span>();<br><span class="hljs-keyword">let</span> <span class="hljs-variable">b</span> = &amp;<span class="hljs-keyword">mut</span> a;<br></code></pre></td></tr></table></figure>
 
@@ -317,12 +317,12 @@
 <h1 id="2-内存模型"><a href="#2-内存模型" class="headerlink" title="2.内存模型"></a>2.内存模型</h1><h2 id="2-1-对象控制权转移"><a href="#2-1-对象控制权转移" class="headerlink" title="2.1 对象控制权转移"></a>2.1 对象控制权转移</h2><h4 id="a-赋值"><a href="#a-赋值" class="headerlink" title="a.赋值"></a>a.赋值</h4><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">a</span> = <span class="hljs-string">&quot;hello&quot;</span>.<span class="hljs-title function_ invoke__">to_string</span>();<br>a = <span class="hljs-string">&quot;world&quot;</span>.<span class="hljs-title function_ invoke__">to_string</span>();<br></code></pre></td></tr></table></figure>
 
 <p>此时的内存模型如下：</p>
-<p><img src="/2023/04/10/rust-xi-tong-bian-cheng-part2/image-20230410160026953.png" srcset="/img/loading.gif" lazyload alt="赋值内存模型"></p>
+<p><img src="/2023/04/10/rust-xi-tong-bian-cheng-zhi-nei-cun-mo-xing/image-20230410160026953.png" srcset="/img/loading.gif" lazyload alt="赋值内存模型"></p>
 <p>此时存在栈上的智能指针对象a已经用于管理另外一块内存，而原来的内存在此时应该被释放。</p>
 <h4 id="b-拷贝"><a href="#b-拷贝" class="headerlink" title="b.拷贝"></a>b.拷贝</h4><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">a</span> = <span class="hljs-string">&quot;hello&quot;</span>.<span class="hljs-title function_ invoke__">to_string</span>();<br><span class="hljs-keyword">let</span> <span class="hljs-variable">b</span> = a;<br></code></pre></td></tr></table></figure>
 
 <p>此时的内存模型如下：</p>
-<p><img src="/2023/04/10/rust-xi-tong-bian-cheng-part2/image-20230410160216265.png" srcset="/img/loading.gif" lazyload alt="拷贝内存模型"></p>
+<p><img src="/2023/04/10/rust-xi-tong-bian-cheng-zhi-nei-cun-mo-xing/image-20230410160216265.png" srcset="/img/loading.gif" lazyload alt="拷贝内存模型"></p>
 <p>此时存在于栈上的智能指针b用于管理a的资源，a必须放弃管理，否则在退出时会造成double free。</p>
 
                 
@@ -369,8 +369,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Rust系统编程part2</div>
-      <div>http://helloymf.github.io/2023/04/10/rust-xi-tong-bian-cheng-part2/</div>
+      <div>Rust系统编程之内存模型</div>
+      <div>http://helloymf.github.io/2023/04/10/rust-xi-tong-bian-cheng-zhi-nei-cun-mo-xing/</div>
     </div>
     <div class="license-meta">
       
@@ -421,9 +421,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/10/rust-xi-tong-bian-cheng-part3/" title="Rust系统编程part3">
+                      <a href="/2023/04/10/rust-xi-tong-bian-cheng-zhi-windows-api/" title="Rust系统编程之Windows API">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Rust系统编程part3</span>
+                        <span class="hidden-mobile">Rust系统编程之Windows API</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -431,8 +431,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/10/rust-xi-tong-bian-cheng-part1/" title="Rust系统编程part1">
-                        <span class="hidden-mobile">Rust系统编程part1</span>
+                      <a href="/2023/04/10/rust-xi-tong-bian-cheng-zhi-ji-chu-yu-fa/" title="Rust系统编程之基础语法">
+                        <span class="hidden-mobile">Rust系统编程之基础语法</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

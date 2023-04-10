@@ -16,22 +16,22 @@
   <meta name="author" content="JNZ">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1.调用Windows APIRust Windows官方文档： windows - Rust (microsoft.github.io) 使用Windows API的例子： [Cargo.toml] 1234567891011121314[package]name &#x3D; &quot;windowsapi&quot;version &#x3D; &quot;0.1.0&quot;edition &#x3D; &amp;quot">
+    <meta name="description" content="调用Windows API1.Rust Windows官方文档windows - Rust (microsoft.github.io) 2.使用Windows API的例子[Cargo.toml] 1234567891011121314[package]name &#x3D; &quot;windowsapi&quot;version &#x3D; &quot;0.1.0&quot;edition &#x3D; &quot;2">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Rust系统编程part3">
-<meta property="og:url" content="http://helloymf.github.io/2023/04/10/rust-xi-tong-bian-cheng-part3/index.html">
+<meta property="og:title" content="Rust系统编程之Windows API">
+<meta property="og:url" content="http://helloymf.github.io/2023/04/10/rust-xi-tong-bian-cheng-zhi-windows-api/index.html">
 <meta property="og:site_name" content="JNZ">
-<meta property="og:description" content="1.调用Windows APIRust Windows官方文档： windows - Rust (microsoft.github.io) 使用Windows API的例子： [Cargo.toml] 1234567891011121314[package]name &#x3D; &quot;windowsapi&quot;version &#x3D; &quot;0.1.0&quot;edition &#x3D; &amp;quot">
+<meta property="og:description" content="调用Windows API1.Rust Windows官方文档windows - Rust (microsoft.github.io) 2.使用Windows API的例子[Cargo.toml] 1234567891011121314[package]name &#x3D; &quot;windowsapi&quot;version &#x3D; &quot;0.1.0&quot;edition &#x3D; &quot;2">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-04-10T08:08:12.000Z">
-<meta property="article:modified_time" content="2023-04-10T09:05:54.151Z">
+<meta property="article:modified_time" content="2023-04-10T13:52:36.949Z">
 <meta property="article:author" content="JNZ">
 <meta property="article:tag" content="Rust">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>Rust系统编程part3 - JNZ</title>
+  <title>Rust系统编程之Windows API - JNZ</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -196,7 +196,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Rust系统编程part3"></span>
+            <span id="subtitle" data-typed-text="Rust系统编程之Windows API"></span>
           
         </div>
 
@@ -219,7 +219,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          910 字
+          878 字
         
       </span>
     
@@ -268,21 +268,19 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Rust系统编程part3</h1>
+            <h1 style="display: none">Rust系统编程之Windows API</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="1-调用Windows-API"><a href="#1-调用Windows-API" class="headerlink" title="1.调用Windows API"></a>1.调用Windows API</h1><p><strong>Rust Windows官方文档：</strong></p>
-<p><a target="_blank" rel="noopener" href="https://microsoft.github.io/windows-docs-rs/doc/windows/index.html">windows - Rust (microsoft.github.io)</a></p>
-<p><strong>使用Windows API的例子：</strong></p>
-<p>[Cargo.toml]</p>
+                <h1 id="调用Windows-API"><a href="#调用Windows-API" class="headerlink" title="调用Windows API"></a>调用Windows API</h1><h2 id="1-Rust-Windows官方文档"><a href="#1-Rust-Windows官方文档" class="headerlink" title="1.Rust Windows官方文档"></a>1.Rust Windows官方文档</h2><p><a target="_blank" rel="noopener" href="https://microsoft.github.io/windows-docs-rs/doc/windows/index.html">windows - Rust (microsoft.github.io)</a></p>
+<h2 id="2-使用Windows-API的例子"><a href="#2-使用Windows-API的例子" class="headerlink" title="2.使用Windows API的例子"></a>2.使用Windows API的例子</h2><p>[Cargo.toml]</p>
 <figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs toml"><span class="hljs-section">[package]</span><br><span class="hljs-attr">name</span> = <span class="hljs-string">&quot;windowsapi&quot;</span><br><span class="hljs-attr">version</span> = <span class="hljs-string">&quot;0.1.0&quot;</span><br><span class="hljs-attr">edition</span> = <span class="hljs-string">&quot;2021&quot;</span><br><br> <span class="hljs-section">[dependencies.windows]</span><br> <span class="hljs-attr">version</span> = <span class="hljs-string">&quot;0.43.0&quot;</span><br> <span class="hljs-attr">features</span> = [<br>     <span class="hljs-string">&quot;Win32_Foundation&quot;</span>,<br>     <span class="hljs-string">&quot;Win32_UI_WindowsAndMessaging&quot;</span>,<br>     <span class="hljs-string">&quot;Win32_Storage_FileSystem&quot;</span>,<br>     <span class="hljs-string">&quot;Win32_Foundation&quot;</span>, <br>     <span class="hljs-string">&quot;Win32_Security&quot;</span><br> ]<br></code></pre></td></tr></table></figure>
 
 <p>[src&#x2F;main.rs]</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">use</span> windows::&#123;<br>    core::*,<br>    Win32::Storage::FileSystem::*,<br>&#125;;<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br>    <span class="hljs-keyword">unsafe</span> &#123;<br>        <span class="hljs-keyword">let</span> <span class="hljs-variable">new_fil</span> = <span class="hljs-title function_ invoke__">CreateFileA</span>(s!(<span class="hljs-string">&quot;C:\\Users\\Jnz\\Desktop\\test.txt&quot;</span>), <br>            FILE_GENERIC_WRITE, <br>            FILE_SHARE_WRITE, <br>            <span class="hljs-literal">None</span>, <br>            CREATE_NEW, FILE_ATTRIBUTE_NORMAL , <span class="hljs-literal">None</span>);<br>        <span class="hljs-keyword">match</span> new_fil &#123;<br>            <span class="hljs-title function_ invoke__">Ok</span>(v) =&gt; <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Create success with handle: &#123;&#125;&quot;</span>, v.<span class="hljs-number">0</span>),<br>            <span class="hljs-title function_ invoke__">Err</span>(e) =&gt; <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Create file failed. &#123;e:?&#125;&quot;</span>),<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<h1 id="2-文件IO"><a href="#2-文件IO" class="headerlink" title="2.文件IO"></a>2.文件IO</h1><h1 id="3-结构体"><a href="#3-结构体" class="headerlink" title="3.结构体"></a>3.结构体</h1><h1 id="4-vector"><a href="#4-vector" class="headerlink" title="4.vector"></a>4.vector</h1><h1 id="5-命令行参数"><a href="#5-命令行参数" class="headerlink" title="5.命令行参数"></a>5.命令行参数</h1><h1 id="6-错误处理"><a href="#6-错误处理" class="headerlink" title="6.错误处理"></a>6.错误处理</h1>
+
                 
               </div>
             
@@ -327,8 +325,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Rust系统编程part3</div>
-      <div>http://helloymf.github.io/2023/04/10/rust-xi-tong-bian-cheng-part3/</div>
+      <div>Rust系统编程之Windows API</div>
+      <div>http://helloymf.github.io/2023/04/10/rust-xi-tong-bian-cheng-zhi-windows-api/</div>
     </div>
     <div class="license-meta">
       
@@ -379,12 +377,18 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2023/04/10/rust-xi-tong-bian-cheng-zhi-cuo-wu-chu-li/" title="Rust系统编程之错误处理">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Rust系统编程之错误处理</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/10/rust-xi-tong-bian-cheng-part2/" title="Rust系统编程part2">
-                        <span class="hidden-mobile">Rust系统编程part2</span>
+                      <a href="/2023/04/10/rust-xi-tong-bian-cheng-zhi-nei-cun-mo-xing/" title="Rust系统编程之内存模型">
+                        <span class="hidden-mobile">Rust系统编程之内存模型</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

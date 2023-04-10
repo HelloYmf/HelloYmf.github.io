@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Rust系统编程part3</title>
+    <link href="/2023/04/10/rust-xi-tong-bian-cheng-part3/"/>
+    <url>/2023/04/10/rust-xi-tong-bian-cheng-part3/</url>
+    
+    <content type="html"><![CDATA[<h1 id="1-调用Windows-API"><a href="#1-调用Windows-API" class="headerlink" title="1.调用Windows API"></a>1.调用Windows API</h1><p><strong>Rust Windows官方文档：</strong></p><p><a href="https://microsoft.github.io/windows-docs-rs/doc/windows/index.html">windows - Rust (microsoft.github.io)</a></p><p><strong>使用Windows API的例子：</strong></p><p>[Cargo.toml]</p><figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs toml"><span class="hljs-section">[package]</span><br><span class="hljs-attr">name</span> = <span class="hljs-string">&quot;windowsapi&quot;</span><br><span class="hljs-attr">version</span> = <span class="hljs-string">&quot;0.1.0&quot;</span><br><span class="hljs-attr">edition</span> = <span class="hljs-string">&quot;2021&quot;</span><br><br> <span class="hljs-section">[dependencies.windows]</span><br> <span class="hljs-attr">version</span> = <span class="hljs-string">&quot;0.43.0&quot;</span><br> <span class="hljs-attr">features</span> = [<br>     <span class="hljs-string">&quot;Win32_Foundation&quot;</span>,<br>     <span class="hljs-string">&quot;Win32_UI_WindowsAndMessaging&quot;</span>,<br>     <span class="hljs-string">&quot;Win32_Storage_FileSystem&quot;</span>,<br>     <span class="hljs-string">&quot;Win32_Foundation&quot;</span>, <br>     <span class="hljs-string">&quot;Win32_Security&quot;</span><br> ]<br></code></pre></td></tr></table></figure><p>[src&#x2F;main.rs]</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">use</span> windows::&#123;<br>    core::*,<br>    Win32::Storage::FileSystem::*,<br>&#125;;<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br>    <span class="hljs-keyword">unsafe</span> &#123;<br>        <span class="hljs-keyword">let</span> <span class="hljs-variable">new_fil</span> = <span class="hljs-title function_ invoke__">CreateFileA</span>(s!(<span class="hljs-string">&quot;C:\\Users\\Jnz\\Desktop\\test.txt&quot;</span>), <br>            FILE_GENERIC_WRITE, <br>            FILE_SHARE_WRITE, <br>            <span class="hljs-literal">None</span>, <br>            CREATE_NEW, FILE_ATTRIBUTE_NORMAL , <span class="hljs-literal">None</span>);<br>        <span class="hljs-keyword">match</span> new_fil &#123;<br>            <span class="hljs-title function_ invoke__">Ok</span>(v) =&gt; <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Create success with handle: &#123;&#125;&quot;</span>, v.<span class="hljs-number">0</span>),<br>            <span class="hljs-title function_ invoke__">Err</span>(e) =&gt; <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Create file failed. &#123;e:?&#125;&quot;</span>),<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><h1 id="2-文件IO"><a href="#2-文件IO" class="headerlink" title="2.文件IO"></a>2.文件IO</h1><h1 id="3-结构体"><a href="#3-结构体" class="headerlink" title="3.结构体"></a>3.结构体</h1><h1 id="4-vector"><a href="#4-vector" class="headerlink" title="4.vector"></a>4.vector</h1><h1 id="5-命令行参数"><a href="#5-命令行参数" class="headerlink" title="5.命令行参数"></a>5.命令行参数</h1>]]></content>
+    
+    
+    <categories>
+      
+      <category>coding</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Rust</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Rust系统编程part2</title>
     <link href="/2023/04/10/rust-xi-tong-bian-cheng-part2/"/>
     <url>/2023/04/10/rust-xi-tong-bian-cheng-part2/</url>

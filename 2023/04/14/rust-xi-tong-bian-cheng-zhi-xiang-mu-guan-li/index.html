@@ -16,22 +16,22 @@
   <meta name="author" content="JNZ">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1.通用语法1.1 声明123456struct User &amp;#123;    active: bool,    username: String,    email: String,    sign_in_count: u64,&amp;#125;  1.2 创建对象常规写法 123456let user1 &#x3D; User &amp;#123;    email: String::from(&quot;someo">
+    <meta name="description" content="1.Crate一个由多个模块组成的树形结构，可以作为三方库进行分发，也可以生成可执行文件进行运行。将多个功能打包到一起形成一个代码集合箱。 1.1 binary crate一个二进制crate，它的充分必要条件是会有.&#x2F;src&#x2F;main.rs这个文件，是整个用于执行crate的入口文件。 cargo新建binary crate命令： 1cargo new test_lib --lib  1.2 l">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Rust系统编程之结构体">
-<meta property="og:url" content="http://helloymf.github.io/2023/04/12/rust-xi-tong-bian-cheng-zhi-jie-gou-ti/index.html">
+<meta property="og:title" content="Rust系统编程之项目管理">
+<meta property="og:url" content="http://helloymf.github.io/2023/04/14/rust-xi-tong-bian-cheng-zhi-xiang-mu-guan-li/index.html">
 <meta property="og:site_name" content="JNZ">
-<meta property="og:description" content="1.通用语法1.1 声明123456struct User &amp;#123;    active: bool,    username: String,    email: String,    sign_in_count: u64,&amp;#125;  1.2 创建对象常规写法 123456let user1 &#x3D; User &amp;#123;    email: String::from(&quot;someo">
+<meta property="og:description" content="1.Crate一个由多个模块组成的树形结构，可以作为三方库进行分发，也可以生成可执行文件进行运行。将多个功能打包到一起形成一个代码集合箱。 1.1 binary crate一个二进制crate，它的充分必要条件是会有.&#x2F;src&#x2F;main.rs这个文件，是整个用于执行crate的入口文件。 cargo新建binary crate命令： 1cargo new test_lib --lib  1.2 l">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-04-12T05:43:00.000Z">
-<meta property="article:modified_time" content="2023-04-12T06:54:03.962Z">
+<meta property="article:published_time" content="2023-04-14T06:38:32.000Z">
+<meta property="article:modified_time" content="2023-04-14T08:19:30.776Z">
 <meta property="article:author" content="JNZ">
 <meta property="article:tag" content="Rust">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>Rust系统编程之结构体 - JNZ</title>
+  <title>Rust系统编程之项目管理 - JNZ</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -196,7 +196,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Rust系统编程之结构体"></span>
+            <span id="subtitle" data-typed-text="Rust系统编程之项目管理"></span>
           
         </div>
 
@@ -207,8 +207,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-12 13:43" pubdate>
-          2023年4月12日 下午
+        <time datetime="2023-04-14 14:38" pubdate>
+          2023年4月14日 下午
         </time>
       </span>
     
@@ -219,7 +219,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.5k 字
+          638 字
         
       </span>
     
@@ -230,7 +230,7 @@
         
         
         
-          13 分钟
+          6 分钟
         
       </span>
     
@@ -268,39 +268,28 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Rust系统编程之结构体</h1>
+            <h1 style="display: none">Rust系统编程之项目管理</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="1-通用语法"><a href="#1-通用语法" class="headerlink" title="1.通用语法"></a>1.通用语法</h1><h2 id="1-1-声明"><a href="#1-1-声明" class="headerlink" title="1.1 声明"></a>1.1 声明</h2><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">User</span> &#123;<br>    active: <span class="hljs-type">bool</span>,<br>    username: <span class="hljs-type">String</span>,<br>    email: <span class="hljs-type">String</span>,<br>    sign_in_count: <span class="hljs-type">u64</span>,<br>&#125;<br></code></pre></td></tr></table></figure>
+                <h1 id="1-Crate"><a href="#1-Crate" class="headerlink" title="1.Crate"></a>1.Crate</h1><p>一个由多个模块组成的树形结构，可以作为三方库进行分发，也可以生成可执行文件进行运行。将多个功能打包到一起形成一个代码集合箱。</p>
+<h2 id="1-1-binary-crate"><a href="#1-1-binary-crate" class="headerlink" title="1.1 binary crate"></a>1.1 binary crate</h2><p>一个二进制crate，它的充分必要条件是会有<code>./src/main.rs</code>这个文件，是整个用于执行crate的入口文件。</p>
+<p>cargo新建binary crate命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cargo new test_lib --lib<br></code></pre></td></tr></table></figure>
 
-<h2 id="1-2-创建对象"><a href="#1-2-创建对象" class="headerlink" title="1.2 创建对象"></a>1.2 创建对象</h2><p>常规写法</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">user1</span> = User &#123;<br>    email: <span class="hljs-type">String</span>::<span class="hljs-title function_ invoke__">from</span>(<span class="hljs-string">&quot;someone@example.com&quot;</span>),<br>    username: <span class="hljs-type">String</span>::<span class="hljs-title function_ invoke__">from</span>(<span class="hljs-string">&quot;someusername123&quot;</span>),<br>    active: <span class="hljs-literal">true</span>,<br>    sign_in_count: <span class="hljs-number">1</span>,<br>&#125;;<br></code></pre></td></tr></table></figure>
+<h2 id="1-2-library-crate"><a href="#1-2-library-crate" class="headerlink" title="1.2 library crate"></a>1.2 library crate</h2><p>一个library crate，它的充分必要条件是有<code>./src/lib.rs</code> 这个文件。</p>
+<h1 id="2-Package"><a href="#2-Package" class="headerlink" title="2.Package"></a>2.Package</h1><p>Package就是一个工程，包含了1个或者n个crate以及测试、文档等，一个Package包含一个<code>Cargo.toml</code>配置文件。</p>
+<p><strong>规则：</strong></p>
+<ul>
+<li>一个package最多包含一个library crate</li>
+<li>一个package可以包含任意多的binary crate</li>
+<li>一个package至少要包含一个crate（无论是binary或是library）</li>
+</ul>
+<p><strong>典型的package解构：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs shell">.<br>├── Cargo.toml<br>├── Cargo.lock<br>├── src<br>│   ├── main.rs<br>│   ├── lib.rs<br>│   └── bin<br>│       └── main1.rs<br>│       └── main2.rs<br>├── tests<br>│   └── some_integration_tests.rs<br>├── benches<br>│   └── simple_bench.rs<br>└── examples<br>    └── simple_example.rs<br></code></pre></td></tr></table></figure>
 
-<p>简化写法：参数如果名字一致，可以省略</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">build_user</span>(email: <span class="hljs-type">String</span>, username: <span class="hljs-type">String</span>) <span class="hljs-punctuation">-&gt;</span> User &#123;<br>    User &#123;<br>        email,<br>        username,<br>        active: <span class="hljs-literal">true</span>,<br>        sign_in_count: <span class="hljs-number">1</span>,<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="1-3-拷贝"><a href="#1-3-拷贝" class="headerlink" title="1.3 拷贝"></a>1.3 拷贝</h2><p><strong>拷贝会发生所有权的转移</strong></p>
-<p>常规写法</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">user2</span> = User &#123;<br>    active: user1.active,<br>    username: user1.username,<br>    email: <span class="hljs-type">String</span>::<span class="hljs-title function_ invoke__">from</span>(<span class="hljs-string">&quot;another@example.com&quot;</span>),<br>    sign_in_count: user1.sign_in_count,<br>&#125;;<br></code></pre></td></tr></table></figure>
-
-<p>简化写法</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">user2</span> = User &#123;<br>    email: <span class="hljs-type">String</span>::<span class="hljs-title function_ invoke__">from</span>(<span class="hljs-string">&quot;another@example.com&quot;</span>),<br>    ..user1<br>&#125;;<br></code></pre></td></tr></table></figure>
-
-<h1 id="2-特殊的结构体"><a href="#2-特殊的结构体" class="headerlink" title="2.特殊的结构体"></a>2.特殊的结构体</h1><h2 id="2-1-元组结构体"><a href="#2-1-元组结构体" class="headerlink" title="2.1 元组结构体"></a>2.1 元组结构体</h2><p>当需要一个不关心名字的结构体时可以采用这种写法</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Color</span>(<span class="hljs-type">i32</span>, <span class="hljs-type">i32</span>, <span class="hljs-type">i32</span>);<br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Point</span>(<span class="hljs-type">i32</span>, <span class="hljs-type">i32</span>, <span class="hljs-type">i32</span>);<br><br><span class="hljs-keyword">let</span> <span class="hljs-variable">black</span> = <span class="hljs-title function_ invoke__">Color</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br><span class="hljs-keyword">let</span> <span class="hljs-variable">origin</span> = <span class="hljs-title function_ invoke__">Point</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
-
-<h2 id="2-2-单元结构体"><a href="#2-2-单元结构体" class="headerlink" title="2.2 单元结构体"></a>2.2 单元结构体</h2><p>没有任何字段和属性的结构体</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs rust"><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">AlwaysEqual</span>;<br><br><span class="hljs-keyword">let</span> <span class="hljs-variable">subject</span> = AlwaysEqual;<br><br><span class="hljs-comment">// 我们不关心 AlwaysEqual 的字段数据，只关心它的行为，因此将它声明为单元结构体，然后再为它实现某个特征</span><br><span class="hljs-keyword">impl</span> <span class="hljs-title class_">SomeTrait</span> <span class="hljs-keyword">for</span> <span class="hljs-title class_">AlwaysEqual</span> &#123;<br><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h1 id="3-含引用成员的结构体"><a href="#3-含引用成员的结构体" class="headerlink" title="3.含引用成员的结构体"></a>3.含引用成员的结构体</h1><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-comment">// 标注生命周期</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">ImportantExcerpt</span>&lt;<span class="hljs-symbol">&#x27;a</span>&gt; &#123;<br>    name: &amp;<span class="hljs-symbol">&#x27;a</span> <span class="hljs-type">str</span>,<br>&#125;<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">s</span> = <span class="hljs-string">&quot;test&quot;</span>.<span class="hljs-title function_ invoke__">to_string</span>();<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">rs</span> = &amp;s;<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">i</span> = ImportantExcerpt &#123;<br>        name: rs,<br>    &#125;;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h1 id="4-格式化输出"><a href="#4-格式化输出" class="headerlink" title="4.格式化输出"></a>4.格式化输出</h1><p><code>#[derive(Debug)]</code>使得结构体支持<code>&#123;:?&#125;</code>格式化输出</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-meta">#[derive(Debug)]</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Rectangle</span> &#123;<br>    width: <span class="hljs-type">u32</span>,<br>    height: <span class="hljs-type">u32</span>,<br>&#125;<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">rect1</span> = Rectangle &#123;<br>        width: <span class="hljs-number">30</span>,<br>        height: <span class="hljs-number">50</span>,<br>    &#125;;<br><br>    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;rect1 is &#123;:?&#125;&quot;</span>, rect1);<br>    <span class="hljs-comment">// 更完整的调试信息输出宏</span><br>    dbg!(&amp;rect1);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>如果要支持<code>&#123;&#125;</code>格式化输出，需要实现<code>Dispaly</code>特征</p>
-
+<h1 id="3-Module"><a href="#3-Module" class="headerlink" title="3.Module"></a>3.Module</h1>
                 
               </div>
             
@@ -345,8 +334,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Rust系统编程之结构体</div>
-      <div>http://helloymf.github.io/2023/04/12/rust-xi-tong-bian-cheng-zhi-jie-gou-ti/</div>
+      <div>Rust系统编程之项目管理</div>
+      <div>http://helloymf.github.io/2023/04/14/rust-xi-tong-bian-cheng-zhi-xiang-mu-guan-li/</div>
     </div>
     <div class="license-meta">
       
@@ -397,18 +386,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/14/rust-xi-tong-bian-cheng-zhi-xiang-mu-guan-li/" title="Rust系统编程之项目管理">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Rust系统编程之项目管理</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/11/rust-xi-tong-bian-cheng-zhi-rong-qi/" title="Rust系统编程之容器">
-                        <span class="hidden-mobile">Rust系统编程之容器</span>
+                      <a href="/2023/04/12/rust-xi-tong-bian-cheng-zhi-jie-gou-ti/" title="Rust系统编程之结构体">
+                        <span class="hidden-mobile">Rust系统编程之结构体</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

@@ -16,15 +16,15 @@
   <meta name="author" content="JNZ">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1.Crate一个由多个模块组成的树形结构，可以作为三方库进行分发，也可以生成可执行文件进行运行。将多个功能打包到一起形成一个代码集合箱。 1.1 binary crate一个二进制crate，它的充分必要条件是会有.&#x2F;src&#x2F;main.rs这个文件，是整个用于执行crate的入口文件。 cargo新建binary crate命令： 1cargo new test_lib --lib  1.2 l">
+    <meta name="description" content="1.Crate一个由多个模块组成的树形结构，可以作为三方库进行分发，也可以生成可执行文件进行运行。将多个功能打包到一起形成一个代码集合箱，一个crate是一个编译单元。 1.1 binary crate一个二进制crate，它的充分必要条件是会有.&#x2F;src&#x2F;main.rs这个文件，是整个用于执行crate的入口文件。 cargo新建binary crate命令： 1cargo new test_l">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Rust系统编程之项目管理">
 <meta property="og:url" content="http://helloymf.github.io/2023/04/14/rust-xi-tong-bian-cheng-zhi-xiang-mu-guan-li/index.html">
 <meta property="og:site_name" content="JNZ">
-<meta property="og:description" content="1.Crate一个由多个模块组成的树形结构，可以作为三方库进行分发，也可以生成可执行文件进行运行。将多个功能打包到一起形成一个代码集合箱。 1.1 binary crate一个二进制crate，它的充分必要条件是会有.&#x2F;src&#x2F;main.rs这个文件，是整个用于执行crate的入口文件。 cargo新建binary crate命令： 1cargo new test_lib --lib  1.2 l">
+<meta property="og:description" content="1.Crate一个由多个模块组成的树形结构，可以作为三方库进行分发，也可以生成可执行文件进行运行。将多个功能打包到一起形成一个代码集合箱，一个crate是一个编译单元。 1.1 binary crate一个二进制crate，它的充分必要条件是会有.&#x2F;src&#x2F;main.rs这个文件，是整个用于执行crate的入口文件。 cargo新建binary crate命令： 1cargo new test_l">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-04-14T06:38:32.000Z">
-<meta property="article:modified_time" content="2023-04-14T08:19:30.776Z">
+<meta property="article:modified_time" content="2023-04-14T13:17:25.080Z">
 <meta property="article:author" content="JNZ">
 <meta property="article:tag" content="Rust">
 <meta name="twitter:card" content="summary_large_image">
@@ -219,7 +219,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          638 字
+          3k 字
         
       </span>
     
@@ -230,7 +230,7 @@
         
         
         
-          6 分钟
+          25 分钟
         
       </span>
     
@@ -273,13 +273,13 @@
             
               <div class="markdown-body">
                 
-                <h1 id="1-Crate"><a href="#1-Crate" class="headerlink" title="1.Crate"></a>1.Crate</h1><p>一个由多个模块组成的树形结构，可以作为三方库进行分发，也可以生成可执行文件进行运行。将多个功能打包到一起形成一个代码集合箱。</p>
+                <h1 id="1-Crate"><a href="#1-Crate" class="headerlink" title="1.Crate"></a>1.Crate</h1><p>一个由多个模块组成的树形结构，可以作为三方库进行分发，也可以生成可执行文件进行运行。将多个功能打包到一起形成一个代码集合箱，一个<code>crate</code>是一个编译单元。</p>
 <h2 id="1-1-binary-crate"><a href="#1-1-binary-crate" class="headerlink" title="1.1 binary crate"></a>1.1 binary crate</h2><p>一个二进制crate，它的充分必要条件是会有<code>./src/main.rs</code>这个文件，是整个用于执行crate的入口文件。</p>
 <p>cargo新建binary crate命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cargo new test_lib --lib<br></code></pre></td></tr></table></figure>
 
 <h2 id="1-2-library-crate"><a href="#1-2-library-crate" class="headerlink" title="1.2 library crate"></a>1.2 library crate</h2><p>一个library crate，它的充分必要条件是有<code>./src/lib.rs</code> 这个文件。</p>
-<h1 id="2-Package"><a href="#2-Package" class="headerlink" title="2.Package"></a>2.Package</h1><p>Package就是一个工程，包含了1个或者n个crate以及测试、文档等，一个Package包含一个<code>Cargo.toml</code>配置文件。</p>
+<h1 id="2-Package"><a href="#2-Package" class="headerlink" title="2.Package"></a>2.Package</h1><p>Package就是一个工程，包含了1个或者n个<code>crate</code>以及测试、文档等，一个Package包含一个<code>Cargo.toml</code>配置文件。</p>
 <p><strong>规则：</strong></p>
 <ul>
 <li>一个package最多包含一个library crate</li>
@@ -289,7 +289,51 @@
 <p><strong>典型的package解构：</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs shell">.<br>├── Cargo.toml<br>├── Cargo.lock<br>├── src<br>│   ├── main.rs<br>│   ├── lib.rs<br>│   └── bin<br>│       └── main1.rs<br>│       └── main2.rs<br>├── tests<br>│   └── some_integration_tests.rs<br>├── benches<br>│   └── simple_bench.rs<br>└── examples<br>    └── simple_example.rs<br></code></pre></td></tr></table></figure>
 
-<h1 id="3-Module"><a href="#3-Module" class="headerlink" title="3.Module"></a>3.Module</h1>
+<h1 id="3-Module"><a href="#3-Module" class="headerlink" title="3.Module"></a>3.Module</h1><p>Module让我们可以将一个 crate 中的代码进行分组，以提高可读性与重用性。</p>
+<p>Module相当于在一个<code>crate</code>中的更小的功能单元，一个<code>crate</code>可能使用了n个<code>module</code>，使用<code>mod xxx</code>的方式来引用一个<code>module</code>。</p>
+<h2 id="3-1-代码搜索规则"><a href="#3-1-代码搜索规则" class="headerlink" title="3.1 代码搜索规则"></a>3.1 代码搜索规则</h2><p>在rust编译<code>crate</code>时会从以下路径中寻找<code>module</code>的代码：</p>
+<ul>
+<li>内联，在大括号中，当<code>mod garden</code>后方不是一个分号而是一个大括号</li>
+<li>在文件 <code>src/garden.rs</code></li>
+<li>在文件 <code>src/garden/mod.rs</code></li>
+</ul>
+<p>并且可以在<code>module</code>中引用其他的<code>module</code>，搜索方式如上。</p>
+<p>一旦一个模块是<code>crate</code>的一部分，你可以在隐私规则允许的前提下，从同一个<code>crate</code>内的任意地方，通过代码路径引用该模块的代码。</p>
+<p>举例而言，一个garden vegetables模块下的<code>Asparagus</code>类型可以在<code>crate::garden::vegetables::Asparagus</code>被找到。</p>
+<h2 id="3-2-隐私规则"><a href="#3-2-隐私规则" class="headerlink" title="3.2 隐私规则"></a>3.2 隐私规则</h2><p>一个模块里的代码默认对其父模块<strong>私有</strong>，但是子模块可以访问到父模块。为了使一个模块公用，应当在声明时使用<code>pub mod</code>替代<code>mod</code>。为了使一个公用模块内部的成员公用，应当在成员声明前使用<code>pub</code>。</p>
+<h2 id="3-3-模块树"><a href="#3-3-模块树" class="headerlink" title="3.3 模块树"></a>3.3 模块树</h2><p>示例代码如下：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">mod</span> front_of_house &#123;<br>    <span class="hljs-keyword">mod</span> hosting &#123;<br>        <span class="hljs-keyword">fn</span> <span class="hljs-title function_">add_to_waitlist</span>() &#123;&#125;<br>        <span class="hljs-keyword">fn</span> <span class="hljs-title function_">seat_at_table</span>() &#123;&#125;<br>    &#125;<br>    <span class="hljs-keyword">mod</span> serving &#123;<br>        <span class="hljs-keyword">fn</span> <span class="hljs-title function_">take_order</span>() &#123;&#125;<br>        <span class="hljs-keyword">fn</span> <span class="hljs-title function_">serve_order</span>() &#123;&#125;<br>        <span class="hljs-keyword">fn</span> <span class="hljs-title function_">take_payment</span>() &#123;&#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>此时从<code>crate</code>为根节点会生成如下的模块树结构：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">crate<br> └── front_of_house<br>     ├── hosting<br>     │   ├── add_to_waitlist<br>     │   └── seat_at_table<br>     └── serving<br>         ├── take_order<br>         ├── serve_order<br>         └── take_payment<br></code></pre></td></tr></table></figure>
+
+<p><code>add_to_waitlist</code>与<code>seat_at_table</code>互为兄弟模块，<code>front_of_house</code>和<code>hosting</code>构成父子模块。</p>
+<h2 id="3-4-引用路径搜索规则"><a href="#3-4-引用路径搜索规则" class="headerlink" title="3.4 引用路径搜索规则"></a>3.4 引用路径搜索规则</h2><p>在模块树中找到一个<code>module</code>的位置，我们使用指定路径的方式，就像在文件系统种使用路径一样。为了调用一个函数，我们需要知道它的代码路径。</p>
+<p>路径分两种：</p>
+<ul>
+<li><strong>绝对路径</strong>（<em>absolute path</em>）是以 crate 根（root）开头的全路径；对于外部 crate 的代码，是以 crate 名开头的绝对路径，对于对于当前 crate 的代码，则以字面值 <code>crate</code> 开头。</li>
+<li><strong>相对路径</strong>（<em>relative path</em>）从当前模块开始，以 <code>self</code>、<code>super</code> 或当前模块的标识符开头，<code>super</code>关键字用于访问父模块中的项。</li>
+</ul>
+<p>绝对路径和相对路径都后跟一个或多个由双冒号（<code>::</code>）分割路径中的<code>module</code>。</p>
+<h2 id="3-5-use关键字"><a href="#3-5-use关键字" class="headerlink" title="3.5 use关键字"></a>3.5 use关键字</h2><p><code>use</code>关键字简化了路径搜索，可以在一个<code>module</code>种使用use来声明一个作用时间更久的软链接的方式将其他<code>module</code>的代码引入当前作用域。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">mod</span> front_of_house &#123;<br>    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">mod</span> hosting &#123;<br>        <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">add_to_waitlist</span>() &#123;&#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">use</span> crate::front_of_house::hosting;<br><br><span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">eat_at_restaurant</span>() &#123;<br>    hosting::<span class="hljs-title function_ invoke__">add_to_waitlist</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>嵌套引用：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">use</span> std::cmp::Ordering;<br><span class="hljs-keyword">use</span> std::io;<br><br>==&gt;<br><br><span class="hljs-keyword">use</span> std::&#123;cmp::Ordering, io&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>引用所有公有项：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">use</span> std::collections::*;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-6-as关键字"><a href="#3-6-as关键字" class="headerlink" title="3.6 as关键字"></a>3.6 as关键字</h2><p>为类型起别名</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">use</span> std::fmt::<span class="hljs-type">Result</span>;<br><span class="hljs-keyword">use</span> std::io::<span class="hljs-type">Result</span> <span class="hljs-keyword">as</span> IoResult;<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">function1</span>() <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Result</span> &#123;<br>    <span class="hljs-comment">// --snip--</span><br>&#125;<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">function2</span>() <span class="hljs-punctuation">-&gt;</span> IoResult&lt;()&gt; &#123;<br>    <span class="hljs-comment">// --snip--</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-7-pub-use重导出"><a href="#3-7-pub-use重导出" class="headerlink" title="3.7 pub use重导出"></a>3.7 pub use重导出</h2><p>在一个作用域内使用<code>use</code>将其他<code>module</code>的项导入进来后，这个项在这个作用域外面还是私有的。如果想外面的代码访问这个项跟访问引入那个项的作用域的权限一致的话，可以使用<code>pub use</code>关键字将那个项进行重导出。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">mod</span> front_of_house &#123;<br>    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">mod</span> hosting &#123;<br>        <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">add_to_waitlist</span>() &#123;&#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">pub</span> <span class="hljs-keyword">use</span> crate::front_of_house::hosting;<br><br><span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">eat_at_restaurant</span>() &#123;<br>    hosting::<span class="hljs-title function_ invoke__">add_to_waitlist</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在这个修改之前，外部代码需要使用路径 <code>restaurant::front_of_house::hosting::add_to_waitlist()</code> 来调用 <code>add_to_waitlist</code> 函数。现在这个 <code>pub use</code> 从根模块重导出了 <code>hosting</code> 模块，外部代码现在可以使用路径 <code>restaurant::hosting::add_to_waitlist</code>来调用。</p>
+
                 
               </div>
             

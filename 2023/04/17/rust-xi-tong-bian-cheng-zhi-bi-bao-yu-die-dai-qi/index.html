@@ -24,7 +24,7 @@
 <meta property="og:description" content="1.闭包1.1 函数式编程函数式编程风格通常包含将函数作为参数值或其他函数的返回值、将函数赋值给变量以供之后执行等等。 1.2 闭包与函数不同于函数，闭包允许捕获被定义时所在作用域中的值。 1234567&#x2F;&#x2F; 函数fn  add_one_v1   (x: u32) -&gt; u32 &amp;#123; x + 1 &amp;#125;&#x2F;&#x2F; 完整类型闭包let add_one_v2 &#x3D; |x: u32| -&amp;g">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-04-17T03:34:49.000Z">
-<meta property="article:modified_time" content="2023-04-17T06:32:26.863Z">
+<meta property="article:modified_time" content="2023-04-17T07:03:02.406Z">
 <meta property="article:author" content="JNZ">
 <meta property="article:tag" content="Rust">
 <meta name="twitter:card" content="summary_large_image">
@@ -219,7 +219,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.5k 字
+          3.8k 字
         
       </span>
     
@@ -230,7 +230,7 @@
         
         
         
-          21 分钟
+          32 分钟
         
       </span>
     
@@ -304,6 +304,26 @@
 
 <p>有些闭包具有特殊的属性，比如在闭包内调用了<code>Vec.push(val)</code>，来将 <code>val</code> 的所有权转移，此时这个闭包就是 <code>FnOnce</code> 的，因为只能调用一次。</p>
 <p>如果闭包内只会修改，但是不会夺取所有权，此时这个闭包就是<code>FnMut</code> 的，可以调用多次。</p>
+<h1 id="2-迭代器"><a href="#2-迭代器" class="headerlink" title="2.迭代器"></a>2.迭代器</h1><h2 id="2-1-新建迭代器"><a href="#2-1-新建迭代器" class="headerlink" title="2.1 新建迭代器"></a>2.1 新建迭代器</h2><h3 id="2-1-1-迭代器可变性"><a href="#2-1-1-迭代器可变性" class="headerlink" title="2.1.1 迭代器可变性"></a>2.1.1 迭代器可变性</h3><p>这里的可变性是指迭代器是否可以遍历。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-comment">// 不可变</span><br><span class="hljs-keyword">let</span> <span class="hljs-variable">v1</span> = <span class="hljs-built_in">vec!</span>[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>];<br><span class="hljs-keyword">let</span> <span class="hljs-variable">v1_iter</span> = v1.<span class="hljs-title function_ invoke__">iter</span>();<br><br><span class="hljs-comment">// 可变</span><br><span class="hljs-keyword">let</span> <span class="hljs-variable">v1</span> = <span class="hljs-built_in">vec!</span>[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>];<br><span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">v1_iter</span> = v1.<span class="hljs-title function_ invoke__">iter</span>();<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-1-2-元素可变性"><a href="#2-1-2-元素可变性" class="headerlink" title="2.1.2 元素可变性"></a>2.1.2 元素可变性</h3><p>这里的可变性是指这个迭代器对原来的元素的影响程度。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-comment">// 这个迭代器获取元素的不可变引用</span><br><span class="hljs-keyword">let</span> <span class="hljs-variable">v1</span> = <span class="hljs-built_in">vec!</span>[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>];<br><span class="hljs-keyword">let</span> <span class="hljs-variable">v1_iter</span> = v1.<span class="hljs-title function_ invoke__">iter</span>();<br><br><span class="hljs-comment">// 这个迭代器获取元素的可变引用</span><br><span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">v1</span> = <span class="hljs-built_in">vec!</span>[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>];<br><span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">v1_iter</span> = v1.<span class="hljs-title function_ invoke__">iter_mut</span>();<br><br><span class="hljs-comment">// 这个迭代器夺走元素所有权</span><br><span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">v1</span> = <span class="hljs-built_in">vec!</span>[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>];<br><span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">v1_iter</span> = v1.<span class="hljs-title function_ invoke__">into_iter</span>();<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-2-消费迭代器"><a href="#2-2-消费迭代器" class="headerlink" title="2.2 消费迭代器"></a>2.2 消费迭代器</h2><p>Rust迭代器默认都是惰性的，即需要手动来修改里面的游标进行消费。每个迭代器类型必须实现<code>next</code> trait。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-meta">#[test]</span><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">iterator_demonstration</span>() &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">v1</span> = <span class="hljs-built_in">vec!</span>[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>];<br><br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">v1_iter</span> = v1.<span class="hljs-title function_ invoke__">iter</span>();<br><br>    <span class="hljs-built_in">assert_eq!</span>(v1_iter.<span class="hljs-title function_ invoke__">next</span>(), <span class="hljs-title function_ invoke__">Some</span>(&amp;<span class="hljs-number">1</span>));<br>    <span class="hljs-built_in">assert_eq!</span>(v1_iter.<span class="hljs-title function_ invoke__">next</span>(), <span class="hljs-title function_ invoke__">Some</span>(&amp;<span class="hljs-number">2</span>));<br>    <span class="hljs-built_in">assert_eq!</span>(v1_iter.<span class="hljs-title function_ invoke__">next</span>(), <span class="hljs-title function_ invoke__">Some</span>(&amp;<span class="hljs-number">3</span>));<br>    <span class="hljs-built_in">assert_eq!</span>(v1_iter.<span class="hljs-title function_ invoke__">next</span>(), <span class="hljs-literal">None</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>next</code>方法可以消费迭代器，就是逐个向下遍历，返回一个<code>Option&lt;T&gt;</code>，如果遍历到末尾则返回None。</p>
+<h2 id="2-3-迭代适配器"><a href="#2-3-迭代适配器" class="headerlink" title="2.3 迭代适配器"></a>2.3 迭代适配器</h2><p><code>Iterator</code> trait 中定义了另一类方法，被称为 <strong>迭代器适配器</strong>（<em>iterator adaptors</em>），他们允许我们将当前迭代器变为不同类型的迭代器。如<code>map</code>方法：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">v1</span>: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt; = <span class="hljs-built_in">vec!</span>[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>];<br><br>v1.<span class="hljs-title function_ invoke__">iter</span>().<span class="hljs-title function_ invoke__">map</span>(|x| x + <span class="hljs-number">1</span>);<br></code></pre></td></tr></table></figure>
+
+<p><code>map</code>方法在每个元素上调用闭包来处理元素并返回一个新的迭代器。上面代码会报警告，因为所有的迭代器都是惰性的，需要进行消费。</p>
+<p><code>collect</code>方法可以消费迭代器并将结果收集到一个数据结构中：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">v1</span>: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt; = <span class="hljs-built_in">vec!</span>[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>];<br><br><span class="hljs-keyword">let</span> <span class="hljs-variable">v2</span>: <span class="hljs-type">Vec</span>&lt;_&gt; = v1.<span class="hljs-title function_ invoke__">iter</span>().<span class="hljs-title function_ invoke__">map</span>(|x| x + <span class="hljs-number">1</span>).<span class="hljs-title function_ invoke__">collect</span>();<br><br><span class="hljs-built_in">assert_eq!</span>(v2, <span class="hljs-built_in">vec!</span>[<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]);<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-4-filter"><a href="#2-4-filter" class="headerlink" title="2.4 filter"></a>2.4 filter</h2><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">shoes_in_size</span>(shoes: <span class="hljs-type">Vec</span>&lt;Shoe&gt;, shoe_size: <span class="hljs-type">u32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Vec</span>&lt;Shoe&gt; &#123;<br>    shoes.<span class="hljs-title function_ invoke__">into_iter</span>().<span class="hljs-title function_ invoke__">filter</span>(|s| s.size == shoe_size).<span class="hljs-title function_ invoke__">collect</span>()<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>可以收集某个容器中满足指定条件的元素序列。</p>
 
                 
               </div>

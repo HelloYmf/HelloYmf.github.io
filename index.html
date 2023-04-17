@@ -223,6 +223,128 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2023/04/17/rust-xi-tong-bian-cheng-zhi-bi-bao-yu-die-dai-qi/" target="_self">
+          Rust系统编程之闭包与迭代器
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/17/rust-xi-tong-bian-cheng-zhi-bi-bao-yu-die-dai-qi/" target="_self">
+        <div>
+          1.闭包1.1 函数式编程函数式编程风格通常包含将函数作为参数值或其他函数的返回值、将函数赋值给变量以供之后执行等等。 1.2 闭包与函数不同于函数，闭包允许捕获被定义时所在作用域中的值。 1234567// 函数fn  add_one_v1   (x: u32) -&gt; u32 &#123; x + 1 &#125;// 完整类型闭包let add_one_v2 = |x: u32| -&g
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-04-17 11:34" pubdate>
+              2023-04-17
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/coding/" class="category-chain-item">coding</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Rust/">#Rust</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/04/17/rust-xi-tong-bian-cheng-zhi-zi-dong-hua-ce-shi/" target="_self">
+          Rust系统编程之自动化测试
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/17/rust-xi-tong-bian-cheng-zhi-zi-dong-hua-ce-shi/" target="_self">
+        <div>
+          1.基础测试模板12345678#[cfg(test)]mod tests &#123;    #[test]    fn it_works() &#123;        let result = 2 + 2;        assert_eq!(result, 6);    &#125;&#125;  1.1 断言宏12assert_eq! // ==assert_ne! // !=	  需要
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-04-17 10:47" pubdate>
+              2023-04-17
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/coding/" class="category-chain-item">coding</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Rust/">#Rust</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2023/04/16/rust-xi-tong-bian-cheng-zhi-fan-xing/" target="_self">
           Rust系统编程之泛型
         </a>
@@ -820,130 +942,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/Rust/">#Rust</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/03/24/coff-wen-jian-ge-shi/" target="_self">
-          COFF文件格式
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/03/24/coff-wen-jian-ge-shi/" target="_self">
-        <div>
-          COFF文件就是.obj文件，链接器使用。 1.整体结构下图显示了COFF文件的整体结构：  从图中可以看出，COFF文件结构比PE文件要简单很多，而二者FileHeader是一致的。 2.局部结构2.1 文件头定位：在COFF文件的开头    偏移 大小 域 描述    0 2 Machine 标识目标机器类型的数字   2 2 NumberOfSections 节表项的数目   4 4 Tim
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-03-24 11:12" pubdate>
-              2023-03-24
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/build/" class="category-chain-item">build</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/basic/">#basic</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/03/21/git-chang-yong-ming-ling/" target="_self">
-          Git常用命令
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/03/21/git-chang-yong-ming-ling/" target="_self">
-        <div>
-          1.基础操作克隆项目 1234// 常规用法git clone [url]// 同时克隆子模块并更新子模块git clone --recurse-submodules  &lt;url&gt;  .gitingore忽略文件 1234# 忽略根目录下的bin文件夹中的所有文件/bin# 忽略全部.c后缀的文件*.c  提交暂存区 1234// 提交单个文件到暂存区git add &lt;file&
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-03-21 13:36" pubdate>
-              2023-03-21
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/tools/" class="category-chain-item">tools</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/basic/">#basic</a>
-            
-              <a href="/tags/Git/">#Git</a>
             
           </div>
         

@@ -4,6 +4,56 @@
   
     
     <entry>
+      <title>随记-2023.4.23</title>
+      <link href="/2023/04/23/sui-ji-2023-4-23/"/>
+      <url>/2023/04/23/sui-ji-2023-4-23/</url>
+      
+        <content type="html"><![CDATA[<p>1.Rust中尽量安全的使用裸指针：</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">use</span> std::ptr;<br><span class="hljs-keyword">pub</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">unsafe</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">ptr</span>::write_unaligned&lt;T&gt;(dst: *<span class="hljs-keyword">mut</span> T, src: T)<br></code></pre></td></tr></table></figure><p>2.Rust中想定义变参函数，需要nightly版本，并将变参逻辑用C++实现。</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">MyPrintf</span><span class="hljs-params">(<span class="hljs-type">char</span>* fmt, ...)</span></span><br><span class="hljs-function"></span>&#123;<br>    va_list ArgList = <span class="hljs-number">0</span>;<br>    <span class="hljs-built_in">va_start</span>(ArgList, fmt);<br>    <span class="hljs-type">int</span> size = <span class="hljs-built_in">vprintf</span>(fmt, ArgList);<br>    <span class="hljs-keyword">if</span> (size &gt; <span class="hljs-number">0</span>)<br>    &#123;<br>        <span class="hljs-type">char</span>* buffer = (<span class="hljs-type">char</span>*)<span class="hljs-built_in">malloc</span>(size + <span class="hljs-number">1</span>);<br>        <span class="hljs-keyword">if</span> (!buffer) &#123;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        buffer[size] = <span class="hljs-number">0</span>;<br>        <span class="hljs-built_in">vsprintf_s</span>(buffer, size + <span class="hljs-number">1</span>, fmt, ArgList);<br>        <span class="hljs-built_in">memset</span>(buffer, <span class="hljs-number">0</span>, size);<br>        <span class="hljs-built_in">free</span>(buffer);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> talk </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> work </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Rust系统编程之智能指针</title>
+      <link href="/2023/04/19/rust-xi-tong-bian-cheng-zhi-zhi-neng-zhi-zhen/"/>
+      <url>/2023/04/19/rust-xi-tong-bian-cheng-zhi-zhi-neng-zhi-zhen/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> coding </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Rust </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Rust系统编程之无畏并发</title>
       <link href="/2023/04/19/rust-xi-tong-bian-cheng-zhi-wu-wei-bing-fa/"/>
       <url>/2023/04/19/rust-xi-tong-bian-cheng-zhi-wu-wei-bing-fa/</url>

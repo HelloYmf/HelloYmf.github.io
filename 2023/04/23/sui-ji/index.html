@@ -18,20 +18,20 @@
   
     <meta name="description" content="1.Rust中尽量安全的使用裸指针： 12use std::ptr;pub const unsafe fn ptr::write_unaligned&lt;T&gt;(dst: *mut T, src: T)  2.Rust中想定义变参函数，需要nightly版本，并将变参逻辑用C++实现。 1234567891011121314151617extern &quot;C&quot; void My">
 <meta property="og:type" content="article">
-<meta property="og:title" content="随记-2023.4.23">
-<meta property="og:url" content="http://helloymf.github.io/2023/04/23/sui-ji-2023-4-23/index.html">
+<meta property="og:title" content="随记">
+<meta property="og:url" content="http://helloymf.github.io/2023/04/23/sui-ji/index.html">
 <meta property="og:site_name" content="JNZ">
 <meta property="og:description" content="1.Rust中尽量安全的使用裸指针： 12use std::ptr;pub const unsafe fn ptr::write_unaligned&lt;T&gt;(dst: *mut T, src: T)  2.Rust中想定义变参函数，需要nightly版本，并将变参逻辑用C++实现。 1234567891011121314151617extern &quot;C&quot; void My">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-04-23T12:25:07.000Z">
-<meta property="article:modified_time" content="2023-04-23T12:31:12.576Z">
+<meta property="article:modified_time" content="2023-04-24T15:39:57.243Z">
 <meta property="article:author" content="JNZ">
 <meta property="article:tag" content="work">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>随记-2023.4.23 - JNZ</title>
+  <title>随记 - JNZ</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -196,7 +196,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="随记-2023.4.23"></span>
+            <span id="subtitle" data-typed-text="随记"></span>
           
         </div>
 
@@ -219,7 +219,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          461 字
+          1.3k 字
         
       </span>
     
@@ -230,7 +230,7 @@
         
         
         
-          4 分钟
+          11 分钟
         
       </span>
     
@@ -268,7 +268,7 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">随记-2023.4.23</h1>
+            <h1 style="display: none">随记</h1>
             
             
               <div class="markdown-body">
@@ -279,6 +279,18 @@
 <p>2.Rust中想定义变参函数，需要nightly版本，并将变参逻辑用C++实现。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">MyPrintf</span><span class="hljs-params">(<span class="hljs-type">char</span>* fmt, ...)</span></span><br><span class="hljs-function"></span>&#123;<br>    va_list ArgList = <span class="hljs-number">0</span>;<br>    <span class="hljs-built_in">va_start</span>(ArgList, fmt);<br>    <span class="hljs-type">int</span> size = <span class="hljs-built_in">vprintf</span>(fmt, ArgList);<br>    <span class="hljs-keyword">if</span> (size &gt; <span class="hljs-number">0</span>)<br>    &#123;<br>        <span class="hljs-type">char</span>* buffer = (<span class="hljs-type">char</span>*)<span class="hljs-built_in">malloc</span>(size + <span class="hljs-number">1</span>);<br>        <span class="hljs-keyword">if</span> (!buffer) &#123;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        buffer[size] = <span class="hljs-number">0</span>;<br>        <span class="hljs-built_in">vsprintf_s</span>(buffer, size + <span class="hljs-number">1</span>, fmt, ArgList);<br>        <span class="hljs-built_in">memset</span>(buffer, <span class="hljs-number">0</span>, size);<br>        <span class="hljs-built_in">free</span>(buffer);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
+<p>3.Rust中vector结构：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br>	<span class="hljs-keyword">let</span> <span class="hljs-variable">v</span> = <span class="hljs-type">Vec</span>::<span class="hljs-title function_ invoke__">new</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>vector分两部分，栈上的智能指针（用于内存管理），堆上的实际数据。如果要想将两部分都放在堆上可以使用Box：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs rust">alloc:<br><span class="hljs-keyword">let</span> <span class="hljs-variable">b</span> = <span class="hljs-type">Box</span>::<span class="hljs-title function_ invoke__">new</span>(<span class="hljs-type">Vec</span>::<span class="hljs-title function_ invoke__">new</span>());<br><span class="hljs-keyword">let</span> <span class="hljs-variable">p</span> = <span class="hljs-type">Box</span>::<span class="hljs-title function_ invoke__">into_raw</span>(b);			<span class="hljs-comment">// 这句话表示自己管理内存</span><br><br>free:<br><span class="hljs-keyword">let</span> <span class="hljs-variable">_</span> = <span class="hljs-type">Box</span>::<span class="hljs-title function_ invoke__">from_raw</span>(parser.original);<br></code></pre></td></tr></table></figure>
+
+<p>4.TLS线程局部存储：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">use</span> std::cell::RefCell;<br><span class="hljs-keyword">use</span> std::thread;<br><br>thread_local!(<span class="hljs-keyword">static</span> FOO: RefCell&lt;<span class="hljs-type">u32</span>&gt; = RefCell::<span class="hljs-title function_ invoke__">new</span>(<span class="hljs-number">1</span>));<br><br>FOO.<span class="hljs-title function_ invoke__">with</span>(|f| &#123;<br>    <span class="hljs-built_in">assert_eq!</span>(*f.<span class="hljs-title function_ invoke__">borrow</span>(), <span class="hljs-number">1</span>);<br>    *f.<span class="hljs-title function_ invoke__">borrow_mut</span>() = <span class="hljs-number">2</span>;<br>&#125;);<br><br><span class="hljs-comment">// each thread starts out with the initial value of 1</span><br><span class="hljs-keyword">let</span> <span class="hljs-variable">t</span> = thread::<span class="hljs-title function_ invoke__">spawn</span>(<span class="hljs-keyword">move</span>|| &#123;<br>    FOO.<span class="hljs-title function_ invoke__">with</span>(|f| &#123;<br>        <span class="hljs-built_in">assert_eq!</span>(*f.<span class="hljs-title function_ invoke__">borrow</span>(), <span class="hljs-number">1</span>);			<span class="hljs-comment">// 这里对于基本类型需要解引用，复合类型不需要</span><br>        *f.<span class="hljs-title function_ invoke__">borrow_mut</span>() = <span class="hljs-number">3</span>;<br>    &#125;);<br>&#125;);<br><br><span class="hljs-comment">// wait for the thread to complete and bail out on panic</span><br>t.<span class="hljs-title function_ invoke__">join</span>().<span class="hljs-title function_ invoke__">unwrap</span>();<br><br><span class="hljs-comment">// we retain our original value of 2 despite the child thread</span><br>FOO.<span class="hljs-title function_ invoke__">with</span>(|f| &#123;<br>    <span class="hljs-built_in">assert_eq!</span>(*f.<span class="hljs-title function_ invoke__">borrow</span>(), <span class="hljs-number">2</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<p>TLS可以在并发的场景下替代全局变量。</p>
+<p>避免使用局部变量的方案：</p>
+<p>将多个函数定义为成员函数，并使用成员变量作为共享数据介质。</p>
 
                 
               </div>
@@ -324,8 +336,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>随记-2023.4.23</div>
-      <div>http://helloymf.github.io/2023/04/23/sui-ji-2023-4-23/</div>
+      <div>随记</div>
+      <div>http://helloymf.github.io/2023/04/23/sui-ji/</div>
     </div>
     <div class="license-meta">
       

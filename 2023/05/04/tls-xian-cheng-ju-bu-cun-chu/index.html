@@ -16,22 +16,25 @@
   <meta name="author" content="JNZ">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1.Rust中尽量安全的使用裸指针： 12use std::ptr;pub const unsafe fn ptr::write_unaligned&lt;T&gt;(dst: *mut T, src: T)  2.Rust中想定义变参函数，需要nightly版本，并将变参逻辑用C++实现。 1234567891011121314151617extern &quot;C&quot; void My">
+    <meta name="description" content="1.简介TLS线程局部存储在每个线程的基础上有效地存储状态，可以在一定程度上避免在每个线程的基础上实例化全局变量的情况。TLS的访问是通过TEB上存在的指针或数组 2.基础使用2.1 显示使用API1234567891011121314151617181920212223242526272829303132333435363738#include &lt;Windows.h&gt;DWORD g_">
 <meta property="og:type" content="article">
-<meta property="og:title" content="随记">
-<meta property="og:url" content="http://helloymf.github.io/2023/04/23/sui-ji/index.html">
+<meta property="og:title" content="TLS线程局部存储">
+<meta property="og:url" content="http://helloymf.github.io/2023/05/04/tls-xian-cheng-ju-bu-cun-chu/index.html">
 <meta property="og:site_name" content="JNZ">
-<meta property="og:description" content="1.Rust中尽量安全的使用裸指针： 12use std::ptr;pub const unsafe fn ptr::write_unaligned&lt;T&gt;(dst: *mut T, src: T)  2.Rust中想定义变参函数，需要nightly版本，并将变参逻辑用C++实现。 1234567891011121314151617extern &quot;C&quot; void My">
+<meta property="og:description" content="1.简介TLS线程局部存储在每个线程的基础上有效地存储状态，可以在一定程度上避免在每个线程的基础上实例化全局变量的情况。TLS的访问是通过TEB上存在的指针或数组 2.基础使用2.1 显示使用API1234567891011121314151617181920212223242526272829303132333435363738#include &lt;Windows.h&gt;DWORD g_">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-04-23T12:25:07.000Z">
-<meta property="article:modified_time" content="2023-04-24T15:39:57.243Z">
+<meta property="og:image" content="http://helloymf.github.io/2023/05/04/tls-xian-cheng-ju-bu-cun-chu/image-20230504120255227.png">
+<meta property="og:image" content="http://helloymf.github.io/2023/05/04/tls-xian-cheng-ju-bu-cun-chu/image-20230504120720929.png">
+<meta property="article:published_time" content="2023-05-04T02:47:41.000Z">
+<meta property="article:modified_time" content="2023-05-04T04:13:34.740Z">
 <meta property="article:author" content="JNZ">
-<meta property="article:tag" content="work">
+<meta property="article:tag" content="windows">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://helloymf.github.io/2023/05/04/tls-xian-cheng-ju-bu-cun-chu/image-20230504120255227.png">
   
   
   
-  <title>随记 - JNZ</title>
+  <title>TLS线程局部存储 - JNZ</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -196,7 +199,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="随记"></span>
+            <span id="subtitle" data-typed-text="TLS线程局部存储"></span>
           
         </div>
 
@@ -207,8 +210,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-23 20:25" pubdate>
-          2023年4月23日 晚上
+        <time datetime="2023-05-04 10:47" pubdate>
+          2023年5月4日 上午
         </time>
       </span>
     
@@ -219,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          2.1k 字
         
       </span>
     
@@ -230,7 +233,7 @@
         
         
         
-          11 分钟
+          18 分钟
         
       </span>
     
@@ -268,29 +271,33 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">随记</h1>
+            <h1 style="display: none">TLS线程局部存储</h1>
             
             
               <div class="markdown-body">
                 
-                <p>1.Rust中尽量安全的使用裸指针：</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">use</span> std::ptr;<br><span class="hljs-keyword">pub</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">unsafe</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">ptr</span>::write_unaligned&lt;T&gt;(dst: *<span class="hljs-keyword">mut</span> T, src: T)<br></code></pre></td></tr></table></figure>
+                <h1 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h1><p>TLS线程局部存储在每个线程的基础上有效地存储状态，可以在一定程度上避免在每个线程的基础上实例化全局变量的情况。<br>TLS的访问是通过TEB上存在的指针或数组</p>
+<h1 id="2-基础使用"><a href="#2-基础使用" class="headerlink" title="2.基础使用"></a>2.基础使用</h1><h2 id="2-1-显示使用API"><a href="#2-1-显示使用API" class="headerlink" title="2.1 显示使用API"></a>2.1 显示使用API</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Windows.h&gt;</span></span><br><br>DWORD g_tlsIdx = <span class="hljs-number">0</span>;<br><br><span class="hljs-function">DWORD WINAPI <span class="hljs-title">ThreadProc1</span><span class="hljs-params">(</span></span><br><span class="hljs-params"><span class="hljs-function">	LPVOID lpThreadParameter</span></span><br><span class="hljs-params"><span class="hljs-function">	)</span> </span>&#123;<br>	<span class="hljs-built_in">TlsSetValue</span>(g_tlsIdx, (LPVOID)<span class="hljs-number">1</span>);<br>	<span class="hljs-built_in">Sleep</span>(<span class="hljs-number">2000</span>);<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;thread1 val: %x\r\n&quot;</span>, (DWORD)<span class="hljs-built_in">TlsGetValue</span>(g_tlsIdx));<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-function">DWORD WINAPI <span class="hljs-title">ThreadProc2</span><span class="hljs-params">(</span></span><br><span class="hljs-params"><span class="hljs-function">	LPVOID lpThreadParameter</span></span><br><span class="hljs-params"><span class="hljs-function">)</span> </span>&#123;<br>	<span class="hljs-built_in">TlsSetValue</span>(g_tlsIdx, (LPVOID)<span class="hljs-number">2</span>);<br>	<span class="hljs-built_in">Sleep</span>(<span class="hljs-number">1000</span>);<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;thread2 val: %x\r\n&quot;</span>, (DWORD)<span class="hljs-built_in">TlsGetValue</span>(g_tlsIdx));<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span>* argv[])</span> </span>&#123;<br><br>	g_tlsIdx = <span class="hljs-built_in">TlsAlloc</span>();<br><br>	HANDLE hThread1 = ::<span class="hljs-built_in">CreateThread</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, ThreadProc1, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br>	HANDLE hThread2 = ::<span class="hljs-built_in">CreateThread</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, ThreadProc2, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br><br>	<span class="hljs-built_in">WaitForSingleObject</span>(hThread1, <span class="hljs-number">-1</span>);<br>	<span class="hljs-built_in">WaitForSingleObject</span>(hThread2, <span class="hljs-number">-1</span>);<br><br>	<span class="hljs-built_in">TlsFree</span>(g_tlsIdx);<br><br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;threads all exit.\r\n&quot;</span>);<br><br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>2.Rust中想定义变参函数，需要nightly版本，并将变参逻辑用C++实现。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">MyPrintf</span><span class="hljs-params">(<span class="hljs-type">char</span>* fmt, ...)</span></span><br><span class="hljs-function"></span>&#123;<br>    va_list ArgList = <span class="hljs-number">0</span>;<br>    <span class="hljs-built_in">va_start</span>(ArgList, fmt);<br>    <span class="hljs-type">int</span> size = <span class="hljs-built_in">vprintf</span>(fmt, ArgList);<br>    <span class="hljs-keyword">if</span> (size &gt; <span class="hljs-number">0</span>)<br>    &#123;<br>        <span class="hljs-type">char</span>* buffer = (<span class="hljs-type">char</span>*)<span class="hljs-built_in">malloc</span>(size + <span class="hljs-number">1</span>);<br>        <span class="hljs-keyword">if</span> (!buffer) &#123;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        buffer[size] = <span class="hljs-number">0</span>;<br>        <span class="hljs-built_in">vsprintf_s</span>(buffer, size + <span class="hljs-number">1</span>, fmt, ArgList);<br>        <span class="hljs-built_in">memset</span>(buffer, <span class="hljs-number">0</span>, size);<br>        <span class="hljs-built_in">free</span>(buffer);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="2-2-隐式使用"><a href="#2-2-隐式使用" class="headerlink" title="2.2 隐式使用"></a>2.2 隐式使用</h2><p>允许使用TLS和全局变量一样方便，需要编译器支持。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs C++">__declspec(thread)<br></code></pre></td></tr></table></figure>
 
-<p>3.Rust中vector结构：</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br>	<span class="hljs-keyword">let</span> <span class="hljs-variable">v</span> = <span class="hljs-type">Vec</span>::<span class="hljs-title function_ invoke__">new</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+<h1 id="3-实现原理"><a href="#3-实现原理" class="headerlink" title="3.实现原理"></a>3.实现原理</h1><h2 id="3-1-API原理"><a href="#3-1-API原理" class="headerlink" title="3.1 API原理"></a>3.1 API原理</h2><p>TEB 中的 TlsSlots <strong>数组</strong>是每个线程的一部分，它为每个线程提供了一组有保证的 64 个线程本地存储插槽。后来，Microsoft 认为 64 个 TLS 插槽不够用，并添加了 TlsExpansionSlots 指针（指向堆），以获得额外的 1024 个 TLS 插槽。如果超过初始的 64 个插槽集，TlsExpansionSlots 将在 TlsAlloc 中按需分配。</p>
+<h3 id="a-TlsAlloc"><a href="#a-TlsAlloc" class="headerlink" title="a.TlsAlloc"></a>a.TlsAlloc</h3><p><strong>在全局位置调用这个函数来获得一个可用的插槽索引，如果前 64 个插槽已经用完，会分配堆内存。</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-function">DWORD <span class="hljs-title">TlsAlloc</span><span class="hljs-params">()</span></span>;<br><br>如果函数成功，则返回值为 TLS 索引。索引的插槽初始化为零。<br>如果函数失败，则返回值为 <span class="hljs-built_in">TLS_OUT_OF_INDEXES</span>(<span class="hljs-number">-1</span>)。调用GetLastError获取拓展错误信息。<br></code></pre></td></tr></table></figure>
 
-<p>vector分两部分，栈上的智能指针（用于内存管理），堆上的实际数据。如果要想将两部分都放在堆上可以使用Box：</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs rust">alloc:<br><span class="hljs-keyword">let</span> <span class="hljs-variable">b</span> = <span class="hljs-type">Box</span>::<span class="hljs-title function_ invoke__">new</span>(<span class="hljs-type">Vec</span>::<span class="hljs-title function_ invoke__">new</span>());<br><span class="hljs-keyword">let</span> <span class="hljs-variable">p</span> = <span class="hljs-type">Box</span>::<span class="hljs-title function_ invoke__">into_raw</span>(b);			<span class="hljs-comment">// 这句话表示自己管理内存</span><br><br>free:<br><span class="hljs-keyword">let</span> <span class="hljs-variable">_</span> = <span class="hljs-type">Box</span>::<span class="hljs-title function_ invoke__">from_raw</span>(parser.original);<br></code></pre></td></tr></table></figure>
+<p><strong>反汇编如下：</strong></p>
+<p><img src="/2023/05/04/tls-xian-cheng-ju-bu-cun-chu/image-20230504120255227.png" srcset="/img/loading.gif" lazyload alt="TlsAlloc反汇编"></p>
+<h3 id="b-TlsSetValue"><a href="#b-TlsSetValue" class="headerlink" title="b.TlsSetValue"></a>b.TlsSetValue</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-function">BOOL <span class="hljs-title">TlsSetValue</span><span class="hljs-params">(</span></span><br><span class="hljs-params"><span class="hljs-function">  [in]           DWORD  dwTlsIndex,</span></span><br><span class="hljs-params"><span class="hljs-function">  [in, optional] LPVOID lpTlsValue</span></span><br><span class="hljs-params"><span class="hljs-function">)</span></span>;<br><br>如果函数成功，则返回值为非零值。<br>如果函数失败，则返回值为零。调用 GetLastError获取拓展错误信息。<br></code></pre></td></tr></table></figure>
 
-<p>4.TLS线程局部存储：</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">use</span> std::cell::RefCell;<br><span class="hljs-keyword">use</span> std::thread;<br><br>thread_local!(<span class="hljs-keyword">static</span> FOO: RefCell&lt;<span class="hljs-type">u32</span>&gt; = RefCell::<span class="hljs-title function_ invoke__">new</span>(<span class="hljs-number">1</span>));<br><br>FOO.<span class="hljs-title function_ invoke__">with</span>(|f| &#123;<br>    <span class="hljs-built_in">assert_eq!</span>(*f.<span class="hljs-title function_ invoke__">borrow</span>(), <span class="hljs-number">1</span>);<br>    *f.<span class="hljs-title function_ invoke__">borrow_mut</span>() = <span class="hljs-number">2</span>;<br>&#125;);<br><br><span class="hljs-comment">// each thread starts out with the initial value of 1</span><br><span class="hljs-keyword">let</span> <span class="hljs-variable">t</span> = thread::<span class="hljs-title function_ invoke__">spawn</span>(<span class="hljs-keyword">move</span>|| &#123;<br>    FOO.<span class="hljs-title function_ invoke__">with</span>(|f| &#123;<br>        <span class="hljs-built_in">assert_eq!</span>(*f.<span class="hljs-title function_ invoke__">borrow</span>(), <span class="hljs-number">1</span>);			<span class="hljs-comment">// 这里对于基本类型需要解引用，复合类型不需要</span><br>        *f.<span class="hljs-title function_ invoke__">borrow_mut</span>() = <span class="hljs-number">3</span>;<br>    &#125;);<br>&#125;);<br><br><span class="hljs-comment">// wait for the thread to complete and bail out on panic</span><br>t.<span class="hljs-title function_ invoke__">join</span>().<span class="hljs-title function_ invoke__">unwrap</span>();<br><br><span class="hljs-comment">// we retain our original value of 2 despite the child thread</span><br>FOO.<span class="hljs-title function_ invoke__">with</span>(|f| &#123;<br>    <span class="hljs-built_in">assert_eq!</span>(*f.<span class="hljs-title function_ invoke__">borrow</span>(), <span class="hljs-number">2</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
+<p><strong>反汇编如下：</strong></p>
+<p><img src="/2023/05/04/tls-xian-cheng-ju-bu-cun-chu/image-20230504120720929.png" srcset="/img/loading.gif" lazyload alt="TlsSetValue反汇编"></p>
+<h3 id="c-TlsGetValue"><a href="#c-TlsGetValue" class="headerlink" title="c.TlsGetValue"></a>c.TlsGetValue</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-function">LPVOID <span class="hljs-title">TlsGetValue</span><span class="hljs-params">(</span></span><br><span class="hljs-params"><span class="hljs-function">  [in] DWORD dwTlsIndex</span></span><br><span class="hljs-params"><span class="hljs-function">)</span></span>;<br><br>如果函数成功，则返回值是存储在与指定索引关联的调用线程的 TLS 槽中的值。如果 dwTlsIndex 是通过成功调用 TlsAlloc 分配的有效索引，则此函数始终成功。<br>如果函数失败，则返回值为零。若要获取扩展的错误信息，请调用 GetLastError。<br>存储在 TLS 槽中的数据的值可以设置为 <span class="hljs-number">0</span>，因为它仍具有其初始值，或者因为调用 TlsSetValue 函数的线程为 <span class="hljs-number">0</span>。因此，如果返回值为 <span class="hljs-number">0</span>，则必须在确定函数失败之前检查 GetLastError 是否返回ERROR_SUCCESS。如果 GetLastError 返回 ERROR_SUCCESS，则函数已成功，TLS 槽中存储的数据为 <span class="hljs-number">0</span>。否则，函数将失败。<br></code></pre></td></tr></table></figure>
 
-<p>TLS可以在并发的场景下替代全局变量。</p>
-<p>避免使用局部变量的方案：</p>
-<p>将多个函数定义为成员函数，并使用成员变量作为共享数据介质。</p>
+<p><strong>源码如下：</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-function">PVOID</span><br><span class="hljs-function">WINAPI</span><br><span class="hljs-function"><span class="hljs-title">TlsGetValue</span><span class="hljs-params">(</span></span><br><span class="hljs-params"><span class="hljs-function">	__in DWORD dwTlsIndex</span></span><br><span class="hljs-params"><span class="hljs-function">	)</span></span><br><span class="hljs-function"></span>&#123;<br>   PTEB Teb = <span class="hljs-built_in">NtCurrentTeb</span>(); <span class="hljs-comment">// fs:[0x18]</span><br>   Teb-&gt;LastErrorValue = <span class="hljs-number">0</span>;<br>   <span class="hljs-keyword">if</span> (dwTlsIndex &lt; <span class="hljs-number">64</span>)<br>      <span class="hljs-keyword">return</span> Teb-&gt;TlsSlots[ dwTlsIndex ];<br><br>   <span class="hljs-keyword">if</span> (dwTlsIndex &gt; <span class="hljs-number">1088</span>)<br>   &#123;<br>      <span class="hljs-built_in">BaseSetLastNTError</span>( STATUS_INVALID_PARAMETER );<br>      <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>   &#125;<br>   <span class="hljs-keyword">if</span> (!Teb-&gt;TlsExpansionSlots)<br>      <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>   <span class="hljs-keyword">return</span> Teb-&gt;TlsExpansionSlots[ dwTlsIndex - <span class="hljs-number">64</span> ];<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>c.TlsGetValue</p>
 
                 
               </div>
@@ -309,7 +316,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/talk/" class="category-chain-item">talk</a>
+  <a href="/categories/coding/" class="category-chain-item">coding</a>
   
   
 
@@ -324,7 +331,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/work/">#work</a>
+        <a href="/tags/windows/">#windows</a>
       
     </div>
   
@@ -336,8 +343,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>随记</div>
-      <div>http://helloymf.github.io/2023/04/23/sui-ji/</div>
+      <div>TLS线程局部存储</div>
+      <div>http://helloymf.github.io/2023/05/04/tls-xian-cheng-ju-bu-cun-chu/</div>
     </div>
     <div class="license-meta">
       
@@ -388,18 +395,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/05/04/tls-xian-cheng-ju-bu-cun-chu/" title="TLS线程局部存储">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">TLS线程局部存储</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/19/rust-xi-tong-bian-cheng-zhi-zhi-neng-zhi-zhen/" title="Rust系统编程之智能指针">
-                        <span class="hidden-mobile">Rust系统编程之智能指针</span>
+                      <a href="/2023/04/23/sui-ji/" title="随记">
+                        <span class="hidden-mobile">随记</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

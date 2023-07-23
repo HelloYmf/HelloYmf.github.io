@@ -16,23 +16,30 @@
   <meta name="author" content="JNZ">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1.内存动态检测1.1 检测模式1.1.1 模式匹配基于特征进行检测。代表性的工具有YARA，以及针对CobaltStrike的检测工具 BeaconEye。 BeaconEye工具主要针对Beacon的配置文件在堆内存中的某一刻一定是解密状态的，甚至配置文件中可以获得TeamServer的哈希。 1.1.2 内存IOCs基于可疑内存属性的检测。如私有内存(VirtualAlloc)的可执行属性，">
+    <meta name="description" content="1.Windbg-TTD1.1 简介​	TTD是”Time Travel Debugging”的缩写，是Windbg preview提供的针对单个进程的用户态trace录制工具。录制完成后生成.run文件可以在调试器中向前向后重放，不需要再重新运行程序就能让你的调试器状态回退，并且还能分享trace文件给别人。 1.2 基础用法从一个简单的除零错误例子出发，目标的源码如下： 12345678910">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Bypass EDR">
-<meta property="og:url" content="http://helloymf.github.io/2023/07/13/bypass-edr/index.html">
+<meta property="og:title" content="windbg-ttd">
+<meta property="og:url" content="http://helloymf.github.io/2023/07/23/windbg-ttd/index.html">
 <meta property="og:site_name" content="JNZ">
-<meta property="og:description" content="1.内存动态检测1.1 检测模式1.1.1 模式匹配基于特征进行检测。代表性的工具有YARA，以及针对CobaltStrike的检测工具 BeaconEye。 BeaconEye工具主要针对Beacon的配置文件在堆内存中的某一刻一定是解密状态的，甚至配置文件中可以获得TeamServer的哈希。 1.1.2 内存IOCs基于可疑内存属性的检测。如私有内存(VirtualAlloc)的可执行属性，">
+<meta property="og:description" content="1.Windbg-TTD1.1 简介​	TTD是”Time Travel Debugging”的缩写，是Windbg preview提供的针对单个进程的用户态trace录制工具。录制完成后生成.run文件可以在调试器中向前向后重放，不需要再重新运行程序就能让你的调试器状态回退，并且还能分享trace文件给别人。 1.2 基础用法从一个简单的除零错误例子出发，目标的源码如下： 12345678910">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-07-13T02:56:28.000Z">
-<meta property="article:modified_time" content="2023-07-20T13:22:01.373Z">
+<meta property="og:image" content="http://helloymf.github.io/2023/07/23/windbg-ttd/image-20230723222915793.png">
+<meta property="og:image" content="http://helloymf.github.io/2023/07/23/windbg-ttd/image-20230723223329415.png">
+<meta property="og:image" content="http://helloymf.github.io/2023/07/23/windbg-ttd/image-20230723224859542.png">
+<meta property="og:image" content="http://helloymf.github.io/2023/07/23/windbg-ttd/image-20230723225113262.png">
+<meta property="og:image" content="http://helloymf.github.io/2023/07/23/windbg-ttd/image-20230723225522278.png">
+<meta property="og:image" content="http://helloymf.github.io/2023/07/23/windbg-ttd/image-20230723225908496.png">
+<meta property="article:published_time" content="2023-07-23T14:15:33.000Z">
+<meta property="article:modified_time" content="2023-07-23T15:00:27.908Z">
 <meta property="article:author" content="JNZ">
-<meta property="article:tag" content="Bypass">
-<meta property="article:tag" content="AV&#x2F;EDR">
+<meta property="article:tag" content="basic">
+<meta property="article:tag" content="tools">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://helloymf.github.io/2023/07/23/windbg-ttd/image-20230723222915793.png">
   
   
   
-  <title>Bypass EDR - JNZ</title>
+  <title>windbg-ttd - JNZ</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -197,7 +204,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Bypass EDR"></span>
+            <span id="subtitle" data-typed-text="windbg-ttd"></span>
           
         </div>
 
@@ -208,8 +215,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-07-13 10:56" pubdate>
-          2023年7月13日 上午
+        <time datetime="2023-07-23 22:15" pubdate>
+          2023年7月23日 晚上
         </time>
       </span>
     
@@ -220,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.4k 字
+          1.3k 字
         
       </span>
     
@@ -231,7 +238,7 @@
         
         
         
-          29 分钟
+          11 分钟
         
       </span>
     
@@ -269,57 +276,36 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Bypass EDR</h1>
+            <h1 style="display: none">windbg-ttd</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="1-内存动态检测"><a href="#1-内存动态检测" class="headerlink" title="1.内存动态检测"></a>1.内存动态检测</h1><h2 id="1-1-检测模式"><a href="#1-1-检测模式" class="headerlink" title="1.1 检测模式"></a>1.1 检测模式</h2><h3 id="1-1-1-模式匹配"><a href="#1-1-1-模式匹配" class="headerlink" title="1.1.1 模式匹配"></a>1.1.1 模式匹配</h3><p>基于特征进行检测。代表性的工具有YARA，以及针对CobaltStrike的检测工具 BeaconEye。</p>
-<p>BeaconEye工具主要针对Beacon的配置文件在堆内存中的某一刻一定是解密状态的，甚至配置文件中可以获得TeamServer的哈希。</p>
-<h3 id="1-1-2-内存IOCs"><a href="#1-1-2-内存IOCs" class="headerlink" title="1.1.2 内存IOCs"></a>1.1.2 内存IOCs</h3><p>基于可疑内存属性的检测。如私有内存(VirtualAlloc)的可执行属性，线程地址未处于映像内存中。</p>
-<h3 id="1-1-3-栈回溯"><a href="#1-1-3-栈回溯" class="headerlink" title="1.1.3 栈回溯"></a>1.1.3 栈回溯</h3><p>基于睡眠的检测，如Hook住Sleep等函数，在Beacon睡眠时进行栈回溯扫描。</p>
-<p>代表工具：BeaconHunter、Hunt-Sleeping-Beacons、MalMemDetect</p>
-<h1 id="2-绕过内存检测"><a href="#2-绕过内存检测" class="headerlink" title="2.绕过内存检测"></a>2.绕过内存检测</h1><h2 id="2-1-加密堆"><a href="#2-1-加密堆" class="headerlink" title="2.1 加密堆"></a>2.1 加密堆</h2><h3 id="2-1-1-加密算法选择"><a href="#2-1-1-加密算法选择" class="headerlink" title="2.1.1 加密算法选择"></a>2.1.1 加密算法选择</h3><p>使用单一异或是过不了YARA的，而自己实现RC4等加密算法可能会产生额外的可执行代码块。</p>
-<p>系统API SystemFunction032是个不错的RC4加密选择。</p>
-<h3 id="2-1-2-基础堆加密"><a href="#2-1-2-基础堆加密" class="headerlink" title="2.1.2 基础堆加密"></a>2.1.2 基础堆加密</h3><p>LockdExeDemo -&gt; 存在不稳定的情况</p>
-<p>Secondary Heap</p>
-<p>Sleep Mask -&gt; cs官方提供，但是需要可执行存根进行错误处理，可能被检测。</p>
-<h3 id="2-1-3-基于异常处理"><a href="#2-1-3-基于异常处理" class="headerlink" title="2.1.3 基于异常处理"></a>2.1.3 基于异常处理</h3><p>Shellcode Fluctuation -&gt; 将内存设置不可执行，并注册veh异常处理程序，在执行到不可执行内存时进行修复。</p>
-<h3 id="2-1-4-基于ROP"><a href="#2-1-4-基于ROP" class="headerlink" title="2.1.4 基于ROP"></a>2.1.4 基于ROP</h3><p>Gargoyle -&gt; 使用APC，但是只做了32位的poc</p>
-<p>YouMayPasser -&gt; Gargoyle的64位实现</p>
-<p>DeepSleep</p>
-<p>ROP可能会出现在版本更新后，在进程中找不到gadget的情况。</p>
-<p>FOLIAGE -&gt; 不使用ROP，使用NtContinue完成</p>
-<p><strong>工作原理：</strong></p>
-<p>1.获取KsecDD驱动句柄来执行加密操作</p>
-<p>2.获取当前线程句柄以便于操作线程Context</p>
-<p>3.创建一个新的线程以获取APC队列</p>
-<p>4.创建一个Event来防止新的线程退出</p>
-<p>5.拷贝新线程的Context到一个单独的结构体中，后续会重用它</p>
-<p>6.对一系列NtContinue APC调用进行排队，每个调用都有一个Context定义睡眠链中的一个步骤，该步骤将返回到NtTestAlert，步骤中做的事情如下：</p>
-<p>​	6.1 等待event防止线程退出</p>
-<p>​	6.2 改变目标内存权限为RW</p>
-<p>​	6.3 通知KsecDD驱动进行加密</p>
-<p>​	6.4 备份原始线程Context</p>
-<p>​	6.5 将线程上下文替换为假的</p>
-<p>​	6.6 调用NtDelayExecution睡眠指定的时间，这个API可能会被检测，可以自己实现，但是又会引发新的问题 -&gt; 我们不想要可执行代码。可以使用WaitForSingleObject的超时参数来模拟休眠。</p>
-<p>​	6.7 通知KsecDD驱动进行解密</p>
-<p>​	6.8 恢复线程Context</p>
-<p>​	6.9 改变目标内存属性为RWX（不要改为RX，因为会造成SMC奔溃）</p>
-<p>​	6.10 结束该新线程</p>
-<p>7.强制该新线程进入警醒状态，来执行APC</p>
-<p>8.向事件发送信号阻止原始线程继续执行</p>
-<p>Ekko与FOLIAGE类似，不过是使用计时器进行APC排序的。</p>
-<h2 id="2-1-返回地址伪造"><a href="#2-1-返回地址伪造" class="headerlink" title="2.1 返回地址伪造"></a>2.1 返回地址伪造</h2><h3 id="2-1-1-静态伪造"><a href="#2-1-1-静态伪造" class="headerlink" title="2.1.1 静态伪造"></a>2.1.1 静态伪造</h3><p>Thread Stack Spoofing -&gt; 将返回地址用0填充</p>
-<p>调用NtSetContextThread API来伪造Context结构</p>
-<h3 id="2-1-2-动态伪造"><a href="#2-1-2-动态伪造" class="headerlink" title="2.1.2 动态伪造"></a>2.1.2 动态伪造</h3><p>Call Stack Spoofers -&gt; 使用了异常处理</p>
-<p>x64 Return Address Spoofing </p>
-<h1 id="武器库"><a href="#武器库" class="headerlink" title="武器库"></a>武器库</h1><p>1.根据hash获取导出函数</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-meta">#<span class="hljs-keyword">define</span> HASH_KEY						13</span><br><span class="hljs-function">__forceinline DWORD <span class="hljs-title">ror</span><span class="hljs-params">(DWORD d)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">return</span> _rotr(d, HASH_KEY);<br>&#125;<br><br><span class="hljs-function">__forceinline DWORD <span class="hljs-title">hash</span><span class="hljs-params">(<span class="hljs-type">char</span>* c)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">register</span> DWORD h = <span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">do</span><br>	&#123;<br>		h = <span class="hljs-built_in">ror</span>(h);<br>		h += *c;<br>	&#125; <span class="hljs-keyword">while</span> (*++c);<br><br>	<span class="hljs-keyword">return</span> h;<br>&#125;<br><br><span class="hljs-function">DWORD64 <span class="hljs-title">get_export_fun</span><span class="hljs-params">(DWORD dstHash)</span> </span>&#123;<br>	DWORD64 modBase = (DWORD64)<span class="hljs-built_in">LoadLibrary</span>(<span class="hljs-string">L&quot;Kernel32.dll&quot;</span>);<br>	IMAGE_NT_HEADERS64* inh = (IMAGE_NT_HEADERS64*)(modBase + ((IMAGE_DOS_HEADER*)modBase)-&gt;e_lfanew);<br>	IMAGE_DATA_DIRECTORY&amp; idd = inh-&gt;OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT];<br>	<span class="hljs-keyword">if</span> (idd.VirtualAddress == <span class="hljs-number">0</span>)<br>		<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br><br>	IMAGE_EXPORT_DIRECTORY* ied = (IMAGE_EXPORT_DIRECTORY*)(modBase + idd.VirtualAddress);<br><br>	DWORD* rvaTable = (DWORD*)(modBase + ied-&gt;AddressOfFunctions);<br>	WORD* ordTable = (WORD*)(modBase + ied-&gt;AddressOfNameOrdinals);<br>	DWORD* nameTable = (DWORD*)(modBase + ied-&gt;AddressOfNames);<br>	<span class="hljs-comment">//lazy search, there is no need to use binsearch for just one function</span><br>	<span class="hljs-keyword">for</span> (DWORD i = <span class="hljs-number">0</span>; i &lt; ied-&gt;NumberOfFunctions; i++)<br>	&#123;<br><br>		DWORD curHash = <span class="hljs-built_in">hash</span>((<span class="hljs-type">char</span>*)((ULONG_PTR)modBase + nameTable[i]));<br><br>		<span class="hljs-keyword">if</span> (curHash != dstHash)<br>			<span class="hljs-keyword">continue</span>;<br>		<span class="hljs-keyword">else</span><br>			<span class="hljs-built_in">return</span> (DWORD64)(modBase + rvaTable[ordTable[i]]);<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+                <h1 id="1-Windbg-TTD"><a href="#1-Windbg-TTD" class="headerlink" title="1.Windbg-TTD"></a>1.Windbg-TTD</h1><h2 id="1-1-简介"><a href="#1-1-简介" class="headerlink" title="1.1 简介"></a>1.1 简介</h2><p>​	TTD是”Time Travel Debugging”的缩写，是Windbg preview提供的针对单个进程的用户态trace录制工具。录制完成后生成.run文件可以在调试器中向前向后重放，不需要再重新运行程序就能让你的调试器状态回退，并且还能分享trace文件给别人。</p>
+<h2 id="1-2-基础用法"><a href="#1-2-基础用法" class="headerlink" title="1.2 基础用法"></a>1.2 基础用法</h2><p>从一个简单的除零错误例子出发，目标的源码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">foo</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b, <span class="hljs-type">int</span> c)</span> &#123;<br><br>    <span class="hljs-type">int</span> x = a * b;<br>    <span class="hljs-type">int</span> y = x / c;<br><br>    <span class="hljs-keyword">return</span> y;<br>&#125;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br><br>    foo(<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">0</span>);<br><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;hello world\r\n&quot;</span>);<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>IDA Python脚本，用于提取Shellcode：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> idaapi<br><span class="hljs-keyword">import</span> idautils<br><span class="hljs-keyword">import</span> binascii<br><br><span class="hljs-comment"># ida python脚本</span><br><span class="hljs-comment"># 将指定的函数硬编码全部提取出来</span><br><br><span class="hljs-comment"># 指定函数的名称</span><br>function_name = <span class="hljs-string">&quot;get_export_fun&quot;</span><br><br><span class="hljs-comment"># 获取函数对象</span><br>function = idaapi.get_name_ea(idaapi.BADADDR, function_name)<br><span class="hljs-keyword">if</span> function != idaapi.BADADDR:<br>    <span class="hljs-comment"># 获取函数的起始地址和结束地址</span><br>    function_start = idaapi.get_func(function).start_ea<br>    function_end = idaapi.get_func(function).end_ea<br><br>    <span class="hljs-comment"># 获取函数的指令地址列表</span><br>    instructions = <span class="hljs-built_in">list</span>(idautils.Heads(function_start, function_end))<br><br>    <span class="hljs-comment"># 输出每条指令的字节</span><br>    <span class="hljs-keyword">for</span> address <span class="hljs-keyword">in</span> instructions:<br><br>        bytes_data = idaapi.get_bytes(address, idaapi.get_item_size(address))<br>        disasm = idc.GetDisasm(address)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;// <span class="hljs-subst">&#123;disasm&#125;</span>&quot;</span>)<br>        <br>        <span class="hljs-keyword">for</span> dat <span class="hljs-keyword">in</span> bytes_data:<br>            hex_obj = <span class="hljs-built_in">bytes</span>([dat])<br>            hex_string = binascii.hexlify(hex_obj).decode(<span class="hljs-string">&quot;utf-8&quot;</span>)<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;__asm __emit(0x<span class="hljs-subst">&#123;hex_string&#125;</span>)&quot;</span>)<br><span class="hljs-keyword">else</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;找不到函数：<span class="hljs-subst">&#123;function_name&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p>在WindbgPreview中的载入操作序列如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs text">File<br>  Launch executable (advanced)<br>    Executable<br>      X:\TTD\TTDTest_0.exe<br>    Start directory<br>      X:\TTD<br>    Target architecture<br>      Autodetect<br>    Record with Time Travel Debugging (选中)<br>      Configure and Record<br>        Save location<br>          X:\TTD\<br>        Record<br></code></pre></td></tr></table></figure>
 
+<p>刚载入会默认断在<code>ntdll</code>模块下的<code>LdrInitializeThunk</code>函数下，输入<code>g</code>即可在异常位置停住，并录制完成，如下图所示：</p>
+<p><img src="/2023/07/23/windbg-ttd/image-20230723222915793.png" srcset="/img/loading.gif" lazyload alt="除零异常现场"></p>
+<p>可以看见在地址<code>0x71d5f4fa2c</code>处发生了一个除零异常，此时可以有如下三种方式来定位目标被赋值的位置：</p>
+<h3 id="1-2-1-数据断点-反向执行"><a href="#1-2-1-数据断点-反向执行" class="headerlink" title="1.2.1 数据断点 + 反向执行"></a>1.2.1 数据断点 + 反向执行</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">ba w1 0x71d5f4fa2c			// 设置内存一字节写入断点<br>g-							// 反向执行<br></code></pre></td></tr></table></figure>
+
+<p>此时可以定位到0被赋值的位置，如下图所示：</p>
+<p><img src="/2023/07/23/windbg-ttd/image-20230723223329415.png" srcset="/img/loading.gif" lazyload alt="数据断点+反向执行结果"></p>
+<h3 id="1-2-2-TTD-Memory"><a href="#1-2-2-TTD-Memory" class="headerlink" title="1.2.2 TTD.Memory"></a>1.2.2 TTD.Memory</h3><p>.idx文件是基于.run文件生成的，可以删除并重新生成。有了.idx文件，可以用<code>dx</code>命令查询对地址<code>0x71d5f4fa2c</code>进行写操作的所有代码，效率比”数据断点+反向执行”高。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">r $t0=0x71d5f4fa2c;r $t1=8;dx -r2 @$cursession.TTD.Memory(@$t0,@$t0+@$t1,&quot;w&quot;).Where(m=&gt;m.Value==0)	// 查询所有对指定内存的写入操作<br></code></pre></td></tr></table></figure>
+
+<p>得到查询结果如下：</p>
+<p><img src="/2023/07/23/windbg-ttd/image-20230723224859542.png" srcset="/img/loading.gif" lazyload alt="TTD.Memory查询结果"></p>
+<p>此时不能直接使用<code>u 0x7ff718a613ac</code>来查看代码，这样不会跟踪到上下文，可以使用<code>!tt &#123;TimeStart&#125;</code>指令来进行时间点切换，如下图所示：</p>
+<p><img src="/2023/07/23/windbg-ttd/image-20230723225113262.png" srcset="/img/loading.gif" lazyload alt="tt来切换时间点"></p>
+<h3 id="1-2-3-Timelines-GUI"><a href="#1-2-3-Timelines-GUI" class="headerlink" title="1.2.3 Timelines GUI"></a>1.2.3 Timelines GUI</h3><p>可以点击工具栏中的Timelines来调出GUI页面，可以利用<code>Add Timeline</code>来设置事件，如图所示：</p>
+<p><img src="/2023/07/23/windbg-ttd/image-20230723225522278.png" srcset="/img/loading.gif" lazyload alt="Add Timeline设置事件"></p>
+<p>本例中要想可以加入对<code>0x7ff718a613ac</code>地址的写入事件，如下图所示：<br><img src="/2023/07/23/windbg-ttd/image-20230723225908496.png" srcset="/img/loading.gif" lazyload alt="Timeline写入事件"></p>
+<p>添加成功后会在时间线中出现褐色的时间点，此时双击即可看见时间点信息，再使用<code>!tt</code>命令即可切换至现场。</p>
 
                 
               </div>
@@ -338,7 +324,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/read-team/" class="category-chain-item">read-team</a>
+  <a href="/categories/reverse/" class="category-chain-item">reverse</a>
   
   
 
@@ -353,9 +339,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Bypass/">#Bypass</a>
+        <a href="/tags/basic/">#basic</a>
       
-        <a href="/tags/AV-EDR/">#AV/EDR</a>
+        <a href="/tags/tools/">#tools</a>
       
     </div>
   
@@ -367,8 +353,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Bypass EDR</div>
-      <div>http://helloymf.github.io/2023/07/13/bypass-edr/</div>
+      <div>windbg-ttd</div>
+      <div>http://helloymf.github.io/2023/07/23/windbg-ttd/</div>
     </div>
     <div class="license-meta">
       
@@ -419,18 +405,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/07/23/windbg-ttd/" title="windbg-ttd">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">windbg-ttd</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/06/29/skills-libs/" title="Skills &amp;&amp; Libs">
-                        <span class="hidden-mobile">Skills &amp;&amp; Libs</span>
+                      <a href="/2023/07/13/bypass-edr/" title="Bypass EDR">
+                        <span class="hidden-mobile">Bypass EDR</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
